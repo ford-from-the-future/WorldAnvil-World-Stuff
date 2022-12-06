@@ -1,249 +1,206 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
-.user-css h2 {
-    font-family: Georgia,Times,Times New Roman,serif; 
+/* * Prefixed by https://autoprefixer.github.io * PostCSS: v8.4.14, * Autoprefixer: v10.4.7 * Browsers: last 4 version */
+ .user-css h2 {
+     font-family: Georgia,Times,Times New Roman,serif;
 }
-
-.user-css h4 {
-    font-family: Georgia,Times,Times New Roman,serif; 
+ .user-css h4 {
+     font-family: Georgia,Times,Times New Roman,serif;
 }
-
-.user-css  {
-    font-family: Georgia,Times,Times New Roman,serif; 
+ .user-css {
+     font-family: Georgia,Times,Times New Roman,serif;
 }
-
-.user-css-presentation {
-    background-image: url(https://drive.google.com/drive/folders/16iaYV_k9kR8af3ldTFNRhfnRIqcLJwOG) ;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+ .user-css-presentation {
+     background-image: url(https://drive.google.com/drive/folders/16iaYV_k9kR8af3ldTFNRhfnRIqcLJwOG) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
 }
-
-.user-css .bookcover {
-    margin: 0px;
-    display: inline-block;
-    width: 300px;
-    text-align: center;
-    position: relative;
-    height: 255px;
-    background: #000;
+ .user-css .bookcover {
+     margin: 0px;
+     display: inline-block;
+     width: 300px;
+     text-align: center;
+     position: relative;
+     height: 255px;
+     background: #000;
 }
-
-.user-css .article-title h1 {
-    font-family: Georgia,Times,Times New Roman,serif; 
-    font-weight: 700;
-    font-size: 42px;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    line-height: 0.9em;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    text-align:center;
+ .user-css .article-title h1 {
+     font-family: Georgia,Times,Times New Roman,serif;
+     font-weight: 700;
+     font-size: 42px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+     line-height: 0.9em;
+     margin-top: 20px;
+     margin-bottom: 5px;
+     text-align:center;
 }
-
-.user-css .heading h1.world-title {
-    font-family: Georgia,Times,Times New Roman,serif; 
-    font-weight: 3;
-    font-size: 44px;
-    padding-top: 10px;
-    padding-bottom: 15px;
+ .user-css .heading h1.world-title {
+     font-family: Georgia,Times,Times New Roman,serif;
+     font-weight: 3;
+     font-size: 44px;
+     padding-top: 10px;
+     padding-bottom: 15px;
 }
-
-.user-css div .backtoworld a {
-    position: absolute;
-    left: 40%;
-    #transform: translate(250%);
-    border-radius: 0%;
+ .user-css div .backtoworld a {
+     position: absolute;
+     left: 40%;
+     #transform: translate(250%);
+     border-radius: 0%;
 }
-
-.user-css.page {
-   background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
+ .user-css.page {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
 }
-
-#comments.row {
-   background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
+ #comments.row {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
 }
-
-#peripheral-content {
-   background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
+ #peripheral-content {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
 }
-
-.user-css .rhea-family-tree {
-background-image: url(https://www.worldanvil.com/uploads/images/8dbbb8247b7c7c743f24d9cbbac10540.png);
+ .user-css .rhea-family-tree {
+     background-image: url(https://www.worldanvil.com/uploads/images/8dbbb8247b7c7c743f24d9cbbac10540.png);
 }
-
-.user-css .map-included {
-background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
+ .user-css .map-included {
+     background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
 }
-
-.user-css .map-box {
-    background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
+ .user-css .map-box {
+     background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
 }
-
-.user-css blockquote {
-    background:rgb(0,0,0) ;
-    padding: 55px;
-    margin: 20px;
-    font-size: 1.1em;
-    line-height: 1.5em;
-    font-family: CrimsonText, serif;
+ .user-css blockquote {
+     background:rgb(0,0,0) ;
+     padding: 55px;
+     margin: 20px;
+     font-size: 1.1em;
+     line-height: 1.5em;
+     font-family: CrimsonText, serif;
 }
-
-.user-css blockquote .author {
-    display: block;
-    font-family: CrimsonText, serif;
-    font-size: 0.8em;
-    text-align: right;
-    color: rgb(0, 0, 0) ;
+ .user-css blockquote .author {
+     display: block;
+     font-family: CrimsonText, serif;
+     font-size: 0.8em;
+     text-align: right;
+     color: rgb(0, 0, 0) ;
 }
-
-.user-css .timeline li .timeline-panel {
-    margin-top: 50px;
-    width: 100.5%;
-    background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
-    background-repeat: no-repeat;
-    width: 100.5%;
-    background-attachment: fixed;
-    border: 5px solid #13181d;
-    padding: 20px;
-    position: relative;
-    border-radius: 5px;
-    #color: #eb9809;
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+ .user-css .timeline li .timeline-panel {
+     margin-top: 50px;
+     width: 100.5%;
+     background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
+     background-repeat: no-repeat;
+     width: 100.5%;
+     background-attachment: fixed;
+     border: 5px solid #13181d;
+     padding: 20px;
+     position: relative;
+     border-radius: 5px;
+     #color: #eb9809;
+     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
-
-
-@media only screen and (min-width:992px) {
-  .user-css .article-content .row .col-md-8 + .col-md-4 {
-    position: sticky;
-    top: 10px;
-    max-height: 100vh;
-    overflow-y: auto;
-    border: 1px solid gray;
-    background: black;
-    background-image: url( https://www.worldanvil.com/uploads/images/52ef851bfeb720594ef4162053819ccf.png );
-    -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
-            box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
-    z-index: 1050;
-  }
+ @media only screen and (min-width:992px) {
+     .user-css .article-content .row .col-md-8 + .col-md-4 {
+         position: sticky;
+         top: 10px;
+         max-height: 100vh;
+         overflow-y: auto;
+         border: 1px solid gray;
+         background: black;
+         background-image: url( https://www.worldanvil.com/uploads/images/52ef851bfeb720594ef4162053819ccf.png );
+         -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+         box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+         z-index: 1050;
+    }
 }
-
-.user-css .timeline .milestone {
-    margin-top: 50px;
-    width: 100.5%;
-    background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
-    background-repeat: no-repeat;
-    width: 100.5%;
-    background-attachment: fixed;
-    border: 5px solid #13181d;
-    padding: 20px;
-    position: relative;
-    border-radius: 5px;
-    #color: #eb9809;
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+ .user-css .timeline .milestone {
+     margin-top: 50px;
+     width: 100.5%;
+     background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
+     background-repeat: no-repeat;
+     width: 100.5%;
+     background-attachment: fixed;
+     border: 5px solid #13181d;
+     padding: 20px;
+     position: relative;
+     border-radius: 5px;
+     #color: #eb9809;
+     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
-
-.user-css h3 {
-    font-family: CrimsonText, serif;
-    font-weight: 700;
-    font-size: 42px;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    line-height: 0.9em;
-    margin-top: 20px;
-    margin-bottom: 5px;
+ .user-css h3 {
+     font-family: CrimsonText, serif;
+     font-weight: 700;
+     font-size: 42px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+     line-height: 0.9em;
+     margin-top: 20px;
+     margin-bottom: 5px;
 }
-
-.user-css .world-title:before {
+ .user-css .world-title:before {
      display: none;
 }
-
-.user-css .world-title:after {
+ .user-css .world-title:after {
      display: none;
 }
-
-.user-css .article-panel,
-.user-css .map-box { 
+ .user-css .article-panel, .user-css .map-box {
      border: 2px solid #6e0707;
      padding: 9px;
      border-radius: 0px;
 }
-
-.user-css h5 { 
+ .user-css h5 {
      font-family: TimesNewRoman;
 }
-
-.user-css hr {
-    border: none;
-    margin: 0;
-    height: 50px;
-    background: url(https://www.worldanvil.com/uploads/images/8bae77c1823ae18b6aee526d38e4e506.png) center no-repeat;
-   background-size: contain;
+ .user-css hr {
+     border: none;
+     margin: 0;
+     height: 50px;
+     background: url(https://www.worldanvil.com/uploads/images/8bae77c1823ae18b6aee526d38e4e506.png) center no-repeat;
+     background-size: contain;
 }
-
-.clotho-box{
-    border: 2px solid #FFD700;
-    background-image: url(https://www.worldanvil.com/uploads/images/f7c5c838f022d9aad2f857dfbe392da2.png);
+ .clotho-box{
+     border: 2px solid #FFD700;
+     background-image: url(https://www.worldanvil.com/uploads/images/f7c5c838f022d9aad2f857dfbe392da2.png);
 }
-
-.clotho-box .clotho-node .clotho-portrait-frame {
-    background-image: url(https://www.worldanvil.com/uploads/images/ced659d97e8d950c4734eaddbd127c31.png);
+ .clotho-box .clotho-node .clotho-portrait-frame {
+     background-image: url(https://www.worldanvil.com/uploads/images/ced659d97e8d950c4734eaddbd127c31.png);
 }
-
-.clotho-box .clotho-node .clotho-text-frame a, .clotho-box .clotho-node .clotho-text-frame a:visited, .clotho-box .clotho-node .clotho-text-frame a:active {
-    font-family: TimesNewRoman;
-    color: #c99700;
+ .clotho-box .clotho-node .clotho-text-frame a, .clotho-box .clotho-node .clotho-text-frame a:visited, .clotho-box .clotho-node .clotho-text-frame a:active {
+     font-family: TimesNewRoman;
+     color: #c99700;
 }
-
-.clotho-box .clotho-node .clotho-text-frame {
-    background: #260400;
+ .clotho-box .clotho-node .clotho-text-frame {
+     background: #260400;
 }
-
-.clotho-box .clotho-organization-node {
-    border: 3px solid #000000;
-    border-radius: 9px;
+ .clotho-box .clotho-organization-node {
+     border: 3px solid #000000;
+     border-radius: 9px;
 }
-
-.rhea-bloodline {
-    border: 4px solid #6e0707;
-    background-image: url(https://www.worldanvil.com/uploads/images/e89e300014f32615d80730d0c53a0297.png);
+ .rhea-bloodline {
+     border: 4px solid #6e0707;
+     background-image: url(https://www.worldanvil.com/uploads/images/e89e300014f32615d80730d0c53a0297.png);
 }
-
-.user-css .panel, .user-css-extended .panel {
-    border-radius: 0px;
-    border:2 #6e0707;
+ .user-css .panel, .user-css-extended .panel {
+     border-radius: 0px;
+     border:2 #6e0707;
 }
-
-@media only screen and (min-width:992px) {
-  .user-css.page {
-    overflow: unset;
-  }
+ @media only screen and (min-width:992px) {
+     .user-css.page {
+         overflow: unset;
+    }
 }
-
-.user-css h2 {
-    border: 7px;
+ .user-css h2 {
+     border: 7px;
 }
-
-.user-css h5, .user-css .timeline li .timeline-panel h5, {
+ .user-css h5, .user-css .timeline li .timeline-panel h5, {
      #font-family: Georgia,Times,Times New Roman,serif;
 }
-
-.user-css h5, .user-css-extended .page h5, .user-css-map-sidebar h5, .user-css .timeline li .timeline-panel h5, .user-css .timeline li .milestone-panel h5, .user-css-extended .timeline li .timeline-panel h5, .user-css-extended .timeline li .milestone-panel h5, .user-css-presentation .tooltipster-content h5 {
-    color: var(--CaptainYellow);
-    font-family: Georgia,Times,Times New Roman,serif;
-    font-size: 23px;
-    text-transform: capitalize;
+ .user-css h5, .user-css-extended .page h5, .user-css-map-sidebar h5, .user-css .timeline li .timeline-panel h5, .user-css .timeline li .milestone-panel h5, .user-css-extended .timeline li .timeline-panel h5, .user-css-extended .timeline li .milestone-panel h5, .user-css-presentation .tooltipster-content h5 {
+     color: var(--CaptainYellow);
+     font-family: Georgia,Times,Times New Roman,serif;
+     font-size: 23px;
+     text-transform: capitalize;
 }
