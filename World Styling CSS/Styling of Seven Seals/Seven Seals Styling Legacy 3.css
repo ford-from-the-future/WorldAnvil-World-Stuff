@@ -37,13 +37,27 @@
 * All Headings Start Here
 */
 
+.user-css .article-title h1 {
+     font-family: OptimusPrinceps;
+     text-transform: capitalize;
+     font-weight: 100;
+     font-size: 45px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+     line-height: 0.9em;
+     margin-top: 20px;
+     margin-bottom: 5px;
+     text-align:center;
+}
+
  .user-css h2 {
      font-family: OptimusPrinceps;
+     font-weight: 100;
 }
 
 .user-css h3 {
      font-family: OptimusPrinceps;
-     font-weight: 700;
+     font-weight: 100;
      font-size: 42px;
      padding-top: 10px;
      padding-bottom: 15px;
@@ -60,18 +74,6 @@
      font-family: TimesNewRoman;
 }
 
-}
- .user-css .article-title h1 {
-     font-family: OptimusPrinceps;
-     text-transform: capitalize;
-     font-weight: 100;
-     font-size: 45px;
-     padding-top: 10px;
-     padding-bottom: 15px;
-     line-height: 0.9em;
-     margin-top: 20px;
-     margin-bottom: 5px;
-     text-align:center;
 }
 
  .user-css .heading h1.world-title {
@@ -280,4 +282,3 @@
      border: 4px solid #6e0707;
      background-image: url(https://www.worldanvil.com/uploads/images/e89e300014f32615d80730d0c53a0297.png);
 }
-
