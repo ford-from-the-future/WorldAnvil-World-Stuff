@@ -1,0 +1,438 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+@font-face {
+ font-family: GutenbergBible;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/ce3e34dc9503041887128c99527adbcfab175e3c/Fonts/Gutenberg%20Bible%20Font/1454%20Gutenberg%20Bibel.ttf) ;
+}
+
+@font-face {
+ font-family: BoecklinsUniverse;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/e122d3f66cc944371db4fb5486040b5bbaf2e540/Fonts/Boecklins%20Universe/Boecklins%20Universe.ttf) ;
+}
+
+@font-face {
+ font-family: OptimusPrinceps;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/8d764d47edffa3e4a29e5cb48a2e6e2dcb993d1e/Fonts/Optimus%20Princeps%20Font/OptimusPrinceps.ttf) ;
+}
+
+@font-face {
+ font-family: Isabella;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/50445c8bde03afd073ee3cba25c5b1e4d1bcd7da/Fonts/Isabella%20Font/Isabella.ttf) ;
+}
+
+/*
+* All Book Widgets Start Here
+*/
+
+ .user-css .bookcover {
+     margin: 0px;
+     display: inline-block;
+     width: 300px;
+     text-align: center;
+     position: relative;
+     height: 255px;
+     background: #000;
+}
+
+.user-css div .backtoworld a {
+     position: absolute;
+     left: 40%;
+     #transform: translate(250%);
+     border-radius: 0%;
+}
+
+/*
+* All Headings Start Here
+*/
+
+ .user-css .heading h1.world-title {
+     font-family: BoecklinsUniverse;
+     font-weight: 2;
+     text-transform: capitalize;
+     font-size: 44px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+}
+
+.user-css .article-title h1 {
+     font-family: BoecklinsUniverse;
+     text-transform: capitalize;
+     font-weight: 100;
+     font-size: 45px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+     line-height: 0.9em;
+     margin-top: 20px;
+     margin-bottom: 5px;
+     text-align:center;
+}
+
+ .user-css h2 {
+     font-family: BoecklinsUniverse;
+     font-weight: 100;
+}
+
+.user-css h3 {
+     font-family: BoecklinsUniverse;
+     font-weight: 100;
+     font-size: 42px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+     line-height: 0.9em;
+     margin-top: 20px;
+     margin-bottom: 5px;
+}
+
+ .user-css h4 {
+     font-family: BoecklinsUniverse;
+}
+
+ .user-css h5 {
+     font-family: BoecklinsUniverse;
+}
+
+}
+
+ .user-css .heading h1.world-title {
+     font-family: BoecklinsUniverse;
+     font-weight: 2;
+     text-transform: capitalize;
+     font-size: 44px;
+     padding-top: 10px;
+     padding-bottom: 15px;
+}
+
+.user-css .world-title:before {
+     display: none;
+}
+
+ .user-css .world-title:after {
+     display: none;
+}
+
+/*
+* All Timelines Start Here
+*/
+
+.user-css .timeline li .timeline-panel {
+     margin-top: 50px;
+     width: 100.5%;
+     background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
+     background-repeat: no-repeat;
+     width: 100.5%;
+     background-attachment: fixed;
+     border: 5px solid #13181d;
+     padding: 20px;
+     position: relative;
+     border-radius: 5px;
+     #color: #eb9809;
+     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+}
+
+.user-css .timeline .milestone {
+     margin-top: 50px;
+     width: 100.5%;
+     background-image: url(https://www.worldanvil.com/uploads/images/ab8fffda64e7a97cfe33b9db6f98bba1.png);
+     background-repeat: no-repeat;
+     width: 100.5%;
+     background-attachment: fixed;
+     border: 5px solid #13181d;
+     padding: 20px;
+     position: relative;
+     border-radius: 5px;
+     #color: #eb9809;
+     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+}
+
+ .user-css h5, .user-css .timeline li .timeline-panel h5, {
+      #font-family: BoecklinsUniverse;
+}
+
+ .user-css h5, .user-css-extended .page h5, .user-css-map-sidebar h5, .user-css .timeline li .timeline-panel h5, .user-css .timeline li .milestone-panel h5, .user-css-extended .timeline li .timeline-panel h5, .user-css-extended .timeline li .milestone-panel h5, .user-css-presentation .tooltipster-content h5 {
+     color: var(--CaptainYellow);
+      font-family: BoecklinsUniverse;
+     font-size: 26px;
+     text-transform: capitalize;
+}
+
+.user-css h1 {
+      font-family: BoecklinsUniverse;
+     text-transform: uppercase;
+}
+
+.user-css, .user-css p, .user-css-extended, .user-css-extended p, .user-css-map-sidebar p, .user-css .calendar-presentation sup, .user-css .timeline li .timeline-panel p, .user-css .timeline li .milestone-panel p, .user-css-extended .timeline li .timeline-panel p, .user-css-extended .timeline li .milestone-panel p, .user-css-extended dl {
+     font-family: BoecklinsUniverse;
+}
+
+/*
+* All Article Stuff Start Here
+*/
+
+@media only screen and (min-width:992px) {
+     .user-css .article-content .row .col-md-8 + .col-md-4 {
+         position: sticky;
+         top: 10px;
+         max-height: 100vh;
+         overflow-y: auto;
+         border: 1px solid gray;
+         background: black;
+         background-image: url( https://www.worldanvil.com/uploads/images/52ef851bfeb720594ef4162053819ccf.png );
+         -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+         box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+         z-index: 1050;
+    }
+}
+
+.user-css blockquote {
+     background:rgb(0,0,0) ;
+     padding: 55px;
+     margin: 20px;
+     font-size: 1.1em;
+     line-height: 1.5em;
+     font-family: Times New Roman, Times, serif;
+}
+
+ .user-css blockquote .author {
+     display: block;
+     font-family: Times New Roman, Times, serif;
+     font-size: 0.8em;
+     text-align: right;
+     color: rgb(0, 0, 0) ;
+}
+
+ .user-css .article-panel, .user-css .map-box {
+     border: 2px solid #6e0707;
+     padding: 9px;
+     border-radius: 0px;
+}
+
+ .user-css .panel, .user-css-extended .panel {
+     border-radius: 0px;
+     border:2 #6e0707;
+}
+
+@media only screen and (min-width:992px) {
+     .user-css.page {
+         overflow: unset;
+    }
+}
+
+ .user-css h2 {
+     border: 7px;
+}
+
+/*
+* All Background Images Start Here
+*/
+
+ .user-css-presentation {
+     background-image: url(https://drive.google.com/drive/folders/16iaYV_k9kR8af3ldTFNRhfnRIqcLJwOG) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
+}
+
+ .user-css.page {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png);
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+}
+
+#comments.row {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+}
+
+ #peripheral-content {
+     background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png) ;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+}
+
+ .user-css .rhea-family-tree {
+     background-image: url(https://www.worldanvil.com/uploads/images/8dbbb8247b7c7c743f24d9cbbac10540.png);
+}
+
+.user-css .map-included {
+     background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
+}
+
+ .user-css .map-box {
+     background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png );
+}
+
+.user-css hr {
+     border: none;
+     margin: 0;
+     height: 50px;
+     background: url(https://www.worldanvil.com/uploads/images/8bae77c1823ae18b6aee526d38e4e506.png) center no-repeat;
+     background-size: contain;
+}
+
+ .clotho-box{
+     border: 2px solid #FFD700;
+     background-image: url(https://www.worldanvil.com/uploads/images/f7c5c838f022d9aad2f857dfbe392da2.png);
+}
+
+ .clotho-box .clotho-node .clotho-portrait-frame {
+     background-image: url(https://www.worldanvil.com/uploads/images/ced659d97e8d950c4734eaddbd127c31.png);
+}
+
+ .clotho-box .clotho-node .clotho-text-frame a, .clotho-box .clotho-node .clotho-text-frame a:visited, .clotho-box .clotho-node .clotho-text-frame a:active {
+     font-family: BoecklinsUniverse;
+     color: #c99700;
+}
+
+ .clotho-box .clotho-node .clotho-text-frame {
+     background: #260400;
+}
+
+ .clotho-box .clotho-organization-node {
+     border: 3px solid #000000;
+     border-radius: 9px;
+}
+
+ .rhea-bloodline {
+     border: 4px solid #6e0707;
+     background-image: url(https://www.worldanvil.com/uploads/images/e89e300014f32615d80730d0c53a0297.png);
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+    background-color: #800000;
+    color: #DAA520;
+    font-size: 12px;
+    border-color: transparent;
+    border-radius: 0px;
+    padding: 6px 10px 6px 10px;
+    font-family: BoecklinsUniverse;
+}
+
+.rhea-family-tree .rhea-character-node .character-label .character-title {
+    font-size: var(--characterHonorificSize);
+    display: block;
+    line-height: var(--characterHonorificLineHeight);
+    color: #000000;
+    font-family: BoecklinsUniverse;
+}
+
+.rhea-bloodline .rhea-character-node .character-label .character-name {
+    background-color: #800000;
+    color: #DAA520;
+    font-size: 12px;
+    border-color: transparent;
+    border-radius: 0px;
+    padding: 6px 10px 6px 10px;
+    font-family: BoecklinsUniverse;
+}
+
+.rhea-bloodline .rhea-character-node .character-label .character-title {
+    font-size: var(--characterHonorificSize);
+    display: block;
+    line-height: var(--characterHonorificLineHeight);
+    color: #000000;
+    font-family: BoecklinsUniverse;
+}
+
+.user-css.page, .user-css-extended .page, .user-css-presentation .tooltipster-content {
+    border-radius: 3px;
+    border-width: medium;
+}
+
+.user-css-extended .nav-tabs li a {
+    background: #B8860B;
+    color: #8B0000;
+    font-family: BoecklinsUniverse;
+    border-radius: 0px;
+}
+
+.user-css blockquote {
+    background: rgb(0,0,0);
+    padding: 45px;
+    margin: 2px;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    border-radius: 0px;
+    font-family: Times New Roman, Times, serif;
+}
+
+.user-css .spoiler-content {
+    background-color: black;
+    color: var(--WeatheredGrey);
+    border: 0px;
+    border-bottom-style: solid;
+    border-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 15px;
+}
+
+.user-css .btn, .user-css-extended .btn, .user-css .label-roller {
+    background-color: #b8860b;
+    border-radius: 15px;
+    border: 0px;
+    font-family: Times New Roman, Times, serif;
+    font-size: 15px;
+    transition: all 0.5s;
+}
+
+.user-css .table td {
+    border-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.user-css-calendar h3 {
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.user-css .calendar-presentation .nav-item a {
+    background: var(--LCARSDarkLavendar);
+    color: var(--NighWhite);
+    border-radius: 0px;
+    font-family: BoecklinsUniverse;
+    font-size: 18px;
+    font-weight: normal;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: background 0.2s;
+}
+
+.user-css .table-striped th, .user-css .calendar-presentation th {
+    background: var(--RedDead);
+    color: var(--NighWhite);
+    border-radius: 0px;
+    border-top: 0px;
+    font-family: BoecklinsUniverse;
+    font-weight: normal;
+    font-size: 15px;;
+    letter-spacing: 2px;
+}
+
+.user-css h3 {
+    font-family: BoecklinsUniverse;
+    font-weight: normal;
+    font-size: 29px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    line-height: 0.9em;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
