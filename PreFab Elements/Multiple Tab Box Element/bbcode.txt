@@ -1,0 +1,57 @@
+[container:tabholder]
+[spoiler]|Tab 1[/spoiler]
+[spoiler]|Tab 2[/spoiler]
+[spoiler]|Tab 3[/spoiler]
+[spoiler]|Tab 4[/spoiler]
+[spoiler]|Tab 5[/spoiler]
+[spoiler]|Tab 6[/spoiler]
+[container:tab1]
+ 
+
+-tab 1 content goes here-
+ 
+
+[/container]
+[container:tab2]
+ 
+
+-tab 2 content goes here-
+ 
+
+[/container]
+[container:tab3]
+ 
+
+-tab 3 content goes here-
+ 
+
+[/container]
+[container:tab4]
+ 
+
+-tab 4 content goes here-
+ 
+
+[/container]
+[container:tab5]
+ 
+
+-tab 5 content goes here-
+ 
+
+[/container]
+[container:tab6]
+ 
+
+-tab 6 content goes here-
+ 
+
+[/container]
+[container:blanktab]
+ 
+
+-this is where you put the content that shows before any tabs are selected-
+ 
+
+[/container]
+[/container]
