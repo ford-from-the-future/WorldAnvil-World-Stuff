@@ -1,0 +1,223 @@
+/*THIS CODE IS FOR JS STYLE TABS*/
+/*These are the animations that bring tabs forward and backward*/
+@keyframes forward {
+	from {}
+
+	to {
+		z-index: 5;
+	}
+}
+
+@keyframes back {
+	from {}
+
+	to {
+		z-index: -10;
+	}
+}
+
+
+/*This controls the styling of the tab buttons*/
+.tabholder .spoiler-button {
+	display: inline-block;
+	background: black !important;
+	color: gold !important;
+	border-left: 3px solid #a08264;
+	border-right: 3px solid #a08264;
+	border-top: 3px solid #a08264;
+        border-radius: 0px;
+        padding: 15px 10px;
+        margin: 0px auto;
+        font-family: Times New Roman
+}
+
+/*This is the styling for the button/tab you are focused on*/
+.tabholder .spoiler-button:focus {
+	background: #8b0000 !important;
+}
+
+
+/*This controls the styling of the tabs, including the base blank tab. Make sure to leave all of the animation rules alone.*/
+.tab1,
+.tab2,
+.tab3,
+.tab4,
+.tab5,
+.tab6,
+.blanktab {
+	animation-name: forward;
+	animation-duration: 1ms;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+	background: black !important;
+	color: white !important;
+        font-family: Times New Roman
+	padding: 10px;
+	margin-top: -11px;
+	width: 100%;
+	position: absolute;
+	display: block;
+	z-index: -1;
+	border-left: 3px solid #a08264;
+	border-right: 3px solid #a08264;
+	border-bottom: 3px solid #a08264;
+	border-radius: 0px;
+        overflow-y: auto;
+        /*Above code allows for overflow which creates the scorll bar in the tab*/
+        height: 300px;
+        /*Above code locks all tabs max height at 300 px*/
+}
+
+
+/*Provides a base Z-index and background colour to the blank(first) tab*/
+.blanktab {
+	z-index: 0;
+	background: Black !important;
+}
+
+
+/*Controls size and positioning of the entire tab container, as well as headers in the next selector*/
+.tabholder {
+	margin-bottom: 50px;
+	min-height: 350px;
+        height: 600;
+	position: relative;
+	width: 100%;
+}
+
+.tabholder h2,
+.tabholder h3,
+.tabholder h4,
+.tabholder h5 {
+	color: black !important;
+}
+
+
+/*Hides the pesky spoiler button content -- we don't need those, we just want the buttons.*/
+.tabholder .well,
+.tabholder .collapse.in,
+.tabholder .collapsing,
+.tabholder .card {
+	display: none;
+}
+
+
+/*From this point on, this CSS is for connecting spoiler buttons to tabs. Each section will have rules for a button bringing its corresponding tab to the front, while sending each other to the back. You shouldn't have to change any of the actual rules in here, but just modify the selectors when you want to add or remove tabs.*/
+
+
+/*This section takes the FIRST spoiler button when clicked on, and brings the FIRST tab out*/
+.tabholder .spoiler-button:nth-child(1):focus~.tab1 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+/*This section takes the FIRST spoiler button when clicked on, and sends every other tab to the back. If you want to add or remove tabs, you need to make sure you have this section properly filled out.*/
+.tabholder .spoiler-button:nth-child(1):focus~.tab2,
+.tabholder .spoiler-button:nth-child(1):focus~.tab3,
+.tabholder .spoiler-button:nth-child(1):focus~.tab4,
+.tabholder .spoiler-button:nth-child(1):focus~.tab5,
+.tabholder .spoiler-button:nth-child(1):focus~.tab6 {
+	animation-name: back;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+/*This section takes the SECOND spoiler button when clicked on, and brings the SECOND tab out. I'm sure you can see the pattern now. The nth-child spoiler buttons count upwards by two, so make sure to pay attention to that when modifying and adding/removing more tabs.*/
+.tabholder .spoiler-button:nth-child(3):focus~.tab2 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+.tabholder .spoiler-button:nth-child(3):focus~.tab1,
+.tabholder .spoiler-button:nth-child(3):focus~.tab3,
+.tabholder .spoiler-button:nth-child(3):focus~.tab4,
+.tabholder .spoiler-button:nth-child(3):focus~.tab5,
+.tabholder .spoiler-button:nth-child(3):focus~.tab6 {
+	animation-name: back;
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+.tabholder .spoiler-button:nth-child(5):focus~.tab3 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+.tabholder .spoiler-button:nth-child(5):focus~.tab1,
+.tabholder .spoiler-button:nth-child(5):focus~.tab2,
+.tabholder .spoiler-button:nth-child(5):focus~.tab4,
+.tabholder .spoiler-button:nth-child(5):focus~.tab5,
+.tabholder .spoiler-button:nth-child(5):focus~.tab6 {
+	animation-name: back;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+.tabholder .spoiler-button:nth-child(7):focus~.tab4 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+.tabholder .spoiler-button:nth-child(7):focus~.tab1,
+.tabholder .spoiler-button:nth-child(7):focus~.tab2,
+.tabholder .spoiler-button:nth-child(7):focus~.tab3,
+.tabholder .spoiler-button:nth-child(7):focus~.tab5,
+.tabholder .spoiler-button:nth-child(7):focus~.tab6 {
+	animation-name: back;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+.tabholder .spoiler-button:nth-child(9):focus~.tab5 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+.tabholder .spoiler-button:nth-child(9):focus~.tab1,
+.tabholder .spoiler-button:nth-child(9):focus~.tab2,
+.tabholder .spoiler-button:nth-child(9):focus~.tab3,
+.tabholder .spoiler-button:nth-child(9):focus~.tab4,
+.tabholder .spoiler-button:nth-child(9):focus~.tab6 {
+	animation-name: back;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+
+.tabholder .spoiler-button:nth-child(11):focus~.tab6 {
+	animation-name: forward;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
+
+.tabholder .spoiler-button:nth-child(11):focus~.tab1,
+.tabholder .spoiler-button:nth-child(11):focus~.tab2,
+.tabholder .spoiler-button:nth-child(11):focus~.tab3,
+.tabholder .spoiler-button:nth-child(11):focus~.tab4,
+.tabholder .spoiler-button:nth-child(11):focus~.tab5 {
+	animation-name: back;
+	animation-duration: 0s;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+}
