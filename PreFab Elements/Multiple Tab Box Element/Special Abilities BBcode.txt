@@ -15,7 +15,7 @@
 [container:tab2]
  
 
-Test Text
+-tab 2 content goes here-
  
 
 [/container]
