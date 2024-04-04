@@ -1,0 +1,57 @@
+[container:tabholder]
+[spoiler]|Magical Arts[/spoiler]
+[spoiler]|Mahābhūta Transformation[/spoiler]
+[spoiler]|Throne World & Barrier Techniques[/spoiler]
+[spoiler]|Familiar Contracts[/spoiler]
+[spoiler]|Inherited Magical Technique[/spoiler]
+[spoiler]|Misc.[/spoiler]
+[container:tab1]
+ 
+
+-tab 1 content goes here-
+ 
+
+[/container]
+[container:tab2]
+ 
+
+Test Text
+ 
+
+[/container]
+[container:tab3]
+ 
+
+-tab 3 content goes here-
+ 
+
+[/container]
+[container:tab4]
+ 
+
+-tab 4 content goes here-
+ 
+
+[/container]
+[container:tab5]
+ 
+
+-tab 5 content goes here-
+ 
+
+[/container]
+[container:tab6]
+ 
+
+-tab 6 content goes here-
+ 
+
+[/container]
+[container:blanktab]
+ 
+
+-this is where you put the content that shows before any tabs are selected-
+ 
+
+[/container]
+[/container]
