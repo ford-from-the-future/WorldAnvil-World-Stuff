@@ -51,6 +51,16 @@ World Fonts, all fonts need to go here!
 	background: #000;
 }
 
+
+.statblock {
+    background: black;
+    opacity: 0.5;
+    color: white !important!;
+    padding: 20px;
+    border: 1px #000 solid;
+    position: relative;
+}
+
 /*
 * All Headings Start Here
 */
@@ -90,6 +100,10 @@ World Fonts, all fonts need to go here!
 	line-height: 0.9em;
 	margin-top: 20px;
 	margin-bottom: 5px;
+}
+
+.user-css h3, .user-css-extended h3, .user-css-map-sidebar h3 {
+    color: gold;
 }
 
 /*
@@ -183,20 +197,21 @@ World Fonts, all fonts need to go here!
 /*This controls the styling of the tab buttons*/
 .tabholder .spoiler-button {
 	display: inline-block;
-	background: black !important;
+	background-color: black !important;
 	color: gold !important;
 	border-left: 3px solid #a08264;
 	border-right: 3px solid #a08264;
 	border-top: 3px solid #a08264;
         border-radius: 0px;
-        padding: 15px 10px;
-        margin: 0px auto;
-        font-family: Times New Roman
+        padding: 15px 15px;
+        margin: 3px auto;
+        font-family: Times New Roman;
 }
 
 /*This is the styling for the button/tab you are focused on*/
 .tabholder .spoiler-button:focus {
 	background: #8b0000 !important;
+        color: gold;
 }
 
 
@@ -212,36 +227,32 @@ World Fonts, all fonts need to go here!
 	animation-duration: 1ms;
 	animation-fill-mode: forwards;
 	animation-play-state: paused;
-	background: black !important;
-	color: white !important;
-        font-family: Times New Roman
+	background: black;
+	color: white;
+        font-family: Times New Roman;
 	padding: 10px;
-	margin-top: -11px;
+	margin-top: -1px;
 	width: 100%;
 	position: absolute;
 	display: block;
 	z-index: -1;
-	border-left: 3px solid #a08264;
-	border-right: 3px solid #a08264;
-	border-bottom: 3px solid #a08264;
-	border-radius: 0px;
         overflow-y: auto;
-        height: 300px;
+        height: 500px;
 }
 
 
 /*Provides a base Z-index and background colour to the blank(first) tab*/
 .blanktab {
 	z-index: 0;
-	background: Black !important;
+	background: black;
 }
 
 
 /*Controls size and positioning of the entire tab container, as well as headers in the next selector*/
 .tabholder {
 	margin-bottom: 50px;
-	min-height: 350px;
-        height: 600;
+	min-height: 650px;
+        height: 750;
 	position: relative;
 	width: 100%;
 }
@@ -250,7 +261,7 @@ World Fonts, all fonts need to go here!
 .tabholder h3,
 .tabholder h4,
 .tabholder h5 {
-	color: black !important;
+	color: black;
 }
 
 
@@ -381,4 +392,8 @@ World Fonts, all fonts need to go here!
 	animation-duration: 0s;
 	animation-fill-mode: forwards;
 	animation-play-state: running;
+}
+
+.tabholder h2, .tabholder h3, .tabholder h4, .tabholder h5 {
+    color: gold;
 }
