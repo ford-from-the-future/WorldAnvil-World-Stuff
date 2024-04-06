@@ -37,7 +37,7 @@ Any other abilities
 [/container]
 [container:blanktab]
 
-The Special Abilities of the character
+[orgchart:c2c8ba4e-d684-466a-b199-d441548296aa]
  
 [/container]
 [/container]
