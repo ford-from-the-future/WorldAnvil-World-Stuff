@@ -16,10 +16,6 @@ World Fonts, all fonts need to go here!
 	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/ce3e34dc9503041887128c99527adbcfab175e3c/Fonts/Gutenberg%20Bible%20Font/1454%20Gutenberg%20Bibel.ttf);
 }
 
-.user-css .page {
-	font-family: 'Times New Roman', Times, serif;
-  }
-
 @font-face {
 	font-family: BoecklinsUniverse;
 	font-style: normal;
@@ -256,7 +252,7 @@ World Fonts, all fonts need to go here!
 .tabholder {
 	margin-bottom: 50px;
 	min-height: 650px;
-        height: 750;
+        height: 650px;
 	position: relative;
 	width: 100%;
 }
@@ -399,5 +395,13 @@ World Fonts, all fonts need to go here!
 }
 
 .tabholder h2, .tabholder h3, .tabholder h4, .tabholder h5 {
-    color: gold;
+    color: #f45232;
+}
+
+.user-css-presentation .article-content, .user-css p {
+  font-family: times new roman;
+}
+
+.user-css .dropcap {
+  font-family: BoecklinsUniverse;
 }

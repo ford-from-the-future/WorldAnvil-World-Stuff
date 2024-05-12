@@ -1,0 +1,43 @@
+[container:tabholder]
+[spoiler]|Metaphysical Artifacts[/spoiler]
+[spoiler]|Starships[/spoiler]
+[spoiler]|Firearms & Blades[/spoiler]
+[spoiler]|Phantom Steed[/spoiler]
+[spoiler]|Armor & Attire[/spoiler]
+[spoiler]|Misc.[/spoiler]
+[container:tab1]
+
+[block:1342659]
+ 
+[/container]
+[container:tab2]
+ 
+[block:1345903]
+
+[/container]
+[container:tab3]
+ 
+[block:1347740]
+ 
+[/container]
+[container:tab4]
+
+[block:1401290]
+
+[/container]
+[container:tab5]
+
+[block:1401287]
+
+[/container]
+[container:tab6]
+
+Any other abilities
+ 
+[/container]
+[container:blanktab]
+
+[orgchart:c2c8ba4e-d684-466a-b199-d441548296aa]
+ 
+[/container]
+[/container]
