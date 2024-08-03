@@ -7,23 +7,23 @@
 [spoiler]|MISC.[/spoiler]
 
 [container:tab1]
-Magic
+Relics
 [/container]
 
 [container:tab2]
-Mahābhūta
+Starships
 [/container]
 
 [container:tab3]
-Barrier
+Blades & Firearms
 [/container]
 
 [container:tab4]
-Familiar
+Phantom Steed
 [/container]
 
 [container:tab5]
-Techniques
+Armor
 [/container]
 
 [container:tab6]
