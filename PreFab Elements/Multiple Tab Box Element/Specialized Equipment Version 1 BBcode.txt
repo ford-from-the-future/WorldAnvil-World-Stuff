@@ -1,43 +1,36 @@
 [container:tabholder]
-[spoiler]|Metaphysical Artifacts[/spoiler]
+[spoiler]|Relics[/spoiler]
 [spoiler]|Starships[/spoiler]
-[spoiler]|Firearms & Blades[/spoiler]
+[spoiler]|Blades & Firearms[/spoiler]
 [spoiler]|Phantom Steed[/spoiler]
-[spoiler]|Armor & Attire[/spoiler]
-[spoiler]|Misc.[/spoiler]
+[spoiler]|Armor[/spoiler]
+[spoiler]|MISC.[/spoiler]
+
 [container:tab1]
-
-[block:1342659]
- 
+Magic
 [/container]
+
 [container:tab2]
- 
-[block:1345903]
-
+Mahābhūta
 [/container]
+
 [container:tab3]
- 
-[block:1347740]
- 
+Barrier
 [/container]
+
 [container:tab4]
-
-[block:1401290]
-
+Familiar
 [/container]
+
 [container:tab5]
-
-[block:1401287]
-
+Techniques
 [/container]
+
 [container:tab6]
-
-Any other abilities
- 
+MISC.
 [/container]
-[container:blanktab]
 
-[orgchart:c2c8ba4e-d684-466a-b199-d441548296aa]
- 
+[container:blanktab]
+-this is where you put the content that shows before any tabs are selected-
 [/container]
 [/container]
