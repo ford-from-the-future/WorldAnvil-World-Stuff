@@ -1,29 +1,29 @@
 [container:tabholder]
-[spoiler]|Relics[/spoiler]
-[spoiler]|Starships[/spoiler]
-[spoiler]|Blades & Firearms[/spoiler]
-[spoiler]|Phantom Steed[/spoiler]
-[spoiler]|Armor[/spoiler]
+[spoiler]|Magic[/spoiler]
+[spoiler]|Mahābhūta[/spoiler]
+[spoiler]|Barriers[/spoiler]
+[spoiler]|Familiar[/spoiler]
+[spoiler]|Techniques[/spoiler]
 [spoiler]|MISC.[/spoiler]
 
 [container:tab1]
-Relics
+Magic
 [/container]
 
 [container:tab2]
-Starships
+Mahābhūta
 [/container]
 
 [container:tab3]
-Blades & Firearms
+Barrier
 [/container]
 
 [container:tab4]
-Phantom Steed
+Familiar
 [/container]
 
 [container:tab5]
-Armor
+Techniques
 [/container]
 
 [container:tab6]
