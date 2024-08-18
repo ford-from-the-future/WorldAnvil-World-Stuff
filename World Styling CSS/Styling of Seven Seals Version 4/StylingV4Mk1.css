@@ -1,0 +1,265 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+/*
+World Fonts, all fonts need to go here!
+*/
+
+@font-face {
+	font-family: GutenbergBible;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/ce3e34dc9503041887128c99527adbcfab175e3c/Fonts/Gutenberg%20Bible%20Font/1454%20Gutenberg%20Bibel.ttf);
+}
+
+@font-face {
+	font-family: BoecklinsUniverse;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/e122d3f66cc944371db4fb5486040b5bbaf2e540/Fonts/Boecklins%20Universe/Boecklins%20Universe.ttf);
+}
+
+@font-face {
+	font-family: OptimusPrinceps;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/8d764d47edffa3e4a29e5cb48a2e6e2dcb993d1e/Fonts/Optimus%20Princeps%20Font/OptimusPrinceps.ttf);
+}
+
+@font-face {
+	font-family: Isabella;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/50445c8bde03afd073ee3cba25c5b1e4d1bcd7da/Fonts/Isabella%20Font/Isabella.ttf);
+}
+
+/*
+* All Book Widgets Start Here
+*/
+
+.user-css .bookcover {
+	margin: 0px;
+	display: inline-block;
+	width: 300px;
+	text-align: center;
+	position: relative;
+	height: 255px;
+	background: #000;
+}
+
+
+.statblock {
+    background: black;
+    opacity: 0.5;
+    color: white !important!;
+    padding: 20px;
+    border: 1px #000 solid;
+    position: relative;
+}
+
+/*
+* All Headings Start Here
+*/
+
+.user-css .heading h1.world-title {
+	font-family: BoecklinsUniverse;
+	font-weight: 1;
+	text-transform: capitalize;
+	font-size: 45px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.user-css .article-title h1 {
+	font-family: BoecklinsUniverse;
+	text-transform: capitalize;
+	font-weight: 100;
+	font-size: 45px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	line-height: 0.9em;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.user-css h2 {
+	font-family: BoecklinsUniverse;
+	font-weight: 1;
+}
+
+.user-css h3 {
+    font-family: BoecklinsUniverse;
+	font-weight: 1;
+	font-size: 35px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	line-height: 0.9em;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+.user-css h5, .user-css-extended .page h5, .user-css-map-sidebar h5, .user-css .timeline li .timeline-panel h5, .user-css .timeline li .milestone-panel h5, 
+.user-css-extended .timeline li .timeline-panel h5, .user-css-extended .timeline li .milestone-panel h5, .user-css-presentation .tooltipster-content h5 {
+    color: var(--CaptainYellow);
+    font-family: BoecklinsUniverse;
+    font-size: 23px;
+    text-transform: capitalize;
+  }
+
+  .user-css h2, .user-css-extended .page h2, .user-css-map-sidebar h2, .user-css-presentation .tooltipster-content h2 {
+    color: var(--ProsperousBlue);
+    font-family: BoecklinsUniverse;
+    letter-spacing: 1px;
+    font-size: 50px;
+    padding: 0 10px 0 10px;
+    text-align: center;
+  }
+
+  .user-css a, .user-css a:focus, .user-css-extended .page a, .user-css .artist-credits a, .user-css .timeline li .timeline-panel a, 
+  .user-css .timeline li .milestone-panel a, .user-css-extended .timeline li .timeline-panel a, .user-css-extended .timeline li .milestone-panel a, 
+  .user-css-presentation .tooltipster-content a {
+    color: var(--BlindingOrange);
+    font-family: BoecklinsUniverse;
+    text-shadow: 0px 0px 2px var(--StarCy);
+  }
+
+.user-css h3, .user-css-extended h3, .user-css-map-sidebar h3 {
+    color: gold;
+}
+
+/*
+* All Article Stuff Start Here
+*/
+
+@media only screen and (min-width:992px) {
+    .user-css .article-content .row .col-md-8 + .col-md-4 {
+        position: sticky;
+        top: 10px;
+        max-height: 100vh;
+        overflow-y: auto;
+        border: 1px solid gray;
+        background: black;
+        background-image: url( https://www.worldanvil.com/uploads/images/52ef851bfeb720594ef4162053819ccf.png );
+        -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+        box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+        z-index: 1050;
+   }
+}
+
+@media only screen and (min-width:992px) {
+    .user-css.page {
+        overflow: unset;
+   }
+}
+
+.user-css blockquote {
+	background: rgb(0, 0, 0);
+	padding: 55px;
+	margin: 20px;
+}
+
+.user-css blockquote {
+    background: rgb(0,0,0);
+    padding: 45px;
+    margin: 2px;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    border-radius: 0px;
+    font-family: Times New Roman, Times, serif;
+}
+
+.user-css .rhea-family-tree {
+    border: 10px double var(--CaptainYellow);
+    border-top: 10px solid var(--CaptainYellow);
+    border-bottom: 10px solid var(--CaptainYellow);
+    background-color: transparent;
+  }
+
+  .user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+    background-color: var(--RedDead);
+    color: var(--NighWhite);
+    font-size: 13px;
+    border-color: transparent;
+    border-radius: 40px;
+    padding: 6px 10px 6px 10px;
+    font-family: BoecklinsUniverse;
+    text-transform: capitalize;
+  }
+
+  .rhea-family-tree .rhea-character-node .character-label .character-title {
+    font-size: var(--characterHonorificSize);
+    display: block;
+    line-height: var(--characterHonorificLineHeight);
+    color: var(--characterHonorificColor);
+    font-family: Times New Roman, Times, serif;
+  }
+
+  .rhea-family-tree .rhea-character-node .character-data {
+    margin-top: 0rem;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+  }
+
+  .user-css .article-subheading, .user-css .article-title-author {
+    text-align: center;
+    font-style: italic;
+    font-family: Times New Roman, Times, serif;
+  }
+
+
+/*
+* All Background Images Start Here
+*/
+
+.user-css.page {
+	background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+/*
+* Golden Bars png
+*/
+
+.user-css hr {
+	border: none;
+	margin: 0;
+	height: 50px;
+	background: url(https://www.worldanvil.com/uploads/images/8bae77c1823ae18b6aee526d38e4e506.png) center no-repeat;
+	background-size: contain;
+}
+
+
+/*
+* Calendar in Article
+*/
+
+.user-css .calendar-presentation .nav-item a {
+	background: var(--LCARSDarkLavendar);
+	color: var(--NighWhite);
+	border-radius: 0px;
+	font-family: BoecklinsUniverse;
+	font-size: 18px;
+	font-weight: normal;
+	padding-left: 15px;
+	padding-right: 15px;
+	transition: background 0.2s;
+}
+
+.tabholder h2, .tabholder h3, .tabholder h4, .tabholder h5 {
+    color: #f45232;
+}
+
+.user-css-presentation .article-content, .user-css p {
+  font-family: times new roman;
+}
+
+.user-css .dropcap {
+  font-family: BoecklinsUniverse;
+}
