@@ -152,44 +152,32 @@ Custom fonts used in my world go here
   font-size: 25px;
 }
 
-.tabholder h2, .tabholder h3, .tabholder h4, .tabholder h5 {
-        color: gold !important;
-    }
-
 /*
 * All Article Stuff Start Here
 */
 
 @media only screen and (min-width:992px) {
-        .user-css .article-content .row .col-md-8 + .col-md-4 {
-            position: sticky;
-            top: 10px;
-            max-height: 100vh;
-            overflow-y: auto;
-            border: 1px solid gray;
-            background: black;
-            background-position: center;
-            background-size: cover;
-            background-image: url(https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/d5d7228ad1dc885f216d40ac38140d4b.jpeg);
-            -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
-            box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
-            z-index: 1050;
-       }
-    }
-    
-    @media only screen and (min-width:992px) {
-        .user-css.page {
-            overflow: unset;
-       }
-    }
+    .user-css .article-content .row .col-md-8 + .col-md-4 {
+        position: sticky;
+        top: 10px;
+        max-height: 100vh;
+        overflow-y: auto;
+        border: 1px solid gray;
+        background: black;
+        background-position: center;
+        background-size: cover;
+        background-image: url(https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/d5d7228ad1dc885f216d40ac38140d4b.jpeg);
+        -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+        box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5) ;
+        z-index: 1050;
+   }
+}
 
-div.articletoc[data-component=article_toc] {
-        border: 1px solid #ccc;
-        display: inline-block;
-        color: orange;
-        background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png);
-        padding: 5px 10px;
-    }
+@media only screen and (min-width:992px) {
+    .user-css.page {
+        overflow: unset;
+   }
+}
 
 .user-css blockquote {
 	background: rgb(0, 0, 0);
@@ -225,38 +213,13 @@ div.articletoc[data-component=article_toc] {
     text-transform: capitalize;
   }
 
-  .user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
-        background-color: #900303;
-        color: white;
-        font-size: 12px;
-        border-color: transparent;
-        border-radius: 40px;
-        padding: 6px 10px 6px 10px;
-        font-family: Times New Roman;
-        font-weight: normal;
-        text-transform: capitalize;
-    }
-    
-
   .rhea-family-tree .rhea-character-node .character-label .character-title {
-        font-size: var(--characterHonorificSize);
-        display: block;
-        line-height: var(--characterHonorificLineHeight);
-        color: #900303;
-        font-family: OptimusPrinceps;
+    font-size: var(--characterHonorificSize);
+    display: block;
+    line-height: var(--characterHonorificLineHeight);
+    color: var(--characterHonorificColor);
+    font-family: Times New Roman, Times, serif;
   }
-
-  .rhea-family-tree .rhea-character-node .character-label {
-        background: black;
-        color: #483e09;
-        padding: var(--characterNamePadding);
-        display: block;
-        border: var(--characterNameBorder);
-        border-radius: 10px;
-        z-index: 200;
-        font-family: sans-serif;
-        font-size: .8em;
-    }
 
   .rhea-family-tree .rhea-character-node .character-data {
     margin-top: 0rem;
@@ -629,6 +592,64 @@ div.articletoc[data-component=article_toc] {
   display: none;
 }
 
+.user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+    background-color: #900303;
+    color: white;
+    font-size: 12px;
+    border-color: transparent;
+    border-radius: 40px;
+    padding: 6px 10px 6px 10px;
+    font-family: Times New Roman;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.rhea-family-tree .rhea-character-node .character-label .character-title {
+    font-size: var(--characterHonorificSize);
+    display: block;
+    line-height: var(--characterHonorificLineHeight);
+    color: #900303;
+    font-family: OptimusPrinceps;
+}
+
+.rhea-family-tree .rhea-character-node .character-label {
+    background: black;
+    color: #483e09;
+    padding: var(--characterNamePadding);
+    display: block;
+    border: var(--characterNameBorder);
+    border-radius: 10px;
+    z-index: 200;
+    font-family: sans-serif;
+    font-size: .8em;
+}
+
+.rhea-family-tree .character-portrait-wrapper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    top: 4px;
+    left: 4px;
+    overflow: hidden;
+    border-radius: 50%;
+    z-index: 72;
+}
+
+.clotho-container .clotho-node .clotho-text-frame a, .clotho-container .clotho-node .clotho-text-frame a:visited, .clotho-container .clotho-node .clotho-text-frame a:active {
+    font-family: OptimusPrinceps;
+}
+
 .tabholder h2, .tabholder h3, .tabholder h4, .tabholder h5 {
-        color: gold !important;
-    }
+    color: gold !important;
+}
+
+div.articletoc[data-component=article_toc] {
+    border: 1px solid #ccc;
+    display: inline-block;
+    color: orange;
+    background-image: url( https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png);
+    padding: 5px 10px;
+}
+
+
+
