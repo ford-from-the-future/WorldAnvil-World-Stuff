@@ -271,6 +271,14 @@ div.articletoc[data-component=article_toc] {
     font-family: Times New Roman, Times, serif;
   }
 
+  .rhea-bloodline .rhea-character-node .character-label .character-title {
+        font-size: var(--characterHonorificSize);
+        display: block;
+        line-height: var(--characterHonorificLineHeight);
+        color: #900303;
+        font-family: OptimusPrinceps;
+    }
+
 
 /*
 * All Background Images Start Here
