@@ -1,0 +1,795 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+/*
+Custom fonts used in my world go here
+*/
+
+@font-face {
+	font-family: FF;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/6abcdbff5906f8eb144ad520822baeeb2449e40e/Fonts/Final%20Fantasy/OPTIEngeEtienne.otf);
+}
+
+@font-face {
+	font-family: GutenbergBible;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/ce3e34dc9503041887128c99527adbcfab175e3c/Fonts/Gutenberg%20Bible%20Font/1454%20Gutenberg%20Bibel.ttf);
+}
+
+@font-face {
+	font-family: BoecklinsUniverse;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/e122d3f66cc944371db4fb5486040b5bbaf2e540/Fonts/Boecklins%20Universe/Boecklins%20Universe.ttf);
+}
+
+@font-face {
+	font-family: OptimusPrinceps;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/8d764d47edffa3e4a29e5cb48a2e6e2dcb993d1e/Fonts/Optimus%20Princeps%20Font/OptimusPrinceps.ttf);
+}
+
+@font-face {
+	font-family: Isabella;
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/50445c8bde03afd073ee3cba25c5b1e4d1bcd7da/Fonts/Isabella%20Font/Isabella.ttf);
+}
+
+/*
+* All Book Widgets Start Here
+*/
+
+.user-css .bookcover {
+	margin: 0px;
+	display: inline-block;
+	width: 300px;
+	text-align: center;
+	position: relative;
+	height: 255px;
+	background: #000;
+}
+
+/*
+* World Anvil Assets
+*/
+
+.statblock {
+	background: black;
+	opacity: 0.5;
+	color: white !important !;
+	padding: 20px;
+	border: 1px #000 solid;
+	position: relative;
+}
+
+.breadcrumb {
+	padding: 8px 15px;
+	margin-bottom: 20px;
+	list-style: none;
+	background-color: #290707;
+	border-radius: 4px;
+}
+
+
+/*
+* All Headings Start Here
+*/
+
+.user-css .heading h1.world-title {
+	font-family: FF;
+	font-weight: 1;
+	text-transform: capitalize;
+	font-size: 45px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+.user-css .article-title h1 {
+	font-family: FF;
+	text-transform: capitalize;
+	font-weight: 100;
+	font-size: 45px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	line-height: 0.9em;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.user-css h2 {
+	font-family: FF;
+	font-weight: 1;
+}
+
+.user-css h3 {
+	font-family: FF;
+	font-weight: 1;
+	font-size: 35px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	line-height: 0.9em;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+.user-css h5,
+.user-css-extended .page h5,
+.user-css-map-sidebar h5,
+.user-css .timeline li .timeline-panel h5,
+.user-css .timeline li .milestone-panel h5,
+.user-css-extended .timeline li .timeline-panel h5,
+.user-css-extended .timeline li .milestone-panel h5,
+.user-css-presentation .tooltipster-content h5 {
+	color: var(--CaptainYellow);
+	font-family: FF;
+	font-size: 40px;
+	text-transform: capitalize;
+}
+
+.user-css h2,
+.user-css-extended .page h2,
+.user-css-map-sidebar h2,
+.user-css-presentation .tooltipster-content h2 {
+	color: var(--ProsperousBlue);
+	font-family: FF;
+	letter-spacing: 1px;
+	font-size: 50px;
+	padding: 0 10px 0 10px;
+	text-align: center;
+}
+
+.user-css a,
+.user-css a:focus,
+.user-css-extended .page a,
+.user-css .artist-credits a,
+.user-css .timeline li .timeline-panel a,
+.user-css .timeline li .milestone-panel a,
+.user-css-extended .timeline li .timeline-panel a,
+.user-css-extended .timeline li .milestone-panel a,
+.user-css-presentation .tooltipster-content a {
+	color: var(--BlindingOrange);
+	font-family: FF;
+	text-shadow: 0px 0px 2px var(--StarCy);
+}
+
+.user-css h3,
+.user-css-extended h3,
+.user-css-map-sidebar h3 {
+	color: gold;
+}
+
+.user-css h4,
+.user-css-extended .page h4,
+.user-css-map-sidebar h4,
+.user-css .timeline li .timeline-panel h4,
+.user-css .timeline li .milestone-panel h4,
+.user-css-extended .timeline li .timeline-panel h4,
+.user-css-extended .timeline li .milestone-panel h4,
+.user-css-presentation .tooltipster-content h4 {
+	color: var(--LCARSDarkLavendar);
+	font-family: FF;
+	font-size: 25px;
+}
+
+.tabholder h2,
+.tabholder h3,
+.tabholder h4,
+.tabholder h5 {
+	color: gold !important;
+}
+
+/*
+* All Article Stuff Start Here
+*/
+
+@media only screen and (min-width:992px) {
+	.user-css .article-content .row .col-md-8+.col-md-4 {
+		position: sticky;
+		top: 10px;
+		max-height: 100vh;
+		overflow-y: auto;
+		border: 1px solid gray;
+		background: black;
+		background-position: center;
+		background-size: cover;
+		background-image: url(https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/d5d7228ad1dc885f216d40ac38140d4b.jpeg);
+		-webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5);
+		box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5);
+		z-index: 1050;
+	}
+}
+
+@media only screen and (min-width:992px) {
+	.user-css.page {
+		overflow: unset;
+	}
+}
+
+div.articletoc[data-component=article_toc] {
+	border: 1px solid #ccc;
+	display: inline-block;
+	color: orange;
+	background-image: url(https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png);
+	padding: 5px 10px;
+}
+
+.user-css blockquote {
+	background: rgb(0, 0, 0);
+	padding: 55px;
+	margin: 20px;
+}
+
+.user-css blockquote {
+	background: rgb(0, 0, 0);
+	padding: 45px;
+	margin: 2px;
+	font-size: 1.1em;
+	line-height: 1.5em;
+	border-radius: 0px;
+	font-family: Times New Roman, Times, serif;
+}
+
+.user-css .rhea-family-tree {
+	border: 10px double var(--CaptainYellow);
+	border-top: 10px solid var(--CaptainYellow);
+	border-bottom: 10px solid var(--CaptainYellow);
+	background-color: transparent;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+	background-color: var(--RedDead);
+	color: var(--NighWhite);
+	font-size: 13px;
+	border-color: transparent;
+	border-radius: 40px;
+	padding: 6px 10px 6px 10px;
+	font-family: Times New Roman;
+	text-transform: capitalize;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+	background-color: #900303;
+	color: white;
+	font-size: 12px;
+	border-color: transparent;
+	border-radius: 40px;
+	padding: 6px 10px 6px 10px;
+	font-family: Times New Roman;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+
+
+.rhea-family-tree .rhea-character-node .character-label .character-title {
+	font-size: var(--characterHonorificSize);
+	display: block;
+	line-height: var(--characterHonorificLineHeight);
+	color: #900303;
+	font-family: OptimusPrinceps;
+}
+
+.rhea-family-tree .rhea-character-node .character-label {
+	background: black;
+	color: #483e09;
+	padding: var(--characterNamePadding);
+	display: block;
+	border: var(--characterNameBorder);
+	border-radius: 10px;
+	z-index: 200;
+	font-family: sans-serif;
+	font-size: .8em;
+}
+
+.rhea-family-tree .rhea-character-node .character-data {
+	margin-top: 0rem;
+	text-align: center;
+	position: relative;
+	z-index: 100;
+}
+
+.user-css .article-subheading,
+.user-css .article-title-author {
+	text-align: center;
+	font-style: italic;
+	font-family: Times New Roman, Times, serif;
+}
+
+.rhea-bloodline .rhea-character-node .character-label .character-title {
+	font-size: var(--characterHonorificSize);
+	display: block;
+	line-height: var(--characterHonorificLineHeight);
+	color: #900303;
+	font-family: OptimusPrinceps;
+}
+
+.rhea-bloodline .rhea-character-node .character-label .character-name {
+	background-color: #900303;
+	color: white;
+	font-size: 12px;
+	border-color: transparent;
+	border-radius: 40px;
+	padding: 6px 10px 6px 10px;
+	font-family: Times New Roman;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+
+.rhea-bloodline .rhea-character-node .character-label {
+	background: black;
+	color: #483e09;
+	padding: var(--characterNamePadding);
+	display: block;
+	border: var(--characterNameBorder);
+	border-radius: 10px;
+	z-index: 200;
+	font-family: sans-serif;
+	font-size: .8em;
+}
+
+
+/*
+* All Background Images Start Here
+*/
+
+.user-css.page {
+	background-image: url(https://www.worldanvil.com/uploads/images/538754e7f51d7ad86e3c1ba46776c0f0.png);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	border-radius: 0px;
+	border-color: black;
+}
+
+.user-css-presentation {
+	background-image: url(https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png);
+}
+
+/*
+* Golden Bars png
+*/
+
+.user-css hr {
+	border: none;
+	margin: 0;
+	height: 50px;
+	background: url(https://www.worldanvil.com/uploads/images/8bae77c1823ae18b6aee526d38e4e506.png) center no-repeat;
+	background-size: contain;
+}
+
+
+/*
+* Calendar in Article
+*/
+
+.user-css .calendar-presentation .nav-item a {
+	background: var(--LCARSDarkLavendar);
+	color: var(--NighWhite);
+	border-radius: 0px;
+	font-family: BoecklinsUniverse;
+	font-size: 18px;
+	font-weight: normal;
+	padding-left: 15px;
+	padding-right: 15px;
+	-webkit-transition: background 0.2s;
+	-o-transition: background 0.2s;
+	transition: background 0.2s;
+}
+
+.tabholder h2,
+.tabholder h3,
+.tabholder h4,
+.tabholder h5 {
+	color: #f45232;
+}
+
+.user-css-presentation .article-content,
+.user-css p {
+	font-family: times new roman;
+}
+
+.user-css .dropcap {
+	font-family: FF;
+}
+
+.user-css,
+.user-css p,
+.user-css-extended,
+.user-css-extended p,
+.user-css-map-sidebar p,
+.user-css .calendar-presentation sup,
+.user-css .timeline li .timeline-panel p,
+.user-css .timeline li .milestone-panel p,
+.user-css-extended .timeline li .timeline-panel p,
+.user-css-extended .timeline li .milestone-panel p,
+.user-css-extended dl {
+	color: var(--WeatheredGrey);
+	font-family: times new roman;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* Animations for tab movement */
+@-webkit-keyframes forward {
+	from {}
+
+	to {
+		z-index: 5;
+	}
+}
+
+@keyframes forward {
+	from {}
+
+	to {
+		z-index: 5;
+	}
+}
+
+@-webkit-keyframes back {
+	from {}
+
+	to {
+		z-index: -10;
+	}
+}
+
+@keyframes back {
+	from {}
+
+	to {
+		z-index: -10;
+	}
+}
+
+/* Styling for tab buttons */
+.tabholder .spoiler-button {
+	display: inline-block;
+	background: gray;
+	color: black !important;
+	border: 1px solid #a08264;
+	padding: 10px 20px;
+	margin: 0;
+	cursor: pointer;
+	border-radius: 3px 3px 0 0;
+	position: relative;
+	z-index: 2;
+	font-family: Times New Roman;
+	color: gold !important;
+}
+
+.tabholder .spoiler-button:focus {
+	background: #8b0000 !important;
+}
+
+.user-css .btn-primary,
+.user-css-extended .btn-primary {
+	background: #8b0000 !important;
+}
+
+/* Styling for the tabs */
+.tab1,
+.tab2,
+.tab3,
+.tab4,
+.tab5,
+.tab6,
+.blanktab {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 1ms;
+	animation-duration: 1ms;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: paused;
+	animation-play-state: paused;
+	background: lightgray;
+	color: black;
+	padding: 15px;
+	margin-top: 0;
+	width: 100%;
+	height: 90%;
+	position: absolute;
+	top: 40px;
+	/* Ensures the tabs stay below the buttons */
+	display: none;
+	z-index: -1;
+	border: 1px solid #a08264;
+	border-top: none;
+	overflow-y: auto;
+	border-radius: 0 0 3px 3px;
+	font-family: Times New Roman;
+	background: black !important;
+	color: white !important;
+}
+
+/* Display Tab 1 by default */
+.tab1 {
+	display: block;
+	z-index: 1;
+}
+
+/* Base Z-index and background for the blank tab */
+.blanktab {
+	z-index: 0;
+	background: gray;
+}
+
+/* Size and positioning of the entire tab container */
+.tabholder {
+	margin-bottom: 50px;
+	height: 500px;
+	position: relative;
+	width: 100%;
+	border: 1px solid #a08264;
+	border-radius: 3px;
+}
+
+.tabholder h2,
+.tabholder h3,
+.tabholder h4,
+.tabholder h5 {
+	color: black !important;
+}
+
+/* Hide the spoiler content */
+.tabholder .well,
+.tabholder .collapse.in,
+.tabholder .collapsing,
+.tabholder .card {
+	display: none;
+}
+
+/* Bring the corresponding tab to the front and send others to the back */
+
+/* Tab 1 */
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab1 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab2,
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab3,
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab4,
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab5,
+.tabholder .spoiler-button:nth-of-type(1):focus~.tab6 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+/* Tab 2 */
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab2 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab1,
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab3,
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab4,
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab5,
+.tabholder .spoiler-button:nth-of-type(2):focus~.tab6 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+/* Tab 3 */
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab3 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab1,
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab2,
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab4,
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab5,
+.tabholder .spoiler-button:nth-of-type(3):focus~.tab6 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+/* Tab 4 */
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab4 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab1,
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab2,
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab3,
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab5,
+.tabholder .spoiler-button:nth-of-type(4):focus~.tab6 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+/* Tab 5 */
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab5 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab1,
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab2,
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab3,
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab4,
+.tabholder .spoiler-button:nth-of-type(5):focus~.tab6 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+/* Tab 6 */
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab6 {
+	-webkit-animation-name: forward;
+	animation-name: forward;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: block;
+	z-index: 1;
+}
+
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab1,
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab2,
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab3,
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab4,
+.tabholder .spoiler-button:nth-of-type(6):focus~.tab5 {
+	-webkit-animation-name: back;
+	animation-name: back;
+	-webkit-animation-duration: 0s;
+	animation-duration: 0s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+	animation-play-state: running;
+	display: none;
+}
+
+.tabholder h2,
+.tabholder h3,
+.tabholder h4,
+.tabholder h5 {
+	color: gold !important;
+}
+
+
+.user-css a, .user-css a:focus, .user-css-extended .page a, .user-css .artist-credits a, .user-css .timeline li .timeline-panel a, .user-css .timeline li .milestone-panel a, .user-css-extended .timeline li .timeline-panel a, .user-css-extended .timeline li .milestone-panel a, .user-css-presentation .tooltipster-content a {
+    color: #FF8C00 !important;
+    font-family: Times;
+    text-shadow: 0px 0px 2px var(--StarCy);
+}
+
+
+.user-css .article-panel .heading {
+    font-family: Times;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-style: normal;
+    display: block;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: 	#FF8C00;
+    text-align: center;
+}
+
+/*
+Tables in Article
+*/
+
+.user-css .statblock .table tr td, .user-css .table tr td, .user-css-extended .table tr td, .user-css-rpgblock .table tr td {
+    color: gold;
+    background: black;
+}
+
+.user-css .table th, .user-css .table td, .user-css .table tr, .user-css-rpgblock .table th, .user-css-rpgblock .table td, 
+.user-css-rpgblock .table tr, .user-css-extended .table th, .user-css-extended .table td, .user-css-extended .table tr {
+    /* width: min-content; */
+    border-left: 1px solid !important;
+    border-top: 1px solid !important;
+    border-bottom: 1px solid !important;
+    border-right: 1px solid !important;
+    border-left-color: red  !important;
+    border-top-color: red !important;
+    border-bottom-color: red !important;
+    border-right-color: red !important;
+}
+
+.user-css blockquote {
+    background: rgb(0, 0, 0);
+    padding: 30px;
+    margin: 2px;
+    font-size: 1em;
+    line-height: 1.5em;
+    border-radius: 07px;
+    font-family: Times New Roman;
+    font-style: normal;
+    border-left: 10px solid Yellow;
+}
