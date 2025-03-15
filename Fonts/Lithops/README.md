@@ -1,6 +1,6 @@
 # Lithops
 
-![specimen1](documentation/specimen/web/Lithops web specimen 1.jpeg)
+Lithops by Anne-Dauphine Borione. Distributed by velvetyne.fr.
 
 Lithops is a very display, very unique, very complex semi modular font. Uppercase only, it was originally hand drawn in Procreate, and then processed in Glyphs 3. Its name stems from succulent plants to which it bears a resemblance, and was (loosely) inspired by Art Nouveau, Alzheimer brains and Matisse cutouts. Lithops started in February 2021 as a spontaneous creative outlet and glyph drawing exercise. Though it may not be easy to use and is difficult to categorise, Lithops serves as an exploration of the future of type design, begging the question: how complex can a font be, all while staying cohesive, legible and aesthetically pleasing, and most importantly, fun?
 
