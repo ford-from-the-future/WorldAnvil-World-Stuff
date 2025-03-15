@@ -1,0 +1,6 @@
+@font-face {
+ font-family: Lithops;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/07a7a571fa3df15d81cb69a8df8579f0fe24cb00/Fonts/Lithops/Lithops-Regular.otf) ;
+}
