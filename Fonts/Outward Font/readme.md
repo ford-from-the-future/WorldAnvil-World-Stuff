@@ -3,6 +3,8 @@ Outward
 
 A very narrow, yet libre typeface
 
+Outward by Raoul Audouin. Distributed by velvetyne.fr.
+
 ![Outward family](documentation/readme-1.png)
 
 About
