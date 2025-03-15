@@ -1,5 +1,7 @@
 # Hyper Scrypt
 
+Hyper Scrypt by Jérémy Landes. Distributed by velvetyne.fr.
+
 The Hyper Scrypt typeface was designed for the Hyper Chapelle exhibition. It was commissioned by [AAAAA Atelier](www.aaaaa-atelier.org) to [Studio Triple's designer Jérémy Landes](studiotriple.fr). It is distributed by [Velvetyne Type Foundry](http://velvetyne.fr/fonts/solide-mirage/).
 
 Hyper Scrypt is a modern stencil typeface inspired by the stained glass technique used in the Metz cathedral. It borrows the stained glass method, drawing holes for the light with black lead. This creates a reverse typeface, where the shapes of the letters are drawn by their counters. Hyper Scrypt is at the intersection between 3 metals : the sacred lead of stained glass, the lead of print characters and the heavy metal. Despite its organic look inherited for the molted metal, Hyper Scrypt is based upon a rigorous grid, allowing some neat alignements between shapes in multi lines layouts.
