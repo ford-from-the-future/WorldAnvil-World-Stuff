@@ -1,5 +1,5 @@
 @font-face {
- font-family: Patriot Regular;
+ font-family: PatriotRegular;
  font-style: normal;
  font-weight: 400;
  src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/16474005d1eb110d60a79f3cf257fc84471b8bb7/Fonts/Patriot/Patriot-Regular.otf) ;
