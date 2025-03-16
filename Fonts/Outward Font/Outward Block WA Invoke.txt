@@ -1,0 +1,6 @@
+@font-face {
+ font-family: OutwardBlock;
+ font-style: normal;
+ font-weight: 400;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/85552ee1031d7b8a6352a4d54a4b0d9f3dc24ef6/Fonts/Outward%20Font/outward-block.ttf) ;
+}
