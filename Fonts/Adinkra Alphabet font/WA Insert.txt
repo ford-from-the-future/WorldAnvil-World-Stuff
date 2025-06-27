@@ -2,5 +2,5 @@
  font-family: ADrunes;
  font-style: normal;
  font-weight: 400;
- src:url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/01c5d23de9d498639fd663c6f0cd426e7fb332e5/Fonts/Adinkra%20Alphabet%20font/Adinkra-Regular.ttf);
+ src:url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/bc828364afa68fce50b5c6aa0267f1fa14c691c4/Fonts/Adinkra%20Alphabet%20font/Adinkra-Regular-Numeric.ttf);
 }
