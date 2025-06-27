@@ -1,2 +1,0 @@
-# font
-Adinkra Alphabet font
