@@ -1,9 +1,3 @@
-# WorldAnvil-World-Stuff
+Created & Written by Khali A. Crawford on Saturday, 24th April 2021
 
-Compiled all coding done for any World Anvil Projects
-
-# World Anvil Fonts
-
-Host unquie fonts here to be used in World Anvil Projects. Most fonts are sourced from www.dafont.com. 
-
-Unless otherwise stated, I do not own these fonts.
+The Seven Seals Legendarium is a sprawling, genre-blending saga of Science Fantasy, High Fantasy, and Space Opera. It is a living sandbox for original characters, stories, and world-building experiments—where myth, magic, and cosmic science collide across galaxies and timelines. All content is free to explore and share under the Creative Commons CC BY-NC-SA 4.0 International License, inviting non-commercial use, remixing, and collaboration. So long as proper credit is given and derivative works are shared alike.
