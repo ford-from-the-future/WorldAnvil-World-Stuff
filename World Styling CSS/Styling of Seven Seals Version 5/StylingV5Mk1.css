@@ -5,13 +5,6 @@
 * Browsers: last 4 version
 */
 
-.user-css h1, .user-css-extended h1, .user-css-map-sidebar h1 {
-    font-family: ADrunes;
-    font-size: 45px;
-    padding-bottom: 5px;
-    color: var(--ember-light-l);
-}
-
 @font-face {
  font-family: ADrunes;
  font-style: normal;
@@ -124,7 +117,9 @@
     }
    
    /*
+   
    * World Anvil Assets
+   * CSS for anything related to global assets on World Anvil pages.
    */
    
    .statblock {
@@ -226,10 +221,10 @@
    .user-css-extended .timeline li .timeline-panel a,
    .user-css-extended .timeline li .milestone-panel a,
    .user-css-presentation .tooltipster-content a {
-       color: var(--BlindingOrange);
-       font-family: Floral;
-       text-shadow: 0px 0px 2px var(--StarCy);
-   }
+    color: #FF8C00 !important;
+    font-family: Times;
+    text-shadow: 0px 0px 2px var(--StarCy);
+}
    
    .user-css h3,
    .user-css-extended h3,
@@ -290,12 +285,6 @@
        color: orange;
        background-image: url(https://www.worldanvil.com/uploads/images/808f9aa638f267cef8733cffb3ca3d67.png);
        padding: 5px 10px;
-   }
-   
-   .user-css blockquote {
-       background: rgb(0, 0, 0);
-       padding: 55px;
-       margin: 20px;
    }
    
    .user-css blockquote {
@@ -809,10 +798,10 @@
    
    
    .user-css a, .user-css a:focus, .user-css-extended .page a, .user-css .artist-credits a, .user-css .timeline li .timeline-panel a, .user-css .timeline li .milestone-panel a, .user-css-extended .timeline li .timeline-panel a, .user-css-extended .timeline li .milestone-panel a, .user-css-presentation .tooltipster-content a {
-       color: #FF8C00 !important;
-       font-family: Times;
-       text-shadow: 0px 0px 2px var(--StarCy);
-   }
+    color: #FF8C00 !important;
+    font-family: Times;
+    text-shadow: 0px 0px 2px var(--StarCy);
+}
    
    
    .user-css .article-panel .heading {

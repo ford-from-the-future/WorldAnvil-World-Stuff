@@ -1,0 +1,319 @@
+/* Animations for tab movement */
+   @-webkit-keyframes forward {
+       from {}
+   
+       to {
+           z-index: 5;
+       }
+   }
+   
+   @keyframes forward {
+       from {}
+   
+       to {
+           z-index: 5;
+       }
+   }
+   
+   @-webkit-keyframes back {
+       from {}
+   
+       to {
+           z-index: -10;
+       }
+   }
+   
+   @keyframes back {
+       from {}
+   
+       to {
+           z-index: -10;
+       }
+   }
+   
+   /* Styling for tab buttons */
+   .tabholder .spoiler-button {
+       display: inline-block;
+       background: gray;
+       color: black !important;
+       border: 1px solid #a08264;
+       padding: 10px 20px;
+       margin: 0;
+       cursor: pointer;
+       border-radius: 3px 3px 0 0;
+       position: relative;
+       z-index: 2;
+       font-family: Times New Roman;
+       color: gold !important;
+   }
+   
+   .tabholder .spoiler-button:focus {
+       background: #8b0000 !important;
+   }
+   
+   .user-css .btn-primary,
+   .user-css-extended .btn-primary {
+       background: #8b0000 !important;
+   }
+   
+   /* Styling for the tabs */
+   .tab1,
+   .tab2,
+   .tab3,
+   .tab4,
+   .tab5,
+   .tab6,
+   .blanktab {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 1ms;
+       animation-duration: 1ms;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: paused;
+       animation-play-state: paused;
+       background: lightgray;
+       color: black;
+       padding: 15px;
+       margin-top: 0;
+       width: 100%;
+       height: 90%;
+       position: absolute;
+       top: 40px;
+       /* Ensures the tabs stay below the buttons */
+       display: none;
+       z-index: -1;
+       border: 1px solid #a08264;
+       border-top: none;
+       overflow-y: auto;
+       border-radius: 0 0 3px 3px;
+       font-family: Times New Roman;
+       background: black !important;
+       color: white !important;
+   }
+   
+   /* Display Tab 1 by default */
+   .tab1 {
+       display: block;
+       z-index: 1;
+   }
+   
+   /* Base Z-index and background for the blank tab */
+   .blanktab {
+       z-index: 0;
+       background: gray;
+   }
+   
+   /* Size and positioning of the entire tab container */
+   .tabholder {
+       margin-bottom: 50px;
+       height: 500px;
+       position: relative;
+       width: 100%;
+       border: 1px solid #a08264;
+       border-radius: 3px;
+   }
+   
+   .tabholder h2,
+   .tabholder h3,
+   .tabholder h4,
+   .tabholder h5 {
+       color: black !important;
+   }
+   
+   /* Hide the spoiler content */
+   .tabholder .well,
+   .tabholder .collapse.in,
+   .tabholder .collapsing,
+   .tabholder .card {
+       display: none;
+   }
+   
+   /* Bring the corresponding tab to the front and send others to the back */
+   
+   /* Tab 1 */
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab1 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab2,
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab3,
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab4,
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab5,
+   .tabholder .spoiler-button:nth-of-type(1):focus~.tab6 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   /* Tab 2 */
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab2 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab1,
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab3,
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab4,
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab5,
+   .tabholder .spoiler-button:nth-of-type(2):focus~.tab6 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   /* Tab 3 */
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab3 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab1,
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab2,
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab4,
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab5,
+   .tabholder .spoiler-button:nth-of-type(3):focus~.tab6 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   /* Tab 4 */
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab4 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab1,
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab2,
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab3,
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab5,
+   .tabholder .spoiler-button:nth-of-type(4):focus~.tab6 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   /* Tab 5 */
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab5 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab1,
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab2,
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab3,
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab4,
+   .tabholder .spoiler-button:nth-of-type(5):focus~.tab6 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   /* Tab 6 */
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab6 {
+       -webkit-animation-name: forward;
+       animation-name: forward;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: block;
+       z-index: 1;
+   }
+   
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab1,
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab2,
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab3,
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab4,
+   .tabholder .spoiler-button:nth-of-type(6):focus~.tab5 {
+       -webkit-animation-name: back;
+       animation-name: back;
+       -webkit-animation-duration: 0s;
+       animation-duration: 0s;
+       -webkit-animation-fill-mode: forwards;
+       animation-fill-mode: forwards;
+       -webkit-animation-play-state: running;
+       animation-play-state: running;
+       display: none;
+   }
+   
+   .tabholder h2,
+   .tabholder h3,
+   .tabholder h4,
+   .tabholder h5 {
+       color: gold !important;
+   }
