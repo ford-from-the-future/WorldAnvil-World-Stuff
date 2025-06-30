@@ -5,7 +5,7 @@
 */
 
 @font-face {
-    font-family: ADrunes;
+    font-family: AdinkraRunesFont;
     font-style: normal;
     font-weight: 400;
     src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/bc828364afa68fce50b5c6aa0267f1fa14c691c4/Fonts/Adinkra%20Alphabet%20font/Adinkra-Regular-Numeric.ttf);
@@ -101,7 +101,7 @@
 .user-css .booktitle {
     background: var(--ember-danger-d);
     color: var(--ember-white);
-    font-family: ADrunes;
+    font-family: AdinkraRunesFont;
 }
 
 /*
@@ -133,7 +133,7 @@
 */
 
 .user-css .heading h1.world-title {
-    font-family: ADrunes;
+    font-family: AdinkraRunesFont;
     color: gold;
     font-weight: 1;
     text-transform: capitalize;
@@ -142,7 +142,7 @@
     padding-bottom: 15px;
 }
 .user-css .article-title h1 {
-    font-family: ADrunes;
+    font-family: AdinkraRunesFont;
     color: gold;
     text-transform: capitalize;
     font-weight: 100;
