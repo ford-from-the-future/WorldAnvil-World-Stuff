@@ -2,5 +2,5 @@
     font-family: J24;
     font-style: normal;
     font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/bc828364afa68fce50b5c6aa0267f1fa14c691c4/Fonts/Adinkra%20Alphabet%20font/Adinkra-Regular-Numeric.ttf);
+    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/5e6883aa5e47c39bb8f1b8d5fbe83718c7630441/Third%20Party%20Fonts/Jersey%2025/Jersey25-Regular.ttf);
 }
