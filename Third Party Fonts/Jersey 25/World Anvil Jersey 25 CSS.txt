@@ -1,5 +1,5 @@
 @font-face {
-    font-family: J24;
+    font-family: J25;
     font-style: normal;
     font-weight: 400;
     src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/5e6883aa5e47c39bb8f1b8d5fbe83718c7630441/Third%20Party%20Fonts/Jersey%2025/Jersey25-Regular.ttf);
