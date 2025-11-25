@@ -90,6 +90,26 @@ When using resources from this repository:
 - Link to or reference this repository
 - Share any derivative works under the same license
 
+## Automated Compliance Checks
+
+This repository includes automated GitHub Actions workflows to ensure all CSS adheres to World Anvil Terms of Service:
+
+### CSS Compliance Check Workflow
+- **Trigger**: Runs on every push and pull request involving CSS files
+- **Location**: `.github/workflows/css-compliance-check.yml`
+- **What it checks**:
+  - ✅ All selectors use `.user-css` namespace
+  - ✅ No prohibited UI elements are targeted
+  - ✅ No hidden required elements (display: none, visibility: hidden)
+  - ✅ No disabled interactions (pointer-events: none)
+- **Failure handling**: Blocks merging of non-compliant CSS with PR comments
+
+### Running locally
+To test your CSS locally before pushing:
+```bash
+node .github/scripts/check-css-compliance.js
+```
+
 ## Contributing
 This repository is maintained by Khali A. Crawford. If you have:
 - Additional fonts to add
@@ -97,6 +117,12 @@ This repository is maintained by Khali A. Crawford. If you have:
 - New PreFab component templates
 
 Feel free to suggest additions that align with the repository's purpose and license.
+
+### Before submitting CSS changes:
+1. Review `World Anvil Structure/CSS_Limits_and_Rules.md`
+2. Run local compliance check: `node .github/scripts/check-css-compliance.js`
+3. Test in World Anvil preview mode
+4. Ensure all automated checks pass
 
 ## Related Projects
 - **The Seven Seals Legendarium** - Primary World Anvil project these resources support

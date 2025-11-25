@@ -1,0 +1,42 @@
+name: CSS Compliance Check
+
+on:
+  pull_request:
+    paths:
+      - '**.css'
+  push:
+    paths:
+      - '**.css'
+
+jobs:
+  css-compliance:
+    runs-on: ubuntu-latest
+    name: Verify World Anvil CSS Compliance
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install css-parse
+
+      - name: Run CSS Compliance Check
+        run: node .github/scripts/check-css-compliance.js
+        continue-on-error: false
+
+      - name: Comment on PR
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ **CSS Compliance Check Failed**\n\nThis PR contains CSS that may violate World Anvil Terms of Service. Please review the [CSS Limits and Rules](https://github.com/${{ github.repository }}/blob/main/World%20Anvil%20Structure/CSS_Limits_and_Rules.md) documentation.\n\nCommon violations:\n- Targeting non `.user-css` selectors\n- Hiding required UI elements\n- Attempting to modify prohibited elements\n\nSee workflow logs for details.'
+            })
