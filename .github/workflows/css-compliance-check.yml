@@ -11,6 +11,9 @@ on:
 jobs:
   css-compliance:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     name: Verify World Anvil CSS Compliance
 
     steps:
