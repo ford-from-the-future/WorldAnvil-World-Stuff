@@ -16,6 +16,16 @@ Pre-fabricated, ready-to-use CSS components and BBCode templates:
   - Multiple versions and styling iterations available
   - BBCode templates for quick integration
 
+### 📁 World Anvil Structure
+Documentation and guidelines for World Anvil implementation and compliance:
+- **BBCode_Guidelines.md** - Complete reference for all BBCode tags and formatting options
+- **CSS_Limits_and_Rules.md** - **CRITICAL REFERENCE** - World Anvil CSS compliance guidelines
+  - ⚠️ **Always consult this before making CSS modifications**
+  - Details what can/cannot be modified in CSS
+  - Terms of Service compliance requirements
+  - Common mistakes and troubleshooting guide
+  - Best practices for safe CSS customization
+
 ### 📁 Third Party Fonts
 A curated collection of open-source and licensed fonts optimized for World Anvil integration:
 - **Adinkra Alphabet** - Symbolic font with FontForge build scripts
@@ -45,6 +55,13 @@ Each font folder typically contains:
 - Usage examples and implementation guides
 
 ## Usage Guide
+
+### ⚠️ CSS COMPLIANCE - READ FIRST
+**Before making ANY CSS modifications**, always:
+1. Review `World Anvil Structure/CSS_Limits_and_Rules.md`
+2. Ensure your changes comply with World Anvil Terms of Service
+3. Verify you're not hiding or disabling required UI elements
+4. Test changes before applying to your world
 
 ### Adding Fonts to World Anvil
 1. Locate the desired font in the `Third Party Fonts/` directory
