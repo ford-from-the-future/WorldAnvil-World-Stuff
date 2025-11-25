@@ -20,62 +20,6 @@
 }
 
 @font-face {
-    font-family: ADrunes;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/bc828364afa68fce50b5c6aa0267f1fa14c691c4/Fonts/Adinkra%20Alphabet%20font/Adinkra-Regular-Numeric.ttf);
-}
-
-@font-face {
-    font-family: GutenbergBible;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/ce3e34dc9503041887128c99527adbcfab175e3c/Fonts/Gutenberg%20Bible%20Font/1454%20Gutenberg%20Bibel.ttf);
-}
-
-@font-face {
-    font-family: BluuNextBI;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/69c1881c210f957f111cb723f3909aa664f5ab2b/Fonts/BluuNext/BluuNext-Bolditalic.otf);
-}
-
-@font-face {
-    font-family: JBR;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/f23c3ff9e734b41885c70b51bd0db101cd08611f/Fonts/JetBrains/JetBrainsMono-Regular.ttf);
-}
-
-@font-face {
-    font-family: Hyperscript;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/3586bf826f6a2bdff97f49816fc42feae6a89758/Fonts/HyperScript/HyperScrypt.otf);
-}
-
-@font-face {
-    font-family: PatriotBold;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/f97652a20774d2ea4170b89f0cc12e0531517363/Fonts/Patriot/Patriot-Bold.otf);
-}
-
-@font-face {
-    font-family: OutwardBlock;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/85552ee1031d7b8a6352a4d54a4b0d9f3dc24ef6/Fonts/Outward%20Font/outward-block.ttf);
-}
-
-@font-face {
-    font-family: Lithops;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/07a7a571fa3df15d81cb69a8df8579f0fe24cb00/Fonts/Lithops/Lithops-Regular.otf);
-}
-
-@font-face {
     font-family: BoecklinsUniverse;
     font-style: normal;
     font-weight: 400;
@@ -90,24 +34,10 @@
 }
 
 @font-face {
-    font-family: Isabella;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/50445c8bde03afd073ee3cba25c5b1e4d1bcd7da/Fonts/Isabella%20Font/Isabella.ttf);
-}
-
-@font-face {
     font-family: Floral;
     font-style: normal;
     font-weight: 400;
     src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/6b670497226d108c013964510f3c60a807c7499b/Fonts/Floral%20Caps%20Nouveau/FloralCapsNouveau.ttf);
-}
-
-@font-face {
-    font-family: jof;
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/f3697832dad452adc6a083ef686813bc18b72b3b/Fonts/Jugendstil%20Ornamente/JugendstilOrnamente.ttf);
 }
 
 /*
