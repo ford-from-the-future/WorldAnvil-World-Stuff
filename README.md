@@ -5,7 +5,7 @@ A comprehensive resource repository for **World Anvil** CSS styling, pre-fabrica
 **Created & Written by Khali A. Crawford**  
 *Licensed under Creative Commons CC BY-NC-SA 4.0 International*
 
-## 📚 What's Inside
+## 📚 What Is Inside
 
 ### 🎨 CSS Styling for World Anvil Projects
 Organized, versioned CSS styling templates for World Anvil worlds:
