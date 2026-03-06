@@ -1,0 +1,15 @@
+@media only screen and (min-width: 992px) {
+    .user-css .article-content .row .col-md-8+.col-md-4 {
+        position: sticky;
+        top: 10px;
+        max-height: 100vh;
+        overflow-y: auto;
+        border: 1px solid gray;
+        box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5);
+        z-index: 1050;
+    }
+
+    .user-css.page {
+        overflow: unset;
+    }
+}
