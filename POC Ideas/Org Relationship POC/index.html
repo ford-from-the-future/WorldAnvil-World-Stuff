@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Org Relationship POC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #15120f;
+      --bg-mid: #221c17;
+      --panel: #f3ecdd;
+      --ink: #2a2016;
+      --ink-soft: #5c4834;
+      --accent: #8f6a45;
+      --accent-dark: #664828;
+      --line: #c8b79f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 231, 188, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 218, 146, 0.1), transparent 45%),
+        linear-gradient(160deg, var(--bg-deep), var(--bg-mid));
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      width: min(820px, 96vw);
+      border: 2px solid var(--accent-dark);
+      border-radius: 12px;
+      background: var(--panel);
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    .status-banner {
+      padding: 14px 18px;
+      background: linear-gradient(90deg, #7f5a3a, #9f7650);
+      color: #fff8ec;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.05rem, 2.3vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid var(--accent-dark);
+      text-align: center;
+    }
+
+    .content {
+      padding: 22px 20px 24px;
+    }
+
+    .org-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .org-card {
+      width: 48%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .org-name {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .org-name.left {
+      text-align: left;
+    }
+
+    .org-name.right {
+      text-align: right;
+    }
+
+    .org-logo {
+      width: min(160px, 100%);
+      height: 96px;
+      object-fit: contain;
+      border: 1px solid #c5b8a1;
+      border-radius: 6px;
+      background: #efe3cd;
+      padding: 6px;
+    }
+
+    .org-logo.left {
+      align-self: flex-start;
+    }
+
+    .org-logo.right {
+      align-self: flex-end;
+    }
+
+    .summary {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .graph-panel {
+      position: relative;
+      margin: 16px 0 18px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8f3e8;
+    }
+
+    .graph-title {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .graph {
+      height: 240px;
+      display: block;
+    }
+
+    .graph-scroll {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 6px;
+    }
+
+    .graph-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .graph-scroll::-webkit-scrollbar-track {
+      background: #e1d5c2;
+      border-radius: 999px;
+    }
+
+    .graph-scroll::-webkit-scrollbar-thumb {
+      background: #9a7651;
+      border-radius: 999px;
+    }
+
+    .graph-tooltip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -130%);
+      background: rgba(34, 28, 23, 0.96);
+      color: #fff7e8;
+      border: 1px solid #8f6a45;
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 0.84rem;
+      line-height: 1.2;
+      white-space: normal;
+      max-width: 280px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 120ms ease;
+      z-index: 3;
+    }
+
+    .graph-tooltip.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 640px) {
+      .org-row {
+        flex-direction: column;
+      }
+
+      .org-card {
+        width: 100%;
+      }
+
+      .org-name.left,
+      .org-name.right {
+        text-align: left;
+      }
+
+      .org-logo.left,
+      .org-logo.right {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="modal-box" aria-label="Organization relationship modal">
+    <header class="status-banner" id="status"></header>
+    <div class="content">
+      <div class="org-row" aria-label="Organization names">
+        <div class="org-card">
+          <h2 class="org-name left" id="org-left"></h2>
+          <img class="org-logo left" id="org-left-logo" alt="">
+        </div>
+        <div class="org-card">
+          <h2 class="org-name right" id="org-right"></h2>
+          <img class="org-logo right" id="org-right-logo" alt="">
+        </div>
+      </div>
+      <div class="graph-panel" aria-label="Relationship history graph">
+        <p class="graph-title">Relationship History</p>
+        <div class="graph-scroll" id="graph-scroll">
+          <svg class="graph" id="relationship-graph" role="img" aria-label="Relationship scores over time"></svg>
+        </div>
+        <div class="graph-tooltip" id="graph-tooltip" aria-hidden="true"></div>
+      </div>
+      <p class="summary" id="summary"></p>
+    </div>
+  </section>
+
+  <script>
+    const relationshipData = {
+      organizations: {
+        leftName: "Helion Compact",
+        rightName: "Nareth Assembly",
+        leftLogo: "./Logos/AIJ.png",
+        rightLogo: "./Logos/IUSM.png"
+      },
+      history: [
+        { year: 1994, score: -35, diplomaticStatus: "Restricted Contact under Emergency Liaison Protocol" },
+        { year: 1996, score: -48, diplomaticStatus: "Reciprocal Censure and Border Transit Suspension" },
+        { year: 1999, score: -20, diplomaticStatus: "Conditional Deconfliction Talks under Neutral Mediation" },
+        { year: 2001, score: 0, diplomaticStatus: "Interjurisdictional Mutual Observer Accord" },
+        { year: 2004, score: 14, diplomaticStatus: "Bilateral Recognition with Special Observer Protocols" },
+        { year: 2008, score: -9, diplomaticStatus: "Limited Engagement after Compliance Review Dispute" },
+        { year: 2012, score: 28, diplomaticStatus: "Structured Civil Exchange and Transit Restoration Compact" },
+        { year: 2015, score: 44, diplomaticStatus: "Joint Security Consultation and Trade Harmonization Pact" },
+        { year: 2018, score: 22, diplomaticStatus: "Temporary Oversight Administration during Charter Audit" },
+        { year: 2021, score: 36, diplomaticStatus: "Cooperative Resource Access and Monitoring Framework" },
+        { year: 2025, score: 61, diplomaticStatus: "Strategic Partnership under UCE Oversight" },
+        { year: 2027, score: 55, diplomaticStatus: "Expanded Port Access and Mutual Customs Accord" },
+        { year: 2029, score: 48, diplomaticStatus: "Compliance Cooling Period with Conditional Exceptions" },
+        { year: 2031, score: 66, diplomaticStatus: "Joint Infrastructure Development and Security Annex" },
+        { year: 2033, score: 39, diplomaticStatus: "Dispute Arbitration Framework under Third-Party Review" },
+        { year: 2035, score: 72, diplomaticStatus: "High Council Recognition and Open Transit Protocol" },
+        { year: 2037, score: 31, diplomaticStatus: "Targeted Sanctions Relief with Monitoring Clauses" },
+        { year: 2039, score: 58, diplomaticStatus: "Mutual Technology Sharing and Research Safeguards Pact" },
+        { year: 2041, score: 44, diplomaticStatus: "Revised Border Coordination and Incident Response Charter" },
+        { year: 2044, score: 69, diplomaticStatus: "Comprehensive Civil Exchange and Defense Liaison Treaty" },
+        { year: 2048, score: 74, diplomaticStatus: "Grand Strategic Concord on Interjurisdictional Governance" }
+      ],
+      summary: "Relations improved from early distrust to structured cooperation. A formal oversight framework stabilized contact and raised confidence. Current ties are positive, with continued upward momentum."
+    };
+
+    function drawRelationshipGraph(svg, tooltip, history) {
+      const height = 240;
+      const margin = { top: 16, right: 20, bottom: 44, left: 36 };
+      const minStep = 74;
+      const sortedHistory = [...history].sort((a, b) => a.year - b.year);
+      const width = margin.left + margin.right + Math.max(1, sortedHistory.length - 1) * minStep;
+      const plotWidth = width - margin.left - margin.right;
+      const plotHeight = height - margin.top - margin.bottom;
+
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.style.width = `${width}px`;
+      svg.style.height = `${height}px`;
+
+      const createSvg = (tagName) => document.createElementNS("http://www.w3.org/2000/svg", tagName);
+      const scoreToY = (score) => margin.top + ((100 - score) / 200) * plotHeight;
+      const step = sortedHistory.length > 1 ? plotWidth / (sortedHistory.length - 1) : 0;
+      const zeroY = scoreToY(0);
+
+      const baseline = createSvg("line");
+      baseline.setAttribute("x1", String(margin.left));
+      baseline.setAttribute("y1", String(zeroY));
+      baseline.setAttribute("x2", String(width - margin.right));
+      baseline.setAttribute("y2", String(zeroY));
+      baseline.setAttribute("stroke", "#8a8a8a");
+      baseline.setAttribute("stroke-width", "2");
+      svg.appendChild(baseline);
+
+      const zeroLabel = createSvg("text");
+      zeroLabel.setAttribute("x", "8");
+      zeroLabel.setAttribute("y", String(zeroY + 4));
+      zeroLabel.setAttribute("fill", "#6f6f6f");
+      zeroLabel.setAttribute("font-size", "13");
+      zeroLabel.setAttribute("font-family", "Manrope, sans-serif");
+      zeroLabel.textContent = "0";
+      svg.appendChild(zeroLabel);
+
+      const points = sortedHistory.map((point, index) => {
+        const x = margin.left + index * step;
+        const y = scoreToY(point.score);
+        return { ...point, x, y };
+      });
+
+      const showTooltip = (point, event) => {
+        const panelBounds = tooltip.offsetParent.getBoundingClientRect();
+        const left = event.clientX - panelBounds.left;
+        const top = event.clientY - panelBounds.top;
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+        tooltip.innerHTML = `
+          <strong>${point.year}</strong><br>
+          Score: ${point.score}<br>
+          Status: ${point.diplomaticStatus}
+        `;
+        tooltip.classList.add("visible");
+      };
+
+      const hideTooltip = () => {
+        tooltip.classList.remove("visible");
+      };
+
+      const path = createSvg("path");
+      const d = points
+        .map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`)
+        .join(" ");
+      path.setAttribute("d", d);
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "#111111");
+      path.setAttribute("stroke-width", "2");
+      svg.appendChild(path);
+
+      points.forEach((point) => {
+        const dot = createSvg("circle");
+        dot.setAttribute("cx", String(point.x));
+        dot.setAttribute("cy", String(point.y));
+        dot.setAttribute("r", "5");
+        dot.setAttribute("stroke", "#111111");
+        dot.setAttribute("stroke-width", "1.5");
+        dot.style.cursor = "pointer";
+
+        if (point.score > 0) {
+          dot.setAttribute("fill", "#2f9c52");
+        } else if (point.score < 0) {
+          dot.setAttribute("fill", "#b33a3a");
+        } else {
+          dot.setAttribute("fill", "#8a8a8a");
+        }
+
+        dot.addEventListener("mouseenter", (event) => showTooltip(point, event));
+        dot.addEventListener("mousemove", (event) => showTooltip(point, event));
+        dot.addEventListener("mouseleave", hideTooltip);
+
+        const dotLabel = createSvg("title");
+        dotLabel.textContent = `${point.year} | Score: ${point.score} | ${point.diplomaticStatus}`;
+        dot.appendChild(dotLabel);
+
+        svg.appendChild(dot);
+
+        const yearLabel = createSvg("text");
+        yearLabel.setAttribute("x", String(point.x));
+        yearLabel.setAttribute("y", String(height - 14));
+        yearLabel.setAttribute("text-anchor", "middle");
+        yearLabel.setAttribute("fill", "#5c4834");
+        yearLabel.setAttribute("font-size", "13");
+        yearLabel.setAttribute("font-family", "Manrope, sans-serif");
+        yearLabel.textContent = String(point.year);
+        svg.appendChild(yearLabel);
+      });
+    }
+
+    const latestHistoryEntry = [...relationshipData.history]
+      .sort((a, b) => a.year - b.year)
+      .at(-1);
+
+    document.getElementById("status").textContent = latestHistoryEntry
+      ? latestHistoryEntry.diplomaticStatus
+      : "Diplomatic status unavailable";
+    document.getElementById("org-left").textContent = relationshipData.organizations.leftName;
+    document.getElementById("org-right").textContent = relationshipData.organizations.rightName;
+    document.getElementById("org-left-logo").src = relationshipData.organizations.leftLogo;
+    document.getElementById("org-right-logo").src = relationshipData.organizations.rightLogo;
+    document.getElementById("org-left-logo").alt = `${relationshipData.organizations.leftName} logo`;
+    document.getElementById("org-right-logo").alt = `${relationshipData.organizations.rightName} logo`;
+    document.getElementById("summary").textContent = relationshipData.summary;
+    drawRelationshipGraph(
+      document.getElementById("relationship-graph"),
+      document.getElementById("graph-tooltip"),
+      relationshipData.history
+    );
+  </script>
+</body>
+</html>
