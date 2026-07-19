@@ -2,11 +2,15 @@ name: CSS Compliance Check
 
 on:
   pull_request:
+    branches:
+      - main
     paths:
-      - '**.css'
+      - '**/*.css'
   push:
+    branches:
+      - main
     paths:
-      - '**.css'
+      - '**/*.css'
 
 jobs:
   css-compliance:
@@ -24,9 +28,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-
-      - name: Install dependencies
-        run: npm install css-parse
 
       - name: Run CSS Compliance Check
         run: node .github/scripts/check-css-compliance.js
