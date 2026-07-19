@@ -1,0 +1,91 @@
+name: Prettier Code Format
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    name: Format Code with Prettier
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Prettier
+        run: npm install --save-dev prettier
+
+      - name: Check code formatting
+        id: prettier
+        run: npx prettier --check . --ignore-unknown
+        continue-on-error: true
+
+      - name: Auto-format and commit (on branch push)
+        if: github.event_name == 'push' && steps.prettier.outcome == 'failure'
+        run: |
+          npx prettier --write . --ignore-unknown
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: format code with Prettier"
+          git push
+
+      - name: Comment on PR with formatting instructions (on PR)
+        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `❌ **Code Formatting Issues Found**\n\nThis PR contains code that doesn't match the project's formatting standards (Prettier).\n\n### To fix locally:\n\`\`\`bash\nnpm install --save-dev prettier\nnpx prettier --write .\ngit add -A\ngit commit -m "chore: format code with Prettier"\ngit push\n\`\`\`\n\nAlternatively, formatting will be automatically applied if you push changes to this branch.`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const existing = comments.find(c =>
+              c.user?.login === 'github-actions[bot]' &&
+              c.body.includes('Code Formatting Issues Found')
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }
+
+      - name: Fail if PR has formatting issues
+        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure'
+        run: |
+          echo "❌ Code formatting issues detected. See PR comment for instructions."
+          exit 1
+
+      - name: Pass formatting check
+        if: steps.prettier.outcome == 'success'
+        run: echo "✅ Code formatting check passed!"
