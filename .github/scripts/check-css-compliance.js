@@ -42,6 +42,10 @@ const VIOLATIONS = {
 
 let totalIssues = 0;
 
+function getScanMode() {
+  return (process.env.CSS_COMPLIANCE_SCAN_MODE || 'changed').toLowerCase();
+}
+
 function createIssueLine(file, line, details) {
   return `- ${file}:${line} - ${details}`;
 }
@@ -101,6 +105,22 @@ function clearReportIfExists() {
 }
 
 /**
+ * Get all tracked CSS files from git
+ */
+function getAllCssFiles() {
+  try {
+    const output = execSync('git ls-files "*.css"', { encoding: 'utf8' });
+    return output
+      .trim()
+      .split('\n')
+      .filter(f => f && f.endsWith('.css') && fs.existsSync(f));
+  } catch (error) {
+    console.error('Error getting all CSS files:', error.message);
+    return [];
+  }
+}
+
+/**
  * Get changed CSS files from git
  */
 function getChangedFiles() {
@@ -138,6 +158,17 @@ function getChangedFiles() {
     console.error('Error getting changed files:', error.message);
     return [];
   }
+}
+
+/**
+ * Get CSS files to scan based on mode
+ */
+function getTargetFiles() {
+  const scanMode = getScanMode();
+  if (scanMode === 'all') {
+    return getAllCssFiles();
+  }
+  return getChangedFiles();
 }
 
 /**
@@ -332,8 +363,10 @@ function printReport() {
  */
 function main() {
   console.log('\n🔍 Starting CSS Compliance Check...\n');
+  const scanMode = getScanMode();
+  console.log(`Scan mode: ${scanMode}\n`);
   
-  const files = getChangedFiles();
+  const files = getTargetFiles();
   
   if (files.length === 0) {
     const workflowPathFilterActive = process.env.GITHUB_EVENT_NAME === 'pull_request' || process.env.GITHUB_EVENT_NAME === 'push';
