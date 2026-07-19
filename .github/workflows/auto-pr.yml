@@ -1,0 +1,78 @@
+name: Auto PR to main
+
+on:
+  push:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: auto-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  open-or-update-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const base = 'main';
+            const head = context.ref.replace('refs/heads/', '');
+
+            if (head === base) {
+              core.info('Head branch is main; skipping.');
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: existing } = await github.rest.pulls.list({
+              owner,
+              repo,
+              state: 'open',
+              head: `${owner}:${head}`,
+              base,
+              per_page: 1,
+            });
+
+            const title = `chore: merge ${head} into ${base}`;
+            const body = [
+              'This PR was opened automatically by the Auto PR workflow.',
+              '',
+              `- Source branch: \`${head}\``,
+              `- Target branch: \`${base}\``,
+              `- Triggered by: @${context.actor}`,
+              `- Run: https://github.com/${owner}/${repo}/actions/runs/${context.runId}`,
+            ].join('\n');
+
+            if (existing.length > 0) {
+              const pr = existing[0];
+              await github.rest.pulls.update({
+                owner,
+                repo,
+                pull_number: pr.number,
+                title,
+                body,
+              });
+              core.info(`Updated existing PR #${pr.number}.`);
+              return;
+            }
+
+            const created = await github.rest.pulls.create({
+              owner,
+              repo,
+              title,
+              head,
+              base,
+              body,
+              maintainer_can_modify: true,
+            });
+
+            core.info(`Created PR #${created.data.number}.`);
