@@ -1,0 +1,12 @@
+node_modules
+.git
+.github
+dist
+build
+*.min.css
+*.woff2
+*.ttf
+*.otf
+LICENSE*
+COPILOT.md
+README.md

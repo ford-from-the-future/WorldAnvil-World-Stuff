@@ -1,0 +1,24 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "./.github/stylelint-world-anvil-plugin.js"
+  ],
+  "rules": {
+    "world-anvil-compliance/no-prohibited-selectors": true,
+    "no-unknown-at-rules": null,
+    "selector-type-no-unknown": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "selector-pseudo-element-no-unknown": null,
+    "custom-property-pattern": null,
+    "declaration-block-no-ignored-properties": true,
+    "no-descending-specificity": [true, { "severity": "warning" }]
+  },
+  "ignoreFiles": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "build/**",
+    "*.min.css",
+    "**/Third Party Fonts/**"
+  ]
+}

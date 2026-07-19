@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const path = require('path');
 const { execSync } = require('child_process');
+
+const REPORT_PATH = '.github/css-compliance-report.md';
 
 /**
  * World Anvil CSS Compliance Checker
@@ -41,6 +42,84 @@ const VIOLATIONS = {
 
 let totalIssues = 0;
 
+function getScanMode() {
+  return (process.env.CSS_COMPLIANCE_SCAN_MODE || 'changed').toLowerCase();
+}
+
+function createIssueLine(file, line, details) {
+  return `- ${file}:${line} - ${details}`;
+}
+
+function buildComplianceReport() {
+  const lines = [];
+  lines.push('### CSS Compliance Violations');
+  lines.push('');
+  lines.push(`Total issues found: ${totalIssues}`);
+  lines.push('');
+
+  if (VIOLATIONS.prohibitedSelectors.length > 0) {
+    lines.push('#### Prohibited Selectors');
+    VIOLATIONS.prohibitedSelectors.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (selector: ${v.selector})`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.nonUserCss.length > 0) {
+    lines.push('#### Non .user-css Selectors');
+    VIOLATIONS.nonUserCss.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (selector: ${v.selector})`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.hiddenElements.length > 0) {
+    lines.push('#### Potentially Hidden Elements');
+    VIOLATIONS.hiddenElements.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (rule: ${v.rule}...)`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.disabledInteraction.length > 0) {
+    lines.push('#### Potentially Disabled Interactions');
+    VIOLATIONS.disabledInteraction.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (rule: ${v.rule}...)`));
+    });
+    lines.push('');
+  }
+
+  lines.push('See workflow logs for full details.');
+  return lines.join('\n');
+}
+
+function writeReport(content) {
+  fs.writeFileSync(REPORT_PATH, `${content}\n`, 'utf8');
+  console.log(`Wrote compliance report to ${REPORT_PATH}`);
+}
+
+function clearReportIfExists() {
+  if (fs.existsSync(REPORT_PATH)) {
+    fs.unlinkSync(REPORT_PATH);
+  }
+}
+
+/**
+ * Get all tracked CSS files from git
+ */
+function getAllCssFiles() {
+  try {
+    const output = execSync('git ls-files "*.css"', { encoding: 'utf8' });
+    return output
+      .trim()
+      .split('\n')
+      .filter(f => f && f.endsWith('.css') && fs.existsSync(f));
+  } catch (error) {
+    console.error('Error getting all CSS files:', error.message);
+    return [];
+  }
+}
+
 /**
  * Get changed CSS files from git
  */
@@ -50,13 +129,27 @@ function getChangedFiles() {
     
     // Check if this is a pull request
     if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
-      const baseRef = process.env.GITHUB_BASE_REF || 'main';
-      const headRef = process.env.GITHUB_HEAD_REF || 'HEAD';
-      const output = execSync(`git diff --name-only ${baseRef}...${headRef}`, { encoding: 'utf8' });
+      const baseSha = process.env.GITHUB_BASE_SHA;
+      const headSha = process.env.GITHUB_HEAD_SHA || process.env.GITHUB_SHA || 'HEAD';
+
+      if (!baseSha) {
+        throw new Error('Missing GITHUB_BASE_SHA for pull_request event.');
+      }
+
+      const output = execSync(`git diff --name-only ${baseSha}...${headSha}`, { encoding: 'utf8' });
       files = output.trim().split('\n').filter(f => f.endsWith('.css'));
     } else {
-      // For push events, check the commit
-      const output = execSync('git diff-tree --no-commit-id --name-only -r HEAD', { encoding: 'utf8' });
+      // For push events, diff from the previous SHA when available.
+      const beforeSha = process.env.GITHUB_BEFORE_SHA;
+      const afterSha = process.env.GITHUB_SHA || 'HEAD';
+
+      let output = '';
+      if (beforeSha && beforeSha !== '0000000000000000000000000000000000000000') {
+        output = execSync(`git diff --name-only ${beforeSha}...${afterSha}`, { encoding: 'utf8' });
+      } else {
+        output = execSync('git diff-tree --no-commit-id --name-only -r HEAD', { encoding: 'utf8' });
+      }
+
       files = output.trim().split('\n').filter(f => f.endsWith('.css'));
     }
     
@@ -65,6 +158,17 @@ function getChangedFiles() {
     console.error('Error getting changed files:', error.message);
     return [];
   }
+}
+
+/**
+ * Get CSS files to scan based on mode
+ */
+function getTargetFiles() {
+  const scanMode = getScanMode();
+  if (scanMode === 'all') {
+    return getAllCssFiles();
+  }
+  return getChangedFiles();
 }
 
 /**
@@ -259,10 +363,27 @@ function printReport() {
  */
 function main() {
   console.log('\n🔍 Starting CSS Compliance Check...\n');
+  const scanMode = getScanMode();
+  console.log(`Scan mode: ${scanMode}\n`);
   
-  const files = getChangedFiles();
+  const files = getTargetFiles();
   
   if (files.length === 0) {
+    const workflowPathFilterActive = process.env.GITHUB_EVENT_NAME === 'pull_request' || process.env.GITHUB_EVENT_NAME === 'push';
+
+    // Fail closed in CI when this workflow was already filtered to CSS paths.
+    // Zero detected files here usually means a diff-resolution issue rather than true absence of CSS changes.
+    if (workflowPathFilterActive) {
+      console.error('❌ No changed CSS files were detected, but this workflow was triggered by CSS path filters.');
+      console.error('   This usually indicates git diff resolution failed or SHAs are unavailable in the runner context.\n');
+      writeReport(
+        '### CSS Compliance Check Error\n\n' +
+        'No changed CSS files were detected, but this workflow was triggered by CSS path filters.\n\n' +
+        'This usually indicates git diff resolution failed or SHAs are unavailable in the runner context.'
+      );
+      process.exit(1);
+    }
+
     console.log('ℹ️  No CSS files changed in this commit.\n');
     return true;
   }
@@ -279,8 +400,11 @@ function main() {
   const passed = printReport();
   
   if (!passed) {
+    writeReport(buildComplianceReport());
     process.exit(1);
   }
+
+  clearReportIfExists();
 }
 
 main();

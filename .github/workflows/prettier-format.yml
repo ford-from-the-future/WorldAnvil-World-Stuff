@@ -1,0 +1,50 @@
+name: Auto Format Code
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    name: Auto-format with Prettier and Stylelint (World Anvil Rules)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Prettier and Stylelint
+        run: npm install --save-dev prettier stylelint stylelint-config-standard
+
+      - name: Format all code with Prettier
+        run: npx prettier --write . --ignore-unknown
+
+      - name: Fix CSS with Stylelint (World Anvil Rules)
+        run: npx stylelint "**/*.css" --fix
+        continue-on-error: true
+
+      - name: Commit and push formatted changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are any changes
+          if git diff --quiet; then
+            echo "ℹ️ No changes to commit. Code is already formatted."
+          else
+            git add -A
+            git commit -m "chore: auto-format code with Prettier and Stylelint (World Anvil rules)"
+            git push
+            echo "✅ Formatted code committed and pushed."
+          fi

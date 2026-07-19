@@ -1,0 +1,17 @@
+/* Intentional violations for CI workflow testing. */
+
+.top-navigation {
+  display: none;
+}
+
+.world-anvil-footer {
+  visibility: hidden;
+}
+
+.user-css .article-button {
+  pointer-events: none;
+}
+
+body {
+  user-select: none;
+}
