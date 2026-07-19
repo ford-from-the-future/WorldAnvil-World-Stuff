@@ -3,6 +3,8 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
+const REPORT_PATH = '.github/css-compliance-report.md';
+
 /**
  * World Anvil CSS Compliance Checker
  * Validates CSS files against World Anvil Terms of Service
@@ -39,6 +41,64 @@ const VIOLATIONS = {
 };
 
 let totalIssues = 0;
+
+function createIssueLine(file, line, details) {
+  return `- ${file}:${line} - ${details}`;
+}
+
+function buildComplianceReport() {
+  const lines = [];
+  lines.push('### CSS Compliance Violations');
+  lines.push('');
+  lines.push(`Total issues found: ${totalIssues}`);
+  lines.push('');
+
+  if (VIOLATIONS.prohibitedSelectors.length > 0) {
+    lines.push('#### Prohibited Selectors');
+    VIOLATIONS.prohibitedSelectors.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (selector: ${v.selector})`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.nonUserCss.length > 0) {
+    lines.push('#### Non .user-css Selectors');
+    VIOLATIONS.nonUserCss.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (selector: ${v.selector})`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.hiddenElements.length > 0) {
+    lines.push('#### Potentially Hidden Elements');
+    VIOLATIONS.hiddenElements.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (rule: ${v.rule}...)`));
+    });
+    lines.push('');
+  }
+
+  if (VIOLATIONS.disabledInteraction.length > 0) {
+    lines.push('#### Potentially Disabled Interactions');
+    VIOLATIONS.disabledInteraction.forEach(v => {
+      lines.push(createIssueLine(v.file, v.line, `${v.reason} (rule: ${v.rule}...)`));
+    });
+    lines.push('');
+  }
+
+  lines.push('See workflow logs for full details.');
+  return lines.join('\n');
+}
+
+function writeReport(content) {
+  fs.writeFileSync(REPORT_PATH, `${content}\n`, 'utf8');
+  console.log(`Wrote compliance report to ${REPORT_PATH}`);
+}
+
+function clearReportIfExists() {
+  if (fs.existsSync(REPORT_PATH)) {
+    fs.unlinkSync(REPORT_PATH);
+  }
+}
 
 /**
  * Get changed CSS files from git
@@ -283,6 +343,11 @@ function main() {
     if (workflowPathFilterActive) {
       console.error('❌ No changed CSS files were detected, but this workflow was triggered by CSS path filters.');
       console.error('   This usually indicates git diff resolution failed or SHAs are unavailable in the runner context.\n');
+      writeReport(
+        '### CSS Compliance Check Error\n\n' +
+        'No changed CSS files were detected, but this workflow was triggered by CSS path filters.\n\n' +
+        'This usually indicates git diff resolution failed or SHAs are unavailable in the runner context.'
+      );
       process.exit(1);
     }
 
@@ -302,8 +367,11 @@ function main() {
   const passed = printReport();
   
   if (!passed) {
+    writeReport(buildComplianceReport());
     process.exit(1);
   }
+
+  clearReportIfExists();
 }
 
 main();
