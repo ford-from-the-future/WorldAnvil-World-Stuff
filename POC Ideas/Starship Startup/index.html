@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSC-7741 ARTEMIS — System Startup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Yuji+Syuku&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --amber:      #f0a22e;
+      --amber-dim:  rgba(180,100,10,.45);
+      --amber-glow: 0 0 5px #f0a22e, 0 0 16px rgba(240,162,46,.25);
+      --green:      #00ff9f;
+      --cyan:       #00e5ff;
+      --red:        #ff2244;
+      --yellow:     #ffcc00;
+      --bg:         #020810;
+      --frame:      rgba(0,200,255,.22);
+      --glow-cyan:  0 0 6px #00e5ff, 0 0 18px rgba(0,229,255,.22);
+      --mono:       'Share Tech Mono', 'Courier New', monospace;
+      --vt:         'VT323', monospace;
+      --jp:         'Yuji Syuku', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: var(--mono);
+    }
+
+    /* ══════════════════════════════════════════
+       CRT OVERLAY  (scanlines + vignette)
+    ══════════════════════════════════════════ */
+    #crt {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    }
+    #crt::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,.17) 2px, rgba(0,0,0,.17) 4px
+      );
+    }
+    #crt::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,.80) 100%);
+    }
+
+    /* ══════════════════════════════════════════
+       PHASE SCREENS
+    ══════════════════════════════════════════ */
+    .screen {
+      position: fixed; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .screen.active { opacity: 1; pointer-events: auto; }
+
+    /* ══════════════════════════════════════════
+       PHASE 1 — BIOS TERMINAL
+    ══════════════════════════════════════════ */
+    #bios-screen { background: #000; }
+
+    #bios-terminal {
+      position: absolute; inset: 0;
+      padding: 32px 48px 32px 48px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.58;
+      color: var(--amber);
+      overflow-y: scroll;
+      scrollbar-width: none;
+    }
+    #bios-terminal::-webkit-scrollbar { display: none; }
+
+    .bl { display: block; opacity: 0; white-space: pre; animation: fadein .04s forwards; text-shadow: var(--amber-glow); }
+    .bl.dim    { color: var(--amber-dim); text-shadow: none; }
+    .bl.ok     { color: #22ff66; text-shadow: 0 0 6px #22ff66; }
+    .bl.warn   { color: var(--yellow); text-shadow: 0 0 6px var(--yellow); }
+    .bl.err    { color: var(--red); }
+    .bl.bright { color: #ffe08a; }
+    @keyframes fadein { to { opacity: 1; } }
+
+    #bios-cursor {
+      display: inline-block; width: 8px; height: 14px;
+      background: var(--amber); vertical-align: text-bottom;
+      animation: blinkC .7s step-end infinite;
+      box-shadow: var(--amber-glow);
+    }
+    @keyframes blinkC { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ══════════════════════════════════════════
+       PHASE 2 — OS LOADING SCREEN
+    ══════════════════════════════════════════ */
+    #os-screen {
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    #os-box {
+      position: relative;
+      width: min(94vw, 500px);
+      padding: 44px 54px;
+      background: rgba(0,28,0,.97);
+      border: 2px solid #00cc44;
+      box-shadow:
+        0 0 22px rgba(0,210,60,.65),
+        0 0 70px rgba(0,210,60,.28),
+        inset 0 0 50px rgba(0,200,60,.08);
+      text-align: center;
+      animation: ospulse 2.2s ease-in-out infinite;
+    }
+    @keyframes ospulse {
+      0%,100% { box-shadow: 0 0 22px rgba(0,210,60,.65), 0 0 70px rgba(0,210,60,.28), inset 0 0 50px rgba(0,200,60,.08); }
+      50%      { box-shadow: 0 0 34px rgba(0,210,60,.9),  0 0 110px rgba(0,210,60,.5), inset 0 0 70px rgba(0,200,60,.14); }
+    }
+
+    .os-cnr { position: absolute; width: 18px; height: 18px; border-color: #00ff66; border-style: solid; }
+    .os-cnr.tl { top: -2px; left: -2px;  border-width: 3px 0 0 3px; }
+    .os-cnr.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; }
+    .os-cnr.bl { bottom: -2px; left: -2px;  border-width: 0 0 3px 3px; }
+    .os-cnr.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+
+    #os-title {
+      font-family: var(--jp); font-size: 52px; letter-spacing: 6px;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255,255,255,.85), 0 0 40px rgba(0,255,100,.5);
+      margin-bottom: 6px; min-height: 64px;
+    }
+    #os-sub {
+      font-family: var(--jp); font-size: 20px; letter-spacing: 3px;
+      color: rgba(200,255,215,.75);
+      margin-bottom: 26px; min-height: 28px;
+    }
+    #os-ver {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+      color: rgba(0,255,100,.45); margin-bottom: 26px;
+    }
+    #os-bar-wrap {
+      height: 5px; background: rgba(0,255,100,.12);
+      border: 1px solid rgba(0,255,100,.25); margin-bottom: 14px;
+    }
+    #os-bar {
+      height: 100%; width: 0%;
+      background: #00ff66; box-shadow: 0 0 10px #00ff66;
+      transition: width .12s linear;
+    }
+    #os-msg {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
+      color: rgba(0,255,100,.42);
+    }
+
+    /* Flash overlay */
+    #os-flash {
+      position: fixed; inset: 0; z-index: 8000;
+      background: #fff; opacity: 0; pointer-events: none;
+      transition: opacity .12s ease;
+    }
+    #os-flash.show { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       PHASE 3 — DASHBOARD
+    ══════════════════════════════════════════ */
+    #dash-screen {
+      background: var(--bg);
+      display: flex; flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .dhdr {
+      flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 22px;
+      border-bottom: 1.5px solid var(--frame);
+      background: linear-gradient(90deg, rgba(0,180,255,.06) 0%, transparent 40%, transparent 60%, rgba(0,180,255,.06) 100%);
+    }
+    .dhdr-title {
+      font-family: var(--vt); font-size: 28px; letter-spacing: 3px;
+      color: var(--cyan); text-shadow: var(--glow-cyan);
+    }
+    .dhdr-sub {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px;
+      color: rgba(0,200,255,.38); margin-top: 2px;
+    }
+    .dhdr-right { display: flex; align-items: center; gap: 22px; }
+    .alert-badge {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+      padding: 3px 10px; border: 1px solid;
+    }
+    .alert-badge.nominal  { color: var(--green); border-color: var(--green); background: rgba(0,255,159,.05); }
+    .alert-badge.starting { color: var(--yellow); border-color: var(--yellow); background: rgba(255,204,0,.05); animation: blink 1.2s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.12} }
+    .dhdr-clk {
+      font-family: var(--vt); font-size: 22px; letter-spacing: 2px;
+      color: var(--cyan); text-shadow: var(--glow-cyan);
+    }
+    .dhdr-sd {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 1px;
+      color: rgba(0,200,255,.32); text-align: right; margin-top: 2px;
+    }
+
+    /* ── PANEL GRID ── */
+    .dgrid {
+      flex: 1 1 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 8px; padding: 8px;
+      overflow: hidden;
+    }
+
+    .panel {
+      background: rgba(0,18,38,.75);
+      border: 1px solid var(--frame);
+      padding: 11px 13px;
+      position: relative;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .38s ease, transform .38s ease;
+      overflow: hidden;
+    }
+    .panel.vis { opacity: 1; transform: translateY(0); }
+
+    /* Corner brackets */
+    .panel::before, .panel::after {
+      content: ''; position: absolute;
+      width: 9px; height: 9px;
+      border-color: rgba(0,200,255,.38); border-style: solid;
+    }
+    .panel::before { top: -1px; left: -1px;   border-width: 2px 0 0 2px; }
+    .panel::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .ptitle {
+      font-family: var(--vt); font-size: 15px; letter-spacing: 2px;
+      color: var(--cyan); text-shadow: 0 0 5px var(--cyan);
+      border-bottom: 1px solid rgba(0,200,255,.1);
+      padding-bottom: 5px; margin-bottom: 9px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pstat {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px;
+      padding: 2px 6px; border: 1px solid;
+    }
+    .ps-off  { color: var(--red);    border-color: var(--red);    animation: blink 1s step-end infinite; }
+    .ps-init { color: var(--yellow); border-color: var(--yellow); }
+    .ps-on   { color: var(--green);  border-color: var(--green);  box-shadow: 0 0 5px rgba(0,255,159,.25); }
+
+    /* ── ENGINE PANEL ── */
+    .eng-row {
+      display: grid; grid-template-columns: 52px 1fr 72px 56px;
+      align-items: center; gap: 7px; margin-bottom: 7px;
+    }
+    .eng-lbl  { font-size: 10px; color: rgba(0,200,255,.45); letter-spacing: 1px; }
+    .eng-bg   { height: 13px; background: rgba(0,200,255,.05); border: 1px solid rgba(0,200,255,.12); overflow: hidden; }
+    .eng-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #003366, var(--cyan));
+      box-shadow: 0 0 7px var(--cyan);
+      transition: width .12s linear; position: relative;
+    }
+    .eng-fill::after { content: ''; position: absolute; right:0; top:0; bottom:0; width:2px; background:#fff; box-shadow:0 0 5px #fff; }
+    .eng-thr  { font-family: var(--mono); font-size: 10px; color: var(--cyan); text-align: right; }
+    .eng-st   { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+    .es-cold   { color: rgba(0,200,255,.28); }
+    .es-ignite { color: var(--yellow); animation: blink .5s step-end infinite; }
+    .es-warmup { color: var(--yellow); }
+    .es-nom    { color: var(--green); }
+
+    .react-lbl { font-size: 10px; color: rgba(0,200,255,.38); letter-spacing: 1px; margin-top: 6px; }
+    .react-bg  { height: 9px; background: rgba(255,34,68,.06); border: 1px solid rgba(255,34,68,.18); overflow: hidden; margin-top: 3px; }
+    .react-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, #440000, var(--red));
+      box-shadow: 0 0 8px var(--red);
+      transition: width .1s linear;
+    }
+    .react-row { display: flex; justify-content: space-between; margin-top: 2px; font-size: 9px; color: rgba(0,200,255,.3); }
+
+    /* ── LIFE SUPPORT PANEL ── */
+    .vital-row  { display: grid; grid-template-columns: 76px 1fr 60px; align-items: center; gap: 7px; margin-bottom: 8px; }
+    .vital-lbl  { font-size: 10px; color: rgba(0,200,255,.42); letter-spacing: .8px; }
+    .vital-bg   { height: 9px; background: rgba(0,200,255,.05); border: 1px solid rgba(0,200,255,.12); overflow: hidden; }
+    .vital-fill { height: 100%; width: 0%; transition: width .15s linear; }
+    .vital-val  { font-size: 11px; color: var(--cyan); text-align: right; font-family: var(--mono); }
+    .ls-note    { font-size: 9px; color: rgba(0,200,255,.3); letter-spacing: 1px; margin-top: 6px; }
+
+    /* ── COMMS PANEL ── */
+    .comms-log { font-size: 10px; line-height: 1.65; color: rgba(0,200,255,.45); overflow: hidden; }
+    .cl { display: block; }
+    .cl-ok   { color: var(--green); }
+    .cl-srch { color: var(--yellow); }
+    .cl-fnd  { color: var(--cyan); }
+
+    /* ── GEO PANEL ── */
+    .geo-grid { display: grid; grid-template-columns: auto 1fr; gap: 3px 14px; font-size: 10px; }
+    .gk { color: rgba(0,200,255,.38); letter-spacing: .7px; }
+    .gv { color: var(--cyan); font-family: var(--mono); }
+    .gv.res  { color: var(--yellow); animation: blink .7s step-end infinite; }
+    .gv.lock { color: var(--green); animation: none; }
+
+    /* ── SYSTEMS OVERVIEW PANEL ── */
+    .sov-row  { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .sov-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,200,255,.18); font-size: 12px; flex-shrink: 0; }
+    .sov-info { flex: 1; }
+    .sov-name { font-size: 9px; color: rgba(0,200,255,.4); letter-spacing: 1px; }
+    .sov-bg   { height: 6px; background: rgba(0,200,255,.05); border: 1px solid rgba(0,200,255,.1); overflow: hidden; margin-top: 3px; }
+    .sov-fill { height: 100%; width: 0%; transition: width .12s linear; }
+    .sov-pct  { font-size: 10px; color: var(--cyan); width: 32px; text-align: right; flex-shrink: 0; font-family: var(--mono); }
+
+    /* ── TIME PANEL ── */
+    .time-big  { font-family: var(--vt); font-size: 44px; letter-spacing: 4px; color: var(--cyan); text-shadow: var(--glow-cyan); text-align: center; margin: 4px 0; }
+    .time-date { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: rgba(0,200,255,.45); text-align: center; }
+    .time-src  { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: rgba(0,255,159,.35); text-align: center; margin-top: 6px; }
+    .time-log  { font-size: 9px; color: rgba(0,200,255,.3); line-height: 1.7; margin-top: 10px; }
+
+    /* ── FOOTER ── */
+    .dftr {
+      flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 22px;
+      border-top: 1px solid var(--frame);
+      background: linear-gradient(90deg, rgba(0,180,255,.05) 0%, transparent 40%, transparent 60%, rgba(0,180,255,.05) 100%);
+      font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
+      color: rgba(0,200,255,.38);
+    }
+    .act-bars { display: flex; gap: 2px; align-items: center; }
+    .act-bar  { width: 13px; height: 6px; background: rgba(0,200,255,.08); border: 1px solid rgba(0,200,255,.14); }
+    .act-bar.on { background: var(--cyan); box-shadow: 0 0 3px var(--cyan); }
+
+    .blink-t { animation: blink 1.5s step-end infinite; }
+
+    /* ══════════════════════════════════════════
+       EMERGENCY ALERT SYSTEM
+    ══════════════════════════════════════════ */
+    .alert-badge.critical {
+      color: var(--red); border-color: var(--red);
+      background: rgba(255,34,68,.08);
+      animation: blink .4s step-end infinite;
+    }
+
+    /* Red screen-edge pulse */
+    #alarm-edge {
+      position: fixed; inset: 0; z-index: 4999; pointer-events: none;
+    }
+    #alarm-edge.active { animation: alarmPulse .7s ease-in-out infinite alternate; }
+    @keyframes alarmPulse {
+      0%   { box-shadow: inset 0 0 0px  rgba(255,34,68,0); }
+      100% { box-shadow: inset 0 0 90px rgba(255,34,68,.68); }
+    }
+
+    /* Overlay backdrop */
+    .emerg-overlay {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(28,0,0,.86);
+      display: flex; align-items: center; justify-content: center;
+      animation: emergBg .9s ease-in-out infinite alternate;
+    }
+    @keyframes emergBg {
+      0%   { background: rgba(28,0,0,.86); }
+      100% { background: rgba(50,0,0,.91); }
+    }
+
+    /* Modal panel */
+    .emerg-modal {
+      width: min(94vw, 640px);
+      background: rgba(7,0,0,.98);
+      border: 2px solid var(--red);
+      animation: emergBorder .5s step-end infinite;
+    }
+    @keyframes emergBorder {
+      0%,100% { border-color: var(--red);   box-shadow: 0 0 35px rgba(255,34,68,.65), 0 0 90px rgba(255,34,68,.28); }
+      50%      { border-color: #ff6688; box-shadow: 0 0 55px rgba(255,34,68,1),   0 0 120px rgba(255,34,68,.5); }
+    }
+
+    .emerg-hdr {
+      font-family: var(--vt); font-size: 22px; letter-spacing: 3px;
+      padding: 10px 18px; text-align: center;
+      animation: emergHdr .5s step-end infinite;
+    }
+    @keyframes emergHdr {
+      0%,100% { background: var(--red); color: #000; }
+      50%      { background: #1c0000;   color: var(--red); }
+    }
+
+    .emerg-body { padding: 16px 22px 20px; }
+
+    .emerg-stitle {
+      font-family: var(--vt); font-size: 15px; letter-spacing: 2px;
+      color: var(--red); margin-bottom: 6px;
+    }
+    .emerg-detail {
+      font-size: 10px; color: rgba(255,110,130,.6); letter-spacing: 1px; margin-bottom: 3px;
+    }
+    .emerg-bar-bg {
+      height: 10px; background: rgba(255,34,68,.07);
+      border: 1px solid rgba(255,34,68,.28); overflow: hidden; margin-top: 7px;
+    }
+    .emerg-bar { height: 100%; transition: width .16s linear; }
+    .emerg-bar.hull { background: linear-gradient(90deg, #550000, var(--red)); box-shadow: 0 0 10px var(--red); }
+    .emerg-bar.lock { background: linear-gradient(90deg, #880000, #ff4466);   box-shadow: 0 0 10px #ff4466; }
+
+    .emerg-div { border-top: 1px solid rgba(255,34,68,.18); margin: 13px 0; }
+
+    .emerg-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 11px; }
+    .ek { color: rgba(255,100,120,.42); letter-spacing: .8px; }
+    .ev { color: #ff7790; font-family: var(--mono); }
+    .ev.danger { color: var(--red); animation: blink .4s step-end infinite; }
+
+    .emerg-actions { display: flex; flex-direction: column; gap: 3px; margin-top: 5px; }
+    .ea { font-size: 10px; color: rgba(255,130,150,.52); letter-spacing: 1px; }
+
+    .emerg-btns {
+      display: flex; gap: 14px; justify-content: center; margin-top: 18px;
+    }
+    .emerg-btn {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
+      padding: 8px 20px; border: 1px solid; cursor: pointer; background: transparent;
+    }
+    .emerg-btn.ack    { color: rgba(255,130,150,.65); border-color: rgba(255,34,68,.35); }
+    .emerg-btn.ack:hover    { background: rgba(255,34,68,.1); }
+    .emerg-btn.battle { color: var(--red); border-color: var(--red); animation: emergBorder .5s step-end infinite; }
+    .emerg-btn.battle:hover { background: rgba(255,34,68,.18); }
+  </style>
+</head>
+<body>
+<div id="crt"></div>
+
+<!-- ══ PHASE 1: BIOS ══ -->
+<div id="bios-screen" class="screen">
+  <div id="bios-terminal">
+    <div id="bios-lines"></div>
+    <span id="bios-cursor"></span>
+  </div>
+</div>
+
+<!-- ══ PHASE 2: OS LOADING ══ -->
+<div id="os-screen" class="screen">
+  <div id="os-box">
+    <div class="os-cnr tl"></div><div class="os-cnr tr"></div>
+    <div class="os-cnr bl"></div><div class="os-cnr br"></div>
+    <div id="os-title"></div>
+    <div id="os-sub"></div>
+    <div id="os-ver">VER. 7.2.1 &nbsp;／／&nbsp; BUILD 3087.44.α</div>
+    <div id="os-bar-wrap"><div id="os-bar"></div></div>
+    <div id="os-msg">INITIALIZING...</div>
+  </div>
+</div>
+<div id="os-flash"></div>
+
+<!-- ══ PHASE 3: DASHBOARD ══ -->
+<div id="dash-screen" class="screen">
+  <header class="dhdr">
+    <div>
+      <div class="dhdr-title">SSC-7741 ARTEMIS &nbsp;<span class="blink-t">▮</span></div>
+      <div class="dhdr-sub" id="dhdr-sub">LIGHT FRIGATE — SERIES IV &nbsp;／／&nbsp; 星界航路 OS v7.2.1 &nbsp;／／&nbsp; STARTUP IN PROGRESS</div>
+    </div>
+    <div class="dhdr-right">
+      <div class="alert-badge starting" id="dash-alert">⚠ STARTUP</div>
+      <div>
+        <div class="dhdr-clk" id="dash-clk">00:00:00</div>
+        <div class="dhdr-sd" id="dash-sd">STARDATE —</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dgrid">
+    <!-- 1 ENGINES -->
+    <div class="panel" id="p-eng">
+      <div class="ptitle">⚙ ENGINE STATUS <span class="pstat ps-off" id="eng-stat">COLD</span></div>
+      <div class="eng-row">
+        <div class="eng-lbl">ENG-01</div>
+        <div class="eng-bg"><div class="eng-fill" id="ef1"></div></div>
+        <div class="eng-thr" id="et1">0.00 GN</div>
+        <div class="eng-st es-cold" id="es1">COLD</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-lbl">ENG-02</div>
+        <div class="eng-bg"><div class="eng-fill" id="ef2"></div></div>
+        <div class="eng-thr" id="et2">0.00 GN</div>
+        <div class="eng-st es-cold" id="es2">COLD</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-lbl">ENG-03</div>
+        <div class="eng-bg"><div class="eng-fill" id="ef3"></div></div>
+        <div class="eng-thr" id="et3">0.00 GN</div>
+        <div class="eng-st es-cold" id="es3">COLD</div>
+      </div>
+      <div class="eng-row">
+        <div class="eng-lbl">ENG-04</div>
+        <div class="eng-bg"><div class="eng-fill" id="ef4"></div></div>
+        <div class="eng-thr" id="et4">0.00 GN</div>
+        <div class="eng-st es-cold" id="es4">COLD</div>
+      </div>
+      <div class="react-lbl">PLASMA REACTOR OUTPUT</div>
+      <div class="react-bg"><div class="react-fill" id="react-fill"></div></div>
+      <div class="react-row"><span>REACTOR</span><span id="react-pct" style="color:var(--red);">0%</span></div>
+    </div>
+
+    <!-- 2 LIFE SUPPORT -->
+    <div class="panel" id="p-ls">
+      <div class="ptitle">♥ LIFE SUPPORT <span class="pstat ps-off" id="ls-stat">OFFLINE</span></div>
+      <div class="vital-row">
+        <div class="vital-lbl">O₂ LEVEL</div>
+        <div class="vital-bg"><div class="vital-fill" id="vf-o2" style="background:linear-gradient(90deg,#003355,var(--cyan));box-shadow:0 0 5px var(--cyan);"></div></div>
+        <div class="vital-val" id="vv-o2">--.--%</div>
+      </div>
+      <div class="vital-row">
+        <div class="vital-lbl">PRESSURE</div>
+        <div class="vital-bg"><div class="vital-fill" id="vf-pr" style="background:linear-gradient(90deg,#003322,var(--green));box-shadow:0 0 5px var(--green);"></div></div>
+        <div class="vital-val" id="vv-pr">--- kPa</div>
+      </div>
+      <div class="vital-row">
+        <div class="vital-lbl">TEMP.</div>
+        <div class="vital-bg"><div class="vital-fill" id="vf-tm" style="background:linear-gradient(90deg,#443300,var(--yellow));box-shadow:0 0 5px var(--yellow);"></div></div>
+        <div class="vital-val" id="vv-tm">--.-°C</div>
+      </div>
+      <div class="vital-row">
+        <div class="vital-lbl">HUMIDITY</div>
+        <div class="vital-bg"><div class="vital-fill" id="vf-hm" style="background:linear-gradient(90deg,#002244,#00aadd);box-shadow:0 0 5px #00aadd;"></div></div>
+        <div class="vital-val" id="vv-hm">--.--%</div>
+      </div>
+      <div class="vital-row">
+        <div class="vital-lbl">CO₂</div>
+        <div class="vital-bg"><div class="vital-fill" id="vf-co2" style="background:linear-gradient(90deg,#330011,var(--red));box-shadow:0 0 5px var(--red);"></div></div>
+        <div class="vital-val" id="vv-co2">--- ppm</div>
+      </div>
+      <div class="ls-note" id="ls-note">AWAITING INITIALIZATION...</div>
+    </div>
+
+    <!-- 3 COMMUNICATIONS -->
+    <div class="panel" id="p-comms">
+      <div class="ptitle">◈ COMMUNICATIONS <span class="pstat ps-off" id="comms-stat">OFFLINE</span></div>
+      <div class="comms-log" id="comms-log"></div>
+    </div>
+
+    <!-- 4 GEO-LOCATION -->
+    <div class="panel" id="p-geo">
+      <div class="ptitle">◎ GEO-LOCATION <span class="pstat ps-off" id="geo-stat">ACQUIRING</span></div>
+      <div class="geo-grid">
+        <span class="gk">LATITUDE</span>  <span class="gv res" id="gl-lat">SCANNING...</span>
+        <span class="gk">LONGITUDE</span> <span class="gv res" id="gl-lon">SCANNING...</span>
+        <span class="gk">ALTITUDE</span>  <span class="gv res" id="gl-alt">SCANNING...</span>
+        <span class="gk">SECTOR</span>    <span class="gv res" id="gl-sec">SCANNING...</span>
+        <span class="gk">SYSTEM</span>    <span class="gv res" id="gl-sys">SCANNING...</span>
+        <span class="gk">NET NODE</span>  <span class="gv res" id="gl-net">SEARCHING...</span>
+        <span class="gk">SIGNAL STR</span><span class="gv res" id="gl-sig">--.--%</span>
+      </div>
+    </div>
+
+    <!-- 5 SYSTEMS OVERVIEW -->
+    <div class="panel" id="p-sysov">
+      <div class="ptitle">■ SYSTEMS OVERVIEW <span class="pstat ps-off" id="sov-stat">CYCLING</span></div>
+      <div id="sov-list"></div>
+    </div>
+
+    <!-- 6 TIME / DATE -->
+    <div class="panel" id="p-time">
+      <div class="ptitle">◷ TIME &amp; DATE SYNC <span class="pstat ps-off" id="time-stat">SYNCING</span></div>
+      <div class="time-big" id="time-big">--:--:--</div>
+      <div class="time-date" id="time-date">AWAITING SYNC</div>
+      <div class="time-src" id="time-src">SEARCHING FOR NETWORK TIME SOURCE...</div>
+      <div class="time-log" id="time-log"></div>
+    </div>
+  </div>
+
+  <footer class="dftr">
+    <span>HULL INTEGRITY: <span style="color:var(--green)">100%</span></span>
+    <div class="act-bars" id="act-bars"></div>
+    <span id="foot-msg">STARTUP SEQUENCE IN PROGRESS</span>
+    <span>SYSTEMS ONLINE: <span id="sys-cnt" style="color:var(--cyan)">0</span> / 6</span>
+  </footer>
+</div>
+
+<!-- SCREEN-EDGE ALARM -->
+<div id="alarm-edge"></div>
+
+<!-- EMERGENCY POPUP -->
+<div id="emerg-overlay" class="emerg-overlay" style="display:none;">
+  <div class="emerg-modal">
+    <div class="emerg-hdr">⚠ CRITICAL ALERT — COMBAT EMERGENCY ⚠</div>
+    <div class="emerg-body">
+
+      <div class="emerg-stitle">▼ HULL INTEGRITY COMPROMISED</div>
+      <div class="emerg-detail">BREACH LOCATION: SECTION D-7 // STARBOARD QUARTER</div>
+      <div class="emerg-detail">AFFECTED ZONES: D-7, D-8, E-7 — PRESSURE LOSS IN PROGRESS</div>
+      <div class="emerg-bar-bg"><div class="emerg-bar hull" id="emerg-hull-bar" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:rgba(255,100,120,.4);letter-spacing:1px;margin-top:3px;">
+        <span>HULL INTEGRITY</span>
+        <span style="color:var(--red);font-family:var(--mono);">67% ▼ DROPPING</span>
+      </div>
+
+      <div class="emerg-div"></div>
+
+      <div class="emerg-stitle" style="animation:blink .4s step-end infinite;">⊕ EXTERNAL TARGETING LOCK ACQUIRED</div>
+      <div class="emerg-grid">
+        <span class="ek">THREAT ID</span>      <span class="ev">SIG-7X-UNKNOWN // VESSEL UNREGISTERED</span>
+        <span class="ek">WEAPON SYSTEM</span>  <span class="ev">PLASMA LANCE — CLASS IV</span>
+        <span class="ek">TARGETING LOCK</span> <span class="ev danger">100% — HARD LOCK</span>
+        <span class="ek">ESTIMATED RANGE</span><span class="ev">4,200 KM</span>
+        <span class="ek">FIRE WINDOW</span>    <span class="ev danger">⚠ OPEN</span>
+      </div>
+      <div class="emerg-bar-bg" style="margin-top:10px;">
+        <div class="emerg-bar lock" id="emerg-lock-bar" style="width:0%"></div>
+      </div>
+
+      <div class="emerg-div"></div>
+
+      <div class="emerg-stitle">▶ RECOMMENDED ACTIONS</div>
+      <div class="emerg-actions">
+        <span class="ea">[ A ]  ACTIVATE EMERGENCY SHIELDS IMMEDIATELY</span>
+        <span class="ea">[ B ]  INITIATE EVASIVE MANEUVERS — VECTOR DELTA-9</span>
+        <span class="ea">[ C ]  BROADCAST DISTRESS SIGNAL ON ALL FREQUENCIES</span>
+      </div>
+
+      <div class="emerg-btns">
+        <button class="emerg-btn ack"    id="btn-ack">ACKNOWLEDGE</button>
+        <button class="emerg-btn battle" id="btn-battle">⚡ BATTLE STATIONS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ════════════════════════════════════════════
+     HELPERS
+  ════════════════════════════════════════════ */
+  const sleep  = ms => new Promise(r => setTimeout(r, ms));
+  const el     = id => document.getElementById(id);
+  const ease   = t  => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+
+  /* ════════════════════════════════════════════
+     DORMANCY CALCULATION
+  ════════════════════════════════════════════ */
+  const LAST_SHUTDOWN = new Date('2026-02-16T04:17:33Z');
+  const NOW           = new Date();
+  const diffMs        = NOW - LAST_SHUTDOWN;
+  const dDays  = Math.floor(diffMs / 86400000);
+  const dHrs   = Math.floor((diffMs % 86400000) / 3600000);
+  const dMins  = Math.floor((diffMs % 3600000)  / 60000);
+  const dSecs  = Math.floor((diffMs % 60000)    / 1000);
+  const dormStr  = `${String(dDays).padStart(3,'0')} DAYS, ${String(dHrs).padStart(2,'0')} HRS, ${String(dMins).padStart(2,'0')} MIN, ${String(dSecs).padStart(2,'0')} SEC`;
+  const shutStr  = '2026-02-16  04:17:33 UTC';
+  const nowStr   = NOW.toISOString().replace('T','  ').replace(/\.\d+Z/, ' UTC');
+
+  /* ════════════════════════════════════════════
+     FOOTER ACTIVITY BARS
+  ════════════════════════════════════════════ */
+  const actBarsEl = el('act-bars');
+  for (let i = 0; i < 14; i++) {
+    const d = document.createElement('div');
+    d.className = 'act-bar' + (i < 9 ? ' on' : '');
+    actBarsEl.appendChild(d);
+  }
+  let abTick = 0;
+  setInterval(() => {
+    abTick++;
+    const lit = 4 + Math.round(6 * Math.abs(Math.sin(abTick * 0.13)));
+    actBarsEl.querySelectorAll('.act-bar').forEach((b, i) => b.classList.toggle('on', i < lit));
+  }, 200);
+
+  /* ════════════════════════════════════════════
+     BIOS SCRIPT
+     Each entry:
+       { text, cls, delay }            — normal line
+       { type:'scan', label }          — animated biometric scan
+       { type:'blank', delay }         — empty line with delay
+  ════════════════════════════════════════════ */
+  const BS = [
+    { type:'blank', delay: 80 },
+    { text:'  ╔══════════════════════════════════════════════════════════════════╗', cls:'dim',    delay:20 },
+    { text:'  ║    AXIOM MARINE SYSTEMS CORP.  //  BIOS v9.3.2                  ║', cls:'bright',  delay:20 },
+    { text:'  ║    (C) 3087 AXIOM MARINE SYSTEMS — ALL RIGHTS RESERVED          ║', cls:'dim',    delay:20 },
+    { text:'  ╚══════════════════════════════════════════════════════════════════╝', cls:'dim',    delay:80 },
+    { type:'blank', delay: 40 },
+    { text:`  HULL REGISTRY       :  SSC-7741-ARTEMIS`,    cls:'',      delay:40 },
+    { text:`  SHIP CLASS          :  LIGHT FRIGATE — SERIES IV`,  cls:'',  delay:40 },
+    { text:`  PRIMARY HULL ID     :  7741-Δ / KEEL BLOCK 9`,   cls:'',  delay:40 },
+    { text:`  BIOS CHECKSUM       :  A7F3-E92B-4401 OK`,       cls:'ok', delay:40 },
+    { type:'blank', delay: 80 },
+    { text:'  POST-DORMANCY DIAGNOSTICS INITIATED...',          cls:'bright', delay:280 },
+    { type:'blank', delay: 40 },
+    { text:`  DORMANCY LOG DETECTED`,                           cls:'warn', delay:40 },
+    { text:`  LAST ACTIVE         :  ${shutStr}`,              cls:'',     delay:40 },
+    { text:`  CURRENT TIME        :  ${nowStr}`,               cls:'',     delay:40 },
+    { text:`  ELAPSED DORMANCY    :  ${dormStr}`,              cls:'warn', delay:220 },
+    { type:'blank', delay: 80 },
+    { text:'  INITIALIZING HARDWARE DETECTION...',             cls:'',   delay:180 },
+    { text:'  CPU CORES      :  64x QUANTUM-RISC Q9  [4.8 THz]    ....  OK', cls:'ok', delay:55 },
+    { text:'  GPU ARRAY      :  16x AXIOM RENDER Ω   [512 TFLOPS]  ...  OK', cls:'ok', delay:55 },
+    { text:'  CORE MEMORY    :  512 TB GRAVITON-RAM               ....  OK', cls:'ok', delay:55 },
+    { text:'  QUANTUM CACHE  :  2.4 PB PHASE-CACHE v3             ....  OK', cls:'ok', delay:55 },
+    { text:'  ARCHIVE STORE  :  88 PB  CRYSTALLINE ARRAY          ....  OK', cls:'ok', delay:55 },
+    { type:'blank', delay: 80 },
+    { text:'  RUNNING CRITICAL SYSTEM CHECKS...',              cls:'bright', delay:200 },
+    { type:'blank', delay: 40 },
+    { text:'  [ 01/12 ]  HULL INTEGRITY SENSORS  ..............  PASS',   cls:'ok',   delay:55 },
+    { text:'  [ 02/12 ]  REACTOR CORE STATUS  ..................  STANDBY', cls:'',    delay:55 },
+    { text:'  [ 03/12 ]  QUANTUM DRIVE CORE  ...................  STANDBY', cls:'',    delay:55 },
+    { text:'  [ 04/12 ]  SUBLIGHT ENGINES (4/4)  ..............  STANDBY', cls:'',    delay:55 },
+    { text:'  [ 05/12 ]  PLASMA MANIFOLD  ......................  NOMINAL', cls:'ok',  delay:55 },
+    { text:'  [ 06/12 ]  WEAPONS LOCKOUT  ......................  ENGAGED', cls:'warn', delay:55 },
+    { text:'  [ 07/12 ]  LIFE SUPPORT CORE  ...................  STANDBY', cls:'',    delay:55 },
+    { text:'  [ 08/12 ]  NAVIGATION COMPUTER  .................  PASS',   cls:'ok',   delay:55 },
+    { text:'  [ 09/12 ]  EMERGENCY SYSTEMS  ...................  OK',     cls:'ok',   delay:55 },
+    { text:'  [ 10/12 ]  COMMUNICATIONS ARRAY  ................  OFFLINE → QUEUED', cls:'warn', delay:55 },
+    { text:'  [ 11/12 ]  RADIATION SHIELDING  .................  NOMINAL', cls:'ok', delay:55 },
+    { text:'  [ 12/12 ]  SELF-DESTRUCT SAFETIES  ..............  ARMED + LOCKED', cls:'warn', delay:55 },
+    { type:'blank', delay: 100 },
+    { text:'  ALL CHECKS COMPLETE.  CRITICAL SYSTEMS NOMINAL.',    cls:'ok',   delay:200 },
+    { type:'blank', delay: 80 },
+    { text:'  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls:'dim', delay:40 },
+    { text:'  CREW ACCESS VERIFICATION REQUIRED',                  cls:'bright', delay:200 },
+    { text:'  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls:'dim', delay:100 },
+    { type:'blank', delay: 80 },
+    { text:'  CREW MEMBER         :  CAPT. YUKI TANAKA — ID #0044-OMEGA',  cls:'',   delay:70 },
+    { text:'  AUTHORIZATION LEVEL :  OMEGA-9  (COMMAND OVERRIDE TIER)',    cls:'',   delay:70 },
+    { type:'blank', delay: 80 },
+    { text:'  INITIATING MULTI-FACTOR BIOMETRIC VERIFICATION...',          cls:'',   delay:320 },
+    { type:'blank', delay: 50 },
+    { type:'scan', label:'RETINAL SCAN        ' },
+    { type:'scan', label:'VOICE PATTERN       ' },
+    { type:'scan', label:'NEURAL SIGNATURE    ' },
+    { type:'blank', delay: 180 },
+    { text:'  ACCESS CODE HASH    :  ██████████████████████████████████',  cls:'',   delay:200 },
+    { text:'  ▶ AUTHORIZATION     :  *** CLEARANCE GRANTED — OMEGA-9 ***', cls:'ok', delay:350 },
+    { type:'blank', delay: 100 },
+    { text:'  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', cls:'dim', delay:80 },
+    { type:'blank', delay: 80 },
+    { text:'  INITIALIZING STARSHIP OS...',                                cls:'bright', delay:180 },
+    { text:'  LOADING  星界航路 OS  v7.2.1...',                            cls:'bright', delay:180 },
+    { text:'  PLEASE STAND BY.',                                           cls:'',       delay:220 },
+  ];
+
+  /* ════════════════════════════════════════════
+     BIOS RUNNER
+  ════════════════════════════════════════════ */
+  const biosLines = el('bios-lines');
+  const biosTerminal = el('bios-terminal');
+
+  function addBiosLine(text, cls) {
+    const div = document.createElement('div');
+    div.className = 'bl' + (cls ? ' ' + cls : '');
+    div.textContent = text;
+    biosLines.appendChild(div);
+    biosTerminal.scrollTop = biosTerminal.scrollHeight;
+    return div;
+  }
+
+  async function animateScan(label) {
+    const total = 20;
+    const lineEl = addBiosLine('', '');
+    for (let b = 0; b <= total; b++) {
+      const filled = '█'.repeat(b) + ' '.repeat(total - b);
+      const pct    = Math.round((b / total) * 100);
+      lineEl.textContent = `  ${label}:  [${filled}]  ${pct}%`;
+      biosTerminal.scrollTop = biosTerminal.scrollHeight;
+      await sleep(55);
+    }
+    lineEl.textContent = `  ${label}:  [████████████████████]  CONFIRMED ✓`;
+    lineEl.className = 'bl ok';
+    await sleep(120);
+  }
+
+  async function runBios() {
+    el('bios-screen').classList.add('active');
+    await sleep(350);
+
+    for (const entry of BS) {
+      if (entry.type === 'blank') {
+        addBiosLine('', '');
+        await sleep(entry.delay || 50);
+      } else if (entry.type === 'scan') {
+        await animateScan(entry.label);
+      } else {
+        addBiosLine(entry.text, entry.cls || '');
+        await sleep(entry.delay || 50);
+      }
+    }
+    await sleep(400);
+  }
+
+  /* ════════════════════════════════════════════
+     OS LOADING RUNNER
+  ════════════════════════════════════════════ */
+  async function typeInto(id, text, charMs) {
+    const target = el(id);
+    target.textContent = '';
+    for (const ch of text) {
+      target.textContent += ch;
+      await sleep(charMs);
+    }
+  }
+
+  async function runOsLoad() {
+    el('bios-screen').classList.remove('active');
+    await sleep(300);
+    el('os-screen').classList.add('active');
+    await sleep(700);
+
+    await typeInto('os-title', '星界航路', 130);
+    await sleep(180);
+    await typeInto('os-sub', '統合管制システム', 75);
+    await sleep(380);
+
+    const bar    = el('os-bar');
+    const msgEl  = el('os-msg');
+    const steps  = [
+      [8,   'MOUNTING KERNEL...'],
+      [20,  'LOADING CORE MODULES...'],
+      [34,  'INITIALIZING HARDWARE LAYER...'],
+      [48,  'STARTING SYSTEM DAEMONS...'],
+      [62,  'ACTIVATING SENSOR ARRAY...'],
+      [75,  'ESTABLISHING INTERNAL NETWORK...'],
+      [87,  'PREPARING CREW ENVIRONMENT...'],
+      [95,  'RUNNING STARTUP SCRIPTS...'],
+      [100, 'STARTUP COMPLETE'],
+    ];
+
+    for (const [pct, msg] of steps) {
+      bar.style.width = pct + '%';
+      msgEl.textContent = msg;
+      await sleep(260 + Math.random() * 180);
+    }
+
+    await sleep(700);
+    const flash = el('os-flash');
+    flash.classList.add('show');
+    await sleep(140);
+    el('os-screen').classList.remove('active');
+    await sleep(160);
+    flash.classList.remove('show');
+  }
+
+  /* ════════════════════════════════════════════
+     DASHBOARD — SHARED HELPERS
+  ════════════════════════════════════════════ */
+  let sysOnline = 0;
+
+  function systemOnline() {
+    sysOnline++;
+    el('sys-cnt').textContent = sysOnline;
+    if (sysOnline === 6) {
+      el('dash-alert').textContent = '◉ NOMINAL';
+      el('dash-alert').className   = 'alert-badge nominal';
+      el('dhdr-sub').textContent   = 'LIGHT FRIGATE — SERIES IV  //  STARTUP COMPLETE  //  ALL SYSTEMS NOMINAL';
+      el('foot-msg').textContent   = 'ALL SYSTEMS OPERATIONAL';
+      setTimeout(triggerEmergency, 4000);
+    }
+  }
+
+  async function showPanel(id, delay) {
+    await sleep(delay);
+    el(id).classList.add('vis');
+  }
+
+  /* ════════════════════════════════════════════
+     DASHBOARD CLOCK
+  ════════════════════════════════════════════ */
+  (() => {
+    let sd = 3087.441;
+    function tick() {
+      const n = new Date();
+      sd += 0.00012;
+      el('dash-clk').textContent = n.toTimeString().slice(0, 8);
+      el('dash-sd').textContent  = 'STARDATE ' + sd.toFixed(3);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* ════════════════════════════════════════════
+     PANEL 1 — ENGINES
+  ════════════════════════════════════════════ */
+  async function runEngines() {
+    await sleep(700);
+    const maxThrust = [2.42, 2.38, 2.51, 2.45];
+    const stagger   = [0, 620, 1240, 1860];
+    let nomCount    = 0;
+    const STEPS     = 80;
+
+    // Reactor bar runs in parallel
+    (async () => {
+      await sleep(350);
+      for (let s = 0; s <= 100; s++) {
+        el('react-fill').style.width = s + '%';
+        el('react-pct').textContent  = s + '%';
+        if (s === 100) el('react-pct').style.color = 'var(--red)';
+        await sleep(32);
+      }
+    })();
+
+    stagger.forEach(async (lag, idx) => {
+      const n   = idx + 1;
+      const max = maxThrust[idx];
+      await sleep(lag);
+
+      el(`es${n}`).textContent = 'IGNITE';
+      el(`es${n}`).className   = 'eng-st es-ignite';
+
+      for (let s = 0; s <= STEPS; s++) {
+        const t      = s / STEPS;
+        const eased  = ease(t);
+        const thrust = (eased * max).toFixed(2);
+        const pct    = eased * 100;
+        el(`ef${n}`).style.width = pct + '%';
+        el(`et${n}`).textContent  = thrust + ' GN';
+
+        if (s === 16) {
+          el(`es${n}`).textContent = 'WARM-UP';
+          el(`es${n}`).className   = 'eng-st es-warmup';
+        }
+        await sleep(38);
+      }
+
+      el(`es${n}`).textContent = 'NOMINAL';
+      el(`es${n}`).className   = 'eng-st es-nom';
+      nomCount++;
+
+      if (nomCount === 4) {
+        el('eng-stat').textContent = 'NOMINAL';
+        el('eng-stat').className   = 'pstat ps-on';
+        systemOnline();
+      }
+    });
+  }
+
+  /* ════════════════════════════════════════════
+     PANEL 2 — LIFE SUPPORT
+  ════════════════════════════════════════════ */
+  async function runLifeSupport() {
+    await sleep(1800);
+    el('ls-stat').textContent = 'INIT';
+    el('ls-stat').className   = 'pstat ps-init';
+    el('ls-note').textContent = 'PRESSURIZING COMPARTMENTS...';
+
+    await sleep(700);
+
+    // [fillId, valId, barTargetPct, valueFn]
+    const vitals = [
+      ['vf-o2',  'vv-o2',  78, p => (p * 0.270).toFixed(1) + '%'],
+      ['vf-pr',  'vv-pr',  82, p => Math.round(p * 1.235) + ' kPa'],
+      ['vf-tm',  'vv-tm',  62, p => (p * 0.355).toFixed(1) + '°C'],
+      ['vf-hm',  'vv-hm',  52, p => (p * 0.865).toFixed(1) + '%'],
+      ['vf-co2', 'vv-co2', 22, p => Math.round(p * 18.2) + ' ppm'],
+    ];
+
+    vitals.forEach(async ([fid, vid, target, fmt], i) => {
+      await sleep(i * 280);
+      const STEPS = 55;
+      for (let s = 0; s <= STEPS; s++) {
+        const pct = (s / STEPS) * target;
+        el(fid).style.width = pct + '%';
+        el(vid).textContent = fmt(pct);
+        await sleep(28);
+      }
+    });
+
+    await sleep(vitals.length * 280 + 1700);
+    el('ls-stat').textContent = 'ONLINE';
+    el('ls-stat').className   = 'pstat ps-on';
+    el('ls-note').textContent = 'ALL COMPARTMENTS PRESSURIZED — NOMINAL';
+    systemOnline();
+  }
+
+  /* ════════════════════════════════════════════
+     PANEL 3 — COMMUNICATIONS
+  ════════════════════════════════════════════ */
+  async function runComms() {
+    await sleep(900);
+    const log = el('comms-log');
+
+    const steps = [
+      ['> POWERING COMMS ARRAY...',                         '',       550],
+      ['> ARRAY ONLINE. SCANNING FREQUENCIES...',           'cl-ok',  400],
+      ['> BROADCASTING SHIP ID: SSC-7741-ARTEMIS...',       '',       450],
+      ['> SCANNING FOR PUBLIC NETWORK NODES...',            'cl-srch', 900],
+      ['> NODE DETECTED: KETHARA PRIME RELAY — SIG: 94%',  'cl-fnd', 280],
+      ['> NODE DETECTED: OUTPOST-7 CARRIER — SIG: 58%',    'cl-fnd', 280],
+      ['> NODE DETECTED: ORBITAL BUOY K-12 — SIG: 31%',   'cl-fnd', 280],
+      ['> HANDSHAKING: KETHARA PRIME RELAY...',             'cl-srch', 720],
+      ['> CONNECTION ESTABLISHED ✓',                        'cl-ok',  280],
+      ['> UPLINK: 48 GBPS &nbsp;|&nbsp; DOWNLINK: 52 GBPS','',       200],
+      ['> QUEUED MSGS: 14 NEW &nbsp;|&nbsp; PRIORITY: 2',  'cl-fnd', 0],
+    ];
+
+    for (const [msg, cls, delay] of steps) {
+      const span = document.createElement('span');
+      span.className = 'cl' + (cls ? ' ' + cls : '');
+      span.innerHTML = msg;
+      log.appendChild(span);
+      if (delay) await sleep(delay);
+    }
+
+    el('comms-stat').textContent = 'ONLINE';
+    el('comms-stat').className   = 'pstat ps-on';
+    systemOnline();
+  }
+
+  /* ════════════════════════════════════════════
+     PANEL 4 — GEO-LOCATION
+  ════════════════════════════════════════════ */
+  async function runGeo() {
+    await sleep(1400);
+    el('geo-stat').textContent = 'ACQUIRING';
+    el('geo-stat').className   = 'pstat ps-init';
+
+    await sleep(1100);
+
+    const CHARS = '0123456789ABCDEF+-.°′″ ';
+    async function resolve(id, value, lag) {
+      await sleep(lag);
+      const e = el(id);
+      for (let i = 0; i < 9; i++) {
+        e.textContent = Array.from({length: Math.max(value.length, 8)}, () =>
+          CHARS[Math.floor(Math.random() * CHARS.length)]
+        ).join('');
+        await sleep(72);
+      }
+      e.textContent = value;
+      e.className   = 'gv lock';
+    }
+
+    await resolve('gl-lat', '34° 52′ 17.4″ N',       0);
+    await resolve('gl-lon', '138° 22′ 44.1″ E',     220);
+    await resolve('gl-alt', '312.4 M ASL',           440);
+    await resolve('gl-sec', 'SECTOR 7-GARM',         660);
+    await resolve('gl-sys', 'KETHARA SYSTEM',        880);
+    await resolve('gl-net', 'KETHARA PRIME RELAY',  1100);
+    await resolve('gl-sig', '94.2%',                1320);
+
+    el('geo-stat').textContent = 'LOCKED';
+    el('geo-stat').className   = 'pstat ps-on';
+    systemOnline();
+  }
+
+  /* ════════════════════════════════════════════
+     PANEL 5 — SYSTEMS OVERVIEW
+  ════════════════════════════════════════════ */
+  const SOV_DATA = [
+    { name:'HULL INTEGRITY',    icon:'▣', pct:100, col:'var(--green)'  },
+    { name:'WEAPONS LOCKOUT',   icon:'⚡', pct:100, col:'var(--red)'   },
+    { name:'SHIELDS',           icon:'◈',  pct:0,   col:'var(--cyan)'  },
+    { name:'SENSOR ARRAY',      icon:'◎',  pct:88,  col:'var(--cyan)'  },
+    { name:'STEALTH SYSTEMS',   icon:'▲',  pct:0,   col:'var(--yellow)'},
+    { name:'EMERGENCY SYSTEMS', icon:'✦',  pct:100, col:'var(--green)' },
+  ];
+
+  async function runSysOv() {
+    const list = el('sov-list');
+    SOV_DATA.forEach((s, i) => {
+      list.insertAdjacentHTML('beforeend', `
+        <div class="sov-row">
+          <div class="sov-icon" style="color:${s.col};border-color:${s.col}26;">${s.icon}</div>
+          <div class="sov-info">
+            <div class="sov-name">${s.name}</div>
+            <div class="sov-bg">
+              <div class="sov-fill" id="sf${i}" style="background:${s.col};box-shadow:0 0 5px ${s.col};"></div>
+            </div>
+          </div>
+          <div class="sov-pct" id="sp${i}" style="color:${s.col};">0%</div>
+        </div>`);
+    });
+
+    await sleep(1100);
+
+    SOV_DATA.forEach(async (s, i) => {
+      await sleep(i * 230);
+      const tgt = s.pct;
+      for (let p = 0; p <= tgt; p += 2) {
+        el(`sf${i}`).style.width  = p + '%';
+        el(`sp${i}`).textContent  = p + '%';
+        await sleep(18);
+      }
+      el(`sf${i}`).style.width  = tgt + '%';
+      el(`sp${i}`).textContent  = tgt + '%';
+    });
+
+    await sleep(SOV_DATA.length * 230 + 800);
+    el('sov-stat').textContent = 'UPDATED';
+    el('sov-stat').className   = 'pstat ps-on';
+    systemOnline();
+  }
+
+  /* ════════════════════════════════════════════
+     PANEL 6 — TIME / DATE SYNC
+  ════════════════════════════════════════════ */
+  async function runTimeSync() {
+    await sleep(2200);
+    const logEl  = el('time-log');
+    const srcEl  = el('time-src');
+
+    const logLine = async (txt, delay = 380) => {
+      logEl.textContent += txt + '\n';
+      await sleep(delay);
+    };
+
+    await logLine('> CONTACTING NTP: KETHARA PRIME RELAY...');
+    await logLine('> RESPONSE LATENCY: 12 ms',       300);
+    await logLine('> TIME DELTA: +0.003 SEC',         280);
+    await logLine('> APPLYING CORRECTION...',         450);
+    await logLine('> SYNCHRONIZATION COMPLETE ✓',    200);
+
+    el('time-stat').textContent = 'SYNCED';
+    el('time-stat').className   = 'pstat ps-on';
+    srcEl.textContent = 'SYNCED — KETHARA PRIME NTP RELAY // LATENCY 12ms';
+
+    function tick() {
+      const n = new Date();
+      el('time-big').textContent  = n.toTimeString().slice(0, 8);
+      el('time-date').textContent = n.toDateString().toUpperCase();
+    }
+    tick();
+    setInterval(tick, 1000);
+    systemOnline();
+  }
+
+  /* ════════════════════════════════════════════
+     MAIN SEQUENCE
+  ════════════════════════════════════════════ */
+  async function main() {
+    await runBios();
+    await sleep(550);
+    await runOsLoad();
+    await sleep(380);
+
+    el('dash-screen').classList.add('active');
+
+    // Stagger panels
+    showPanel('p-eng',   0);
+    showPanel('p-ls',    160);
+    showPanel('p-comms', 320);
+    showPanel('p-geo',   480);
+    showPanel('p-sysov', 640);
+    showPanel('p-time',  800);
+
+    // All sub-systems run concurrently
+    runEngines();
+    runLifeSupport();
+    runComms();
+    runGeo();
+    runSysOv();
+    runTimeSync();
+  }
+
+  /* ════════════════════════════════════════════
+     EMERGENCY SEQUENCE
+  ════════════════════════════════════════════ */
+  async function triggerEmergency() {
+    // Phase 1 — Anomalous signal warning
+    el('foot-msg').textContent  = '⚠  WARNING: ANOMALOUS SIGNAL DETECTED ON LONG-RANGE SENSORS';
+    el('dash-alert').textContent = '⚠ WARNING';
+    el('dash-alert').className   = 'alert-badge starting';
+    el('dhdr-sub').textContent   = 'LIGHT FRIGATE — SERIES IV  //  ⚠ ANOMALOUS SIGNAL DETECTED  //  INVESTIGATING';
+
+    await sleep(1600);
+
+    // Phase 2 — Hull breach registered
+    el('foot-msg').textContent  = '● CRITICAL: HULL BREACH — SECTION D-7 STARBOARD QUARTER';
+    el('dash-alert').textContent = '● CRITICAL';
+    el('dash-alert').className   = 'alert-badge critical';
+    el('dhdr-sub').textContent   = 'LIGHT FRIGATE — SERIES IV  //  ● HULL BREACH D-7  //  PRESSURE DROPPING';
+
+    // Animate hull integrity bar dropping in systems overview
+    el('sf0').style.background = 'linear-gradient(90deg,#440000,var(--red))';
+    el('sf0').style.boxShadow  = '0 0 6px var(--red)';
+    el('sp0').style.color      = 'var(--red)';
+    for (let p = 100; p >= 67; p--) {
+      el('sf0').style.width = p + '%';
+      el('sp0').textContent = p + '%';
+      await sleep(22);
+    }
+
+    // Concurrently: pressure in life support dropping
+    (async () => {
+      for (let p = 82; p >= 49; p--) {
+        el('vf-pr').style.width = p + '%';
+        el('vv-pr').textContent = Math.round(p * 1.235) + ' kPa';
+        await sleep(38);
+      }
+      el('ls-stat').textContent = 'CRITICAL';
+      el('ls-stat').className   = 'pstat ps-off';
+      el('ls-note').textContent = '⚠ PRESSURE LOSS — SECTION D-7 BREACH';
+    })();
+
+    await sleep(1000);
+
+    // Phase 3 — Red screen-edge alarm
+    el('alarm-edge').classList.add('active');
+
+    await sleep(900);
+
+    // Phase 4 — Weapons lock popup
+    el('emerg-overlay').style.display = 'flex';
+    el('emerg-hull-bar').style.width  = '67%';
+
+    // Animate targeting lock bar to 100%
+    for (let p = 0; p <= 100; p++) {
+      el('emerg-lock-bar').style.width = p + '%';
+      await sleep(16);
+    }
+  }
+
+  // Emergency popup button handlers
+  el('btn-ack').addEventListener('click', () => {
+    el('emerg-overlay').style.display = 'none';
+    el('foot-msg').textContent = '⚠  ALERT ACKNOWLEDGED — WEAPONS THREAT REMAINS ACTIVE';
+  });
+
+  el('btn-battle').addEventListener('click', () => {
+    el('emerg-overlay').style.display = 'none';
+    el('dash-alert').textContent = '⚡ BATTLE STATIONS';
+    el('dash-alert').className   = 'alert-badge critical';
+    el('dhdr-sub').textContent   = 'LIGHT FRIGATE — SERIES IV  //  ⚡ BATTLE STATIONS  //  SHIELDS ACTIVATING';
+    el('foot-msg').textContent   = '⚡ BATTLE STATIONS — ALL CREW REPORT TO COMBAT POSITIONS';
+  });
+
+  main();
+})();
+</script>
+</body>
+</html>
