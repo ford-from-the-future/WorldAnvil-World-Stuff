@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const path = require('path');
 const { execSync } = require('child_process');
 
 /**
@@ -50,13 +49,27 @@ function getChangedFiles() {
     
     // Check if this is a pull request
     if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
-      const baseRef = process.env.GITHUB_BASE_REF || 'main';
-      const headRef = process.env.GITHUB_HEAD_REF || 'HEAD';
-      const output = execSync(`git diff --name-only ${baseRef}...${headRef}`, { encoding: 'utf8' });
+      const baseSha = process.env.GITHUB_BASE_SHA;
+      const headSha = process.env.GITHUB_HEAD_SHA || process.env.GITHUB_SHA || 'HEAD';
+
+      if (!baseSha) {
+        throw new Error('Missing GITHUB_BASE_SHA for pull_request event.');
+      }
+
+      const output = execSync(`git diff --name-only ${baseSha}...${headSha}`, { encoding: 'utf8' });
       files = output.trim().split('\n').filter(f => f.endsWith('.css'));
     } else {
-      // For push events, check the commit
-      const output = execSync('git diff-tree --no-commit-id --name-only -r HEAD', { encoding: 'utf8' });
+      // For push events, diff from the previous SHA when available.
+      const beforeSha = process.env.GITHUB_BEFORE_SHA;
+      const afterSha = process.env.GITHUB_SHA || 'HEAD';
+
+      let output = '';
+      if (beforeSha && beforeSha !== '0000000000000000000000000000000000000000') {
+        output = execSync(`git diff --name-only ${beforeSha}...${afterSha}`, { encoding: 'utf8' });
+      } else {
+        output = execSync('git diff-tree --no-commit-id --name-only -r HEAD', { encoding: 'utf8' });
+      }
+
       files = output.trim().split('\n').filter(f => f.endsWith('.css'));
     }
     
@@ -263,6 +276,16 @@ function main() {
   const files = getChangedFiles();
   
   if (files.length === 0) {
+    const workflowPathFilterActive = process.env.GITHUB_EVENT_NAME === 'pull_request' || process.env.GITHUB_EVENT_NAME === 'push';
+
+    // Fail closed in CI when this workflow was already filtered to CSS paths.
+    // Zero detected files here usually means a diff-resolution issue rather than true absence of CSS changes.
+    if (workflowPathFilterActive) {
+      console.error('❌ No changed CSS files were detected, but this workflow was triggered by CSS path filters.');
+      console.error('   This usually indicates git diff resolution failed or SHAs are unavailable in the runner context.\n');
+      process.exit(1);
+    }
+
     console.log('ℹ️  No CSS files changed in this commit.\n');
     return true;
   }

@@ -23,14 +23,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
+      - name: Debug diff context
+        run: |
+          echo "Event: $GITHUB_EVENT_NAME"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "PR base SHA: ${{ github.event.pull_request.base.sha }}"
+          echo "PR head SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "Push before SHA: ${{ github.event.before }}"
+          git --version
+          git rev-parse --is-shallow-repository
+
       - name: Run CSS Compliance Check
         run: node .github/scripts/check-css-compliance.js
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GITHUB_BEFORE_SHA: ${{ github.event.before }}
         continue-on-error: false
 
       - name: Comment on PR
