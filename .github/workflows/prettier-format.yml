@@ -45,9 +45,63 @@ jobs:
           git add -A
           git commit -m "chore: format code with Prettier"
           git push
+        continue-on-error: false
 
-      - name: Comment on PR with formatting instructions (on PR)
-        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure'
+      - name: Run CSS Compliance Check on PR (Priority Check)
+        id: compliance
+        if: github.event_name == 'pull_request'
+        run: node .github/scripts/check-css-compliance.js
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GITHUB_BEFORE_SHA: ${{ github.event.before }}
+          CSS_COMPLIANCE_SCAN_MODE: changed
+        continue-on-error: true
+
+      - name: Comment on PR with compliance issues (takes priority over formatting)
+        if: github.event_name == 'pull_request' && steps.compliance.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = '.github/css-compliance-report.md';
+            let reportBody = '\n\nSee workflow logs for details.';
+
+            if (fs.existsSync(reportPath)) {
+              reportBody = `\n\n${fs.readFileSync(reportPath, 'utf8')}`;
+            }
+
+            const body = '⚠️ **World Anvil Compliance Check Failed**\n\n**Compliance rules take priority over code formatting.** This PR contains CSS that violates World Anvil Terms of Service.\n\nPlease review the [CSS Limits and Rules](https://github.com/${{ github.repository }}/blob/main/World%20Anvil%20Structure/CSS_Limits_and_Rules.md) documentation and fix the violations before pushing again.' + reportBody;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const existing = comments.find(c =>
+              c.user?.login === 'github-actions[bot]' &&
+              c.body.includes('World Anvil Compliance Check Failed')
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }
+
+      - name: Comment on PR with formatting instructions (only if compliance passes)
+        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure' && steps.compliance.outcome != 'failure'
         uses: actions/github-script@v7
         with:
           script: |
@@ -80,12 +134,18 @@ jobs:
               });
             }
 
-      - name: Fail if PR has formatting issues
-        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure'
+      - name: Fail PR if compliance check failed (Priority)
+        if: github.event_name == 'pull_request' && steps.compliance.outcome == 'failure'
+        run: |
+          echo "❌ World Anvil compliance violation detected. Compliance rules take priority."
+          exit 1
+
+      - name: Fail PR if formatting issues exist (Secondary)
+        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'failure' && steps.compliance.outcome != 'failure'
         run: |
           echo "❌ Code formatting issues detected. See PR comment for instructions."
           exit 1
 
-      - name: Pass formatting check
-        if: steps.prettier.outcome == 'success'
-        run: echo "✅ Code formatting check passed!"
+      - name: All checks passed
+        if: github.event_name == 'pull_request' && steps.prettier.outcome == 'success' && steps.compliance.outcome == 'success'
+        run: echo "✅ Code formatting and World Anvil compliance checks passed!"
