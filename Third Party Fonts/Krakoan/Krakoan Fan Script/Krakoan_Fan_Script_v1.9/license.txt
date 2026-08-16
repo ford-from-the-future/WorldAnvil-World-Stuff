@@ -1,0 +1,17 @@
+Krakoan Fan Script License
+
+Copyright (c) 2026, Krakoan Fan Script authors and contributors.
+
+This work is an unofficial fan-made typeface inspired by the Krakoan alphabet and related fan-script conventions. It is not affiliated with, endorsed by, or sponsored by Marvel, Disney, or any other rights holder associated with Krakoan or related material.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this font software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+2. You must retain this license text and any accompanying README or attribution included with the package when distributing the Software or any derivative work.
+3. This license does not grant any rights to the names, logos, characters, or trademarks of Krakoan, Marvel, Disney, or any related entities. Any use of those marks or characters remains subject to the rights of their respective owners.
+4. You may create derivative works based on this font, but any redistributed derivative version should preserve the notice that it is a fan-made, unofficial adaptation.
+5. If you distribute the Software in a package, archive, or downloadable bundle, the package should clearly identify that it contains an unofficial fan-made font and that it is not an official release from the original rights holders.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This license is intended to allow practical reuse while preserving the clear statement that the work is an unofficial fan creation.
