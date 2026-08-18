@@ -239,21 +239,36 @@
 }
 
 .user-css .article-content blockquote {
-  margin: 2rem 0;
-  padding: 1.25rem 1.4rem 1.25rem 1.6rem;
-  color: var(--kr-ink);
-  border: 0;
-  border-left: 12px solid var(--kr-ink);
-  border-radius: 0;
+  margin: 2rem 0 !important;
+  padding: 1.5rem 1.65rem !important;
+  overflow: visible !important;
+  color: var(--kr-ink) !important;
+  border: 2px solid var(--kr-ink) !important;
+  border-left: 12px solid var(--kr-red) !important;
+  border-radius: 0 !important;
   background:
-    linear-gradient(90deg, rgba(189, 20, 40, 0.18), transparent 48%),
-    var(--kr-paper-deep);
-  box-shadow: none;
+    linear-gradient(90deg, rgba(189, 20, 40, 0.18), transparent 58%),
+    var(--kr-paper-deep) !important;
+  box-shadow: none !important;
+  clip-path: none !important;
 }
 
 .user-css .article-content blockquote p {
-  margin: 0;
-  font-family: var(--kr-mono);
+  margin: 0 !important;
+  color: var(--kr-ink) !important;
+  font-family: var(--kr-mono) !important;
+}
+
+.user-css .article-content blockquote .author-note {
+  display: block;
+  margin-top: 1rem;
+  color: var(--kr-red) !important;
+  font-family: var(--kr-mono) !important;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: right;
 }
 
 .user-css .article-content ul li::marker,
@@ -771,6 +786,93 @@
   height: 6px !important;
   border: 0 !important;
   background: var(--kr-ink) !important;
+}
+
+.user-css .rhea-family-tree {
+  --rootNodeBg: var(--kr-paper);
+  --rootNodeBorder: 2px solid var(--kr-ink);
+  --rootNodeHeight: 650px;
+  margin: 2rem 0;
+  overflow: hidden;
+  border: 6px solid var(--kr-ink) !important;
+  border-top-color: var(--kr-gold) !important;
+  border-right-color: var(--kr-gold) !important;
+  border-radius: 0 !important;
+  background-color: var(--kr-paper) !important;
+  box-shadow: none !important;
+}
+
+.user-css .rhea-family-tree svg line,
+.user-css .rhea-family-tree svg path {
+  stroke: var(--kr-ink) !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-portrait-wrapper {
+  border: 5px solid var(--kr-ink) !important;
+  border-radius: 0 !important;
+  background: var(--kr-paper-deep) !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-portrait {
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-portrait::after {
+  display: none !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-portrait-wrapper img {
+  border-radius: 0 !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-label {
+  padding: 0.45rem 0.55rem !important;
+  color: var(--kr-ink) !important;
+  border: 2px solid var(--kr-ink) !important;
+  border-radius: 0 !important;
+  background: var(--kr-paper) !important;
+  font-family: var(--kr-head) !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-data .character-name {
+  padding: 0.38rem 0.7rem !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--kr-red) !important;
+  font-family: var(--kr-head) !important;
+  font-size: 0.78rem !important;
+  font-weight: 900 !important;
+  line-height: 1.05 !important;
+  text-transform: uppercase !important;
+}
+
+.user-css .rhea-family-tree .rhea-character-node .character-label .character-title,
+.user-css .rhea-family-tree .rhea-character-node .character-label .character-life {
+  color: var(--kr-ink) !important;
+  font-family: var(--kr-mono) !important;
+  font-size: 0.68rem !important;
+  line-height: 1.2 !important;
+}
+
+.user-css .rhea-family-tree .rhea-ft-search input,
+.user-css .rhea-family-tree .rhea-ft-search button,
+.user-css .rhea-family-tree .rhea-ft-search .btn {
+  color: var(--kr-ink) !important;
+  border: 2px solid var(--kr-ink) !important;
+  border-radius: 0 !important;
+  background: var(--kr-paper) !important;
+  box-shadow: none !important;
+  font-family: var(--kr-mono) !important;
+}
+
+.user-css .rhea-family-tree .rhea-ft-search button:hover,
+.user-css .rhea-family-tree .rhea-ft-search button:focus,
+.user-css .rhea-family-tree .rhea-ft-search .btn:hover,
+.user-css .rhea-family-tree .rhea-ft-search .btn:focus {
+  color: #ffffff !important;
+  background: var(--kr-red) !important;
 }
 
 .user-css .kr-action {
