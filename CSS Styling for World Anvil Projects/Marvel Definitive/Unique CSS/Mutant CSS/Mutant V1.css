@@ -1,0 +1,968 @@
+/*
+  KRAKOAN MUTANT ARTICLE THEME
+  Clean production build
+
+  KRAKOAN and KRAKOANfan are defined in World CSS.
+  Desktop Mutant sidebars are intentionally static for smoother scrolling.
+  Large fixed paint effects, alpha compositing, and large shadows are avoided.
+*/
+
+.user-css {
+  --kr-paper: #f4f2ec;
+  --kr-paper-deep: #e5e2d9;
+  --kr-ink: #07090b;
+  --kr-red: #bd1428;
+  --kr-orange: #ef5d25;
+  --kr-blue: #159bc5;
+  --kr-gold: #d5ad35;
+  --kr-line: rgba(7, 9, 11, 0.22);
+  --kr-head: Arial, Helvetica, sans-serif;
+  --kr-mono: Consolas, Monaco, monospace;
+}
+
+.user-css-presentation {
+  min-height: 100vh;
+  background-color: #e8e6df;
+  background-image:
+    linear-gradient(rgba(7, 9, 11, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7, 9, 11, 0.055) 1px, transparent 1px);
+  background-position: center, center;
+  background-size: 64px 64px, 64px 64px;
+  background-repeat: repeat, repeat;
+  background-attachment: scroll;
+}
+
+.user-css.page {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.user-css .article-title,
+.user-css .article-content {
+  position: relative;
+  width: calc(100% - 48px);
+  max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--kr-ink);
+  border: 2px solid var(--kr-ink);
+  border-radius: 0;
+}
+
+.user-css .article-title {
+  z-index: 2;
+  margin-top: 42px;
+  margin-bottom: 0;
+  padding: 46px 58px 30px;
+  background: var(--kr-ink);
+  box-shadow: none;
+}
+
+.user-css .article-title::before,
+.user-css .article-title::after,
+.user-css .kr-panel::before,
+.user-css .kr-panel::after {
+  content: attr(data-kr-mark);
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+.user-css .article-title::before,
+.user-css .kr-panel::before {
+  top: 18px;
+  left: 18px;
+  border-top: 2px solid var(--kr-ink);
+  border-left: 2px solid var(--kr-ink);
+}
+
+.user-css .article-title::after,
+.user-css .kr-panel::after {
+  right: 18px;
+  bottom: 18px;
+  border-right: 2px solid var(--kr-ink);
+  border-bottom: 2px solid var(--kr-ink);
+}
+
+.user-css .article-title::before,
+.user-css .article-title::after {
+  border-color: var(--kr-gold);
+}
+
+.user-css .article-title h1 {
+  position: relative;
+  z-index: 1;
+  left: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 1180px;
+  margin: 20px auto 5px;
+  padding: 10px 0 15px;
+  color: var(--kr-gold);
+  border: 0;
+  border-bottom: 12px solid var(--kr-gold);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-family: KRAKOANfan, KRAKOAN, sans-serif;
+  font-size: clamp(45px, 6vw, 74px);
+  font-weight: 100;
+  line-height: 0.9;
+  letter-spacing: 0.025em;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-wrap: balance;
+  text-transform: capitalize;
+}
+
+.user-css .dictionary-word-title strong {
+  font-family: KRAKOAN !important;
+  font-weight: 400 !important;
+}
+
+.user-css .article-content {
+  z-index: 1;
+  margin-top: 0;
+  margin-bottom: 52px;
+  padding: 64px 72px 82px;
+  border-top: 2px solid var(--kr-ink);
+  border-left: 12px solid var(--kr-ink);
+  border-right: 12px solid var(--kr-ink);
+  counter-reset: kr-section;
+  background-color: var(--kr-paper);
+  box-shadow: none;
+}
+
+.user-css .article-content p,
+.user-css .article-content li,
+.user-css .article-content dd,
+.user-css .article-content td {
+  color: var(--kr-ink);
+  font-family: var(--kr-head);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.user-css .article-content h2 {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: end;
+  gap: 0.75rem;
+  margin: 3.4rem 0 1.2rem;
+  padding: 0 0 0.45rem;
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-bottom: 11px solid var(--kr-ink) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  font-family: var(--kr-head);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.user-css .article-content h2::before {
+  content: counter(kr-section, decimal-leading-zero);
+  counter-increment: kr-section;
+  display: grid;
+  place-items: center;
+  min-height: 2.7rem;
+  padding: 0.35rem;
+  color: var(--kr-paper);
+  background: var(--kr-ink);
+  font-family: var(--kr-mono);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.user-css .article-content h2::after {
+  content: none !important;
+  display: none !important;
+}
+
+.user-css .article-content h3 {
+  margin: 2.4rem 0 0.9rem;
+  padding: 0.2rem 0 0.2rem 0.75rem;
+  color: var(--kr-ink);
+  border-left: 7px solid var(--kr-red);
+  font-family: var(--kr-head);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.user-css .article-content h4,
+.user-css .article-content h5 {
+  margin-top: 1.8rem;
+  color: var(--kr-ink);
+  font-family: var(--kr-mono);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.user-css .article-content a {
+  color: var(--kr-red);
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.user-css .article-content a:hover,
+.user-css .article-content a:focus {
+  color: var(--kr-paper);
+  background: var(--kr-red);
+  outline: 2px solid var(--kr-red);
+}
+
+.user-css .character-relationships h4 a {
+  font-family: KRAKOANfan, KRAKOAN, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+.user-css .article-content hr {
+  height: 12px;
+  margin: 2.6rem 0;
+  border: 0;
+  background: var(--kr-ink);
+}
+
+.user-css .article-content blockquote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.4rem 1.25rem 1.6rem;
+  color: var(--kr-ink);
+  border: 0;
+  border-left: 12px solid var(--kr-ink);
+  border-radius: 0;
+  background:
+    linear-gradient(90deg, rgba(189, 20, 40, 0.18), transparent 48%),
+    var(--kr-paper-deep);
+  box-shadow: none;
+}
+
+.user-css .article-content blockquote p {
+  margin: 0;
+  font-family: var(--kr-mono);
+}
+
+.user-css .article-content ul li::marker,
+.user-css .article-content ol li::marker {
+  color: var(--kr-red);
+  font-weight: 900;
+}
+
+.user-css .article-content table,
+.user-css .article-content table.table {
+  width: 100% !important;
+  margin: 2rem 0 !important;
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-top: 12px solid var(--kr-ink) !important;
+  border-bottom: 4px solid var(--kr-ink) !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border-radius: 0 !important;
+  background: var(--kr-paper) !important;
+  box-shadow: none !important;
+  font-family: Consolas, Monaco, monospace !important;
+  table-layout: auto;
+}
+
+.user-css .article-content table caption,
+.user-css .article-content table.table caption {
+  padding: 0.72rem 0.9rem !important;
+  color: var(--kr-paper) !important;
+  border: 0 !important;
+  border-left: 8px solid var(--kr-red) !important;
+  border-radius: 0 !important;
+  background: var(--kr-ink) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 0.86rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.055em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+}
+
+.user-css .article-content table thead,
+.user-css .article-content table thead tr,
+.user-css .article-content table.table thead,
+.user-css .article-content table.table thead tr {
+  color: var(--kr-paper) !important;
+  background: var(--kr-ink) !important;
+}
+
+.user-css .article-content table th,
+.user-css .article-content table thead tr th,
+.user-css .article-content table.table th,
+.user-css .article-content table.table thead tr th {
+  padding: 0.72rem 0.78rem !important;
+  color: var(--kr-paper) !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(213, 173, 53, 0.58) !important;
+  border-bottom: 4px solid var(--kr-gold) !important;
+  border-radius: 0 !important;
+  background: var(--kr-ink) !important;
+  box-shadow: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 0.78rem !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.045em !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+.user-css .article-content table th:last-child,
+.user-css .article-content table.table th:last-child {
+  border-right: 0 !important;
+}
+
+.user-css .article-content table tbody,
+.user-css .article-content table tbody tr,
+.user-css .article-content table.table tbody,
+.user-css .article-content table.table tbody tr {
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.user-css .article-content table td,
+.user-css .article-content table tbody tr td,
+.user-css .article-content table.table td,
+.user-css .article-content table.table tbody tr td {
+  padding: 0.58rem 0.72rem !important;
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(7, 9, 11, 0.2) !important;
+  border-bottom: 1px dotted rgba(7, 9, 11, 0.56) !important;
+  border-radius: 0 !important;
+  background: #f6f4ed !important;
+  box-shadow: none !important;
+  font-family: Consolas, Monaco, monospace !important;
+  font-size: 0.82rem !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+  vertical-align: top !important;
+}
+
+.user-css .article-content table tbody tr:nth-child(even) td,
+.user-css .article-content table.table tbody tr:nth-child(even) td {
+  background: #e4e1d8 !important;
+}
+
+.user-css .article-content table tbody tr:nth-child(odd) td,
+.user-css .article-content table.table tbody tr:nth-child(odd) td {
+  background: #f6f4ed !important;
+}
+
+.user-css .article-content table tbody td:first-child,
+.user-css .article-content table.table tbody td:first-child {
+  border-left: 6px solid var(--kr-ink) !important;
+  font-weight: 900 !important;
+  white-space: nowrap;
+}
+
+.user-css .article-content table tbody td:last-child,
+.user-css .article-content table.table tbody td:last-child {
+  border-right: 0 !important;
+  font-size: 0.76rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.045em !important;
+  text-transform: uppercase !important;
+}
+
+.user-css .article-content table tbody tr:hover td,
+.user-css .article-content table.table tbody tr:hover td {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
+  background: var(--kr-blue) !important;
+}
+
+.user-css .article-content table tbody tr:hover td:first-child,
+.user-css .article-content table.table tbody tr:hover td:first-child {
+  border-left-color: var(--kr-red) !important;
+}
+
+.user-css .article-content pre,
+.user-css .article-content code,
+.user-css .kr-telemetry,
+.user-css .kr-label {
+  font-family: var(--kr-mono);
+}
+
+.user-css .article-content pre {
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.35rem;
+  color: var(--kr-paper);
+  border: 0;
+  border-radius: 0;
+  background: var(--kr-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.user-css .article-content img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--kr-ink);
+  border-radius: 0;
+}
+
+.user-css .kr-panel {
+  position: relative;
+  margin: 2rem 0;
+  padding: 2.5rem 2.8rem;
+  color: var(--kr-ink);
+  border: 1px solid var(--kr-ink);
+  background: var(--kr-paper);
+}
+
+.user-css .kr-panel h2:first-child,
+.user-css .kr-panel h3:first-child,
+.user-css .kr-panel h4:first-child {
+  margin-top: 0;
+}
+
+.user-css .kr-label {
+  display: inline-block;
+  margin: 0 0 0.8rem;
+  padding: 0.3rem 0.5rem;
+  color: var(--kr-paper);
+  background: var(--kr-ink);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.user-css .kr-telemetry {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  color: var(--kr-paper);
+  border-left: 8px solid var(--kr-red);
+  background: var(--kr-ink);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  letter-spacing: 0.035em;
+}
+
+.user-css .kr-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin: 2rem 0;
+}
+
+.user-css .kr-card {
+  min-height: 300px;
+  padding: 1.6rem 1.4rem 2rem;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-top: 18px solid #ffffff;
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px),
+    linear-gradient(155deg, var(--kr-red), #7e0b18);
+}
+
+.user-css .kr-card-orange {
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px),
+    linear-gradient(155deg, var(--kr-orange), #a32916);
+}
+
+.user-css .kr-card-blue {
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px),
+    linear-gradient(155deg, var(--kr-blue), #07566f);
+}
+
+.user-css .kr-card-black {
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px),
+    var(--kr-ink);
+}
+
+.user-css .kr-card h2,
+.user-css .kr-card h3,
+.user-css .kr-card h4,
+.user-css .kr-card h5,
+.user-css .kr-card p,
+.user-css .kr-card li,
+.user-css .kr-card a {
+  color: #ffffff;
+}
+
+.user-css .kr-card h2,
+.user-css .kr-card h3 {
+  display: block;
+  margin-top: 0;
+  padding: 0 0 0.65rem;
+  border: 0;
+  border-bottom: 3px solid #ffffff;
+  font-family: var(--kr-head);
+  font-size: 1.35rem;
+  letter-spacing: 0;
+}
+
+.user-css .kr-card h2::before {
+  display: none;
+}
+
+.user-css .kr-card p,
+.user-css .kr-card li {
+  font-family: var(--kr-mono);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.user-css .kr-index {
+  margin: 2rem 0;
+  padding: 0;
+  counter-reset: kr-index;
+}
+
+.user-css .kr-index li {
+  counter-increment: kr-index;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4.25rem;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.1rem;
+  margin: 0 0 4px;
+  padding: 0 0 0 0.8rem;
+  color: var(--kr-paper);
+  background: var(--kr-ink);
+  font-family: var(--kr-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.user-css .kr-index li::after {
+  content: counter(kr-index, decimal-leading-zero);
+  display: grid;
+  align-self: stretch;
+  place-items: center;
+  color: var(--kr-paper);
+  border-left: 4px solid var(--kr-paper);
+  background: var(--kr-ink);
+  font-family: var(--kr-mono);
+}
+
+.user-css .kr-index li::marker {
+  color: transparent;
+  font-size: 0;
+}
+
+.user-css .kr-index li:hover {
+  background: var(--kr-blue);
+}
+
+.user-css .kr-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.4rem;
+  align-items: start;
+}
+
+.user-css .kr-glyphs {
+  margin: 1.8rem auto;
+  padding: 1.2rem;
+  color: var(--kr-ink);
+  font-family: KRAKOANfan, KRAKOAN, monospace;
+  font-size: clamp(2rem, 6vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.user-css .kr-seal {
+  display: grid;
+  place-items: center;
+  width: min(76vw, 620px);
+  aspect-ratio: 1;
+  margin: 2rem auto;
+  padding: 9%;
+  overflow: hidden;
+  color: #ffffff;
+  border: 5px solid var(--kr-ink);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 68% 35%, rgba(239, 93, 37, 0.84), transparent 42%),
+    radial-gradient(circle at 25% 68%, rgba(189, 20, 40, 0.78), transparent 50%),
+    var(--kr-ink);
+  text-align: center;
+}
+
+.user-css .kr-seal .kr-glyphs {
+  color: #ffffff;
+}
+
+.user-css .kr-seal img {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-css .kr-scan img {
+  filter: grayscale(1) contrast(1.16);
+}
+
+.user-css .kr-warm img {
+  filter: grayscale(1) sepia(1) saturate(4) hue-rotate(325deg) contrast(1.12);
+}
+
+.user-css .kr-no-scan img {
+  filter: none;
+}
+
+.user-css .kr-index-table tbody td:last-child {
+  color: #ffffff;
+  background: var(--kr-ink);
+  text-align: center;
+}
+
+.user-css .kr-index-table tbody tr:hover td:last-child {
+  background: var(--kr-red);
+}
+
+.user-css .article-content-right,
+.user-css .article-content .row .col-md-8 + .col-md-4 {
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.user-css .article-content-right .panel,
+.user-css .article-content-right .panel.panel-default,
+.user-css .article-content-right .card,
+.user-css .article-content .row .col-md-8 + .col-md-4 .panel,
+.user-css .article-content .row .col-md-8 + .col-md-4 .card,
+.user-css .character-relationships .panel,
+.user-css .character-relationships .panel.panel-default {
+  color: var(--kr-ink) !important;
+  border: 2px solid var(--kr-ink) !important;
+  border-top: 12px solid var(--kr-ink) !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: var(--kr-paper) !important;
+  box-shadow: none !important;
+}
+
+.user-css .article-content-right .panel .panel-\62 ody,
+.user-css .article-content-right .card .card-\62 ody,
+.user-css .article-content .row .col-md-8 + .col-md-4 .panel .panel-\62 ody,
+.user-css .article-content .row .col-md-8 + .col-md-4 .card .card-\62 ody {
+  padding: 1.35rem !important;
+  color: var(--kr-ink) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.user-css .article-content-right .panel p,
+.user-css .article-content-right .panel li,
+.user-css .article-content-right .panel dl,
+.user-css .article-content-right .panel dt,
+.user-css .article-content-right .panel dd,
+.user-css .article-content-right .panel small,
+.user-css .article-content-right .panel em,
+.user-css .article-content-right .panel strong,
+.user-css .article-content-right .card p,
+.user-css .article-content-right .card li,
+.user-css .article-content-right .card dl,
+.user-css .article-content-right .card dt,
+.user-css .article-content-right .card dd,
+.user-css .article-content-right .card small,
+.user-css .article-content-right .card em,
+.user-css .article-content-right .card strong,
+.user-css .character-relationships .panel p,
+.user-css .character-relationships .panel li,
+.user-css .character-relationships .panel dl,
+.user-css .character-relationships .panel dt,
+.user-css .character-relationships .panel dd,
+.user-css .character-relationships .panel small,
+.user-css .character-relationships .panel em,
+.user-css .character-relationships .panel strong {
+  color: var(--kr-ink) !important;
+}
+
+.user-css .article-content-right .panel h1,
+.user-css .article-content-right .panel h2,
+.user-css .article-content-right .panel h3,
+.user-css .article-content-right .panel h4,
+.user-css .article-content-right .panel h5,
+.user-css .article-content-right .panel h6,
+.user-css .article-content-right .card h1,
+.user-css .article-content-right .card h2,
+.user-css .article-content-right .card h3,
+.user-css .article-content-right .card h4,
+.user-css .article-content-right .card h5,
+.user-css .article-content-right .card h6 {
+  color: var(--kr-ink) !important;
+}
+
+.user-css .article-content-right .panel h2,
+.user-css .article-content-right .card h2 {
+  display: block !important;
+  margin: 0 0 1rem !important;
+  padding: 0 0 0.55rem !important;
+  border: 0 !important;
+  border-bottom: 7px solid var(--kr-ink) !important;
+  font-size: 1.5rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.user-css .article-content-right .panel h2::before,
+.user-css .article-content-right .panel h2::after,
+.user-css .article-content-right .card h2::before,
+.user-css .article-content-right .card h2::after {
+  display: none !important;
+}
+
+.user-css .article-content-right .panel h3,
+.user-css .article-content-right .card h3 {
+  margin-top: 1.6rem !important;
+  padding-left: 0.65rem !important;
+  border-left: 6px solid var(--kr-red) !important;
+  font-size: 1.16rem !important;
+}
+
+.user-css .article-content-right .panel a,
+.user-css .article-content-right .card a {
+  color: var(--kr-red) !important;
+  background: transparent !important;
+  font-weight: 900 !important;
+}
+
+.user-css .article-content-right .panel a:hover,
+.user-css .article-content-right .panel a:focus,
+.user-css .article-content-right .card a:hover,
+.user-css .article-content-right .card a:focus {
+  color: #ffffff !important;
+  background: var(--kr-red) !important;
+  outline-color: var(--kr-red) !important;
+}
+
+.user-css .article-content-right .panel hr,
+.user-css .article-content-right .card hr {
+  height: 6px !important;
+  border: 0 !important;
+  background: var(--kr-ink) !important;
+}
+
+.user-css .kr-action {
+  display: inline-block;
+  padding: 0.65rem 0.9rem;
+  color: #ffffff;
+  border: 2px solid var(--kr-ink);
+  border-radius: 0;
+  background: var(--kr-ink);
+  font-family: var(--kr-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.user-css .kr-action:hover,
+.user-css .kr-action:focus {
+  color: #ffffff;
+  border-color: var(--kr-red);
+  background: var(--kr-red);
+}
+
+@media only screen and (max-width: 991px) {
+  .user-css .article-content {
+    width: calc(100% - 20px);
+  }
+
+  .user-css .article-title {
+    width: calc(100% - 20px);
+    margin-top: 26px;
+    margin-bottom: 0;
+    padding: 38px 30px 24px;
+  }
+
+  .user-css .article-title h1 {
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 8px 0 13px;
+  }
+
+  .user-css .article-content {
+    padding: 52px 42px 62px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+  }
+
+  .user-css .kr-card-grid,
+  .user-css .kr-split {
+    grid-template-columns: 1fr;
+  }
+
+  .user-css .kr-card {
+    min-height: 0;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .user-css-presentation {
+    background-size: 40px 40px, 40px 40px;
+  }
+
+  .user-css .article-title {
+    width: calc(100% - 10px);
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 32px 22px 22px;
+  }
+
+  .user-css .article-title h1 {
+    width: 100%;
+    height: auto;
+    padding: 6px 0 11px;
+    border-bottom-width: 8px;
+    box-shadow: none;
+    font-size: clamp(28px, 8.7vw, 42px);
+  }
+
+  .user-css .article-content {
+    width: calc(100% - 10px);
+    padding-top: 44px;
+    padding-right: 24px;
+    padding-left: 24px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+  }
+
+  .user-css .article-content h2 {
+    grid-template-columns: 2.7rem minmax(0, 1fr);
+    font-size: 1.65rem;
+  }
+
+  .user-css .article-content table th,
+  .user-css .article-content table thead tr th,
+  .user-css .article-content table.table th,
+  .user-css .article-content table.table thead tr th {
+    padding: 0.52rem 0.48rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .user-css .article-content table td,
+  .user-css .article-content table tbody tr td,
+  .user-css .article-content table.table td,
+  .user-css .article-content table.table tbody tr td {
+    padding: 0.46rem 0.48rem !important;
+    font-size: 0.72rem !important;
+  }
+
+  .user-css .article-content table tbody td:first-child,
+  .user-css .article-content table.table tbody td:first-child {
+    border-left-width: 4px !important;
+  }
+
+  .user-css .kr-panel {
+    padding: 2rem 1.35rem;
+  }
+
+  .user-css .kr-seal {
+    width: 82vw;
+  }
+}
+
+/* Desktop Mutant pages use a static sidebar to avoid sticky-scroll repainting. */
+@media only screen and (min-width: 992px) {
+  .user-css .article-content .row .col-md-8 + .col-md-4,
+  .user-css .article-content-right {
+    position: static !important;
+    top: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+  }
+}
+
+/* Return to MARVEL homepage */
+.user-css .backtoworld {
+  position: relative !important;
+  float: none !important;
+  clear: both !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 28px auto 36px !important;
+  padding: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+.user-css .backtoworld a {
+  position: relative !important;
+  float: none !important;
+  display: block !important;
+  flex: 0 0 130px;
+  width: 130px !important;
+  height: 130px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: hidden;
+  color: transparent !important;
+  border: 5px solid var(--kr-ink);
+  border-radius: 50%;
+  background-color: var(--kr-ink);
+  background-image: url(https://wa-cdn.nyc3.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/52d5711e1c468ac9f6e926181ef76438.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 7px 7px 0 rgba(7, 9, 11, 0.20);
+  clip-path: none !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-decoration: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.user-css .backtoworld a::before,
+.user-css .backtoworld a::after {
+  content: none !important;
+  display: none !important;
+}
+
+.user-css .backtoworld a:hover,
+.user-css .backtoworld a:focus {
+  color: transparent !important;
+  border-color: var(--kr-gold);
+  outline: 3px solid var(--kr-gold);
+  outline-offset: 4px;
+}

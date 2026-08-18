@@ -1,0 +1,89 @@
+@font-face {
+  font-family: marvel;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/8b9eb71b7de90fb61c6952ee2b3e530bf868baea/Third%20Party%20Fonts/Marvel-Regular/Marvel-Regular.ttf);
+}
+
+@font-face {
+  font-family: KRAKOAN;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/aae5e02c4f6e994903045691c7bd7f4f921e1708/Third%20Party%20Fonts/Krakoan/KRAKOANbeta-Regular.otf);
+}
+
+@font-face {
+ font-family: KRAKOANfan;
+ font-style: normal;
+ font-weight: 400;
+ font-display: swap;
+ src: url(https://rawcdn.githack.com/ford-from-the-future/WorldAnvil-World-Stuff/69397877f4fe75895e8fa2a643fe4ad00b69ab04/Third%20Party%20Fonts/Krakoan/Krakoan%20Fan%20Script/Krakoan_Fan_Script_v1.9/KrakoanFanScript-Regular.ttf) ;
+}
+
+.user-css .article-title h1 {
+  font-family: marvel;
+  color: gold;
+  text-transform: capitalize;
+  font-weight: 100;
+  font-size: 45px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  line-height: 0.9em;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.user-css .heading h1.world-title {
+  font-family: marvel;
+  color: gold;
+  font-weight: 1;
+  text-transform: capitalize;
+  font-size: 45px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+.user-css.page {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url(https://wa-cdn.nyc3.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/ac343885d0510a2ed30844615426d867.jpeg);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 0px;
+  border-color: black;
+}
+
+.user-css-presentation {
+  min-height: 100vh;
+  background-image: url(https://wa-cdn.nyc3.digitaloceanspaces.com/user-data/production/bd9aa158-359c-4986-b5cb-4be7871d2c3f/uploads/images/d8d5b0a3e2e99148614c5e1e44493676.jpeg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+@media only screen and (min-width:992px) {
+  .user-css .article-content .row .col-md-8+.col-md-4 {
+    position: sticky;
+    top: 10px;
+    max-height: 100vh;
+    overflow-y: auto;
+    border: 1px solid gray;
+    background-position: center;
+    background-size: cover;
+    -webkit-box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5);
+    box-shadow: 2px 2px 6px rgba(50, 50, 50, 0.5);
+    z-index: 1050;
+  }
+}
+
+@media only screen and (min-width:992px) {
+  .user-css.page {
+    overflow: unset;
+  }
+}
